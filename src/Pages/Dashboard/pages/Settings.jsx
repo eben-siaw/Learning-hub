@@ -12,7 +12,7 @@ function Settings() {
 
       <div style={{paddingTop: 50}}> 
       <span> After creating a course as an Instructor which redirects you to the streams, <br/> 
-        open or install <a href="www.obs-studio.com">OBS studio</a>  on your PC and open settings add a custom stream and use rtmp://localhost-live as the URL or server.  </span> 
+        open or install <a href="https://obsproject.com/">OBS studio</a>  on your PC and open settings add a custom stream and use rtmp://localhost-live as the URL or server.  </span> 
         <br/>  
 
         <div style={{paddingTop: 50}}> 
