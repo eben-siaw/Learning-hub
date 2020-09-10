@@ -1,0 +1,74 @@
+.lec_header
+{ 
+ width: 100%;
+ position: fixed; 
+ top: 0;
+ left: 0;
+ height: 59px;
+} 
+
+.lec_navigation 
+{
+display: flex;
+height: 100%;
+padding: 0 0.5rem; 
+align-items: center;
+} 
+
+.Logo 
+{
+  margin-left: 45px;
+}
+
+.spacer
+{
+    flex: 0.9;
+}
+
+.lec_links ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.lec_links li
+{ 
+    padding: 0 1.5rem; 
+    padding-top: 3px;
+}  
+
+.lec_links li a
+{ 
+font-family: Arial, Helvetica, sans-serif; 
+color: black;
+}  
+
+.icon1
+{
+ margin-right: -20px;
+}
+
+.icon2
+{
+margin-right: -20px;
+}
+
+.icon4
+{
+margin-right: -20px;
+}
+
+.L  
+{
+   color: #ffffff;
+   text-decoration: none;  
+   font-size: 1em; 
+   font-family: Arial, Helvetica, sans-serif;
+} 
+    
+.L:hover, 
+.L:active
+{
+   color: #FF7E00;
+}  

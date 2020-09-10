@@ -1,0 +1,401 @@
+main {
+  width: 100%;
+  height: 100vh;
+}
+
+.inner-container {
+  position: relative;
+  height: 100%;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  grid-template-areas: "info-side form-side";
+}
+
+.mobileImage {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+.wave {
+  position: absolute;
+  width: 100vh;
+  top: 0;
+  right: 100px;
+  transform-origin: top right;
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+}
+
+.info-section {
+  grid-area: info-side;
+  background: url(/img/fluid-background.svg);
+  background-size: cover;
+  background-position: top left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-section .text {
+  width: 90%;
+  color: #fff;
+  font-size: 20px;
+}
+
+.info-section .text span {
+  font-size: 70px;
+}
+.info-section .text p {
+  opacity: 0.6;
+  word-spacing: 5px;
+}
+
+.form-section {
+  grid-area: form-side;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.formbox {
+  min-width: 350px;
+  transition: 0.5s ease-in-out;
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -ms-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+}
+
+.formbox.signup .wrapper {
+  max-height: 80vh;
+  overflow: scroll;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.formbox.signup .wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.form-title {
+  font-size: 30px;
+  color: var(--text-color);
+  margin-bottom: 0px;
+  text-align: center;
+}
+
+.error-display {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+
+.error-display p {
+  padding: 10px 15px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  background: rgba(255, 0, 0, 0.123);
+  color: rgb(248, 10, 10);
+  font-size: 12px;
+}
+
+.input-group:not(:last-child) {
+  margin-bottom: 30px;
+}
+
+.input-group input {
+  border: none;
+  background: none;
+  width: 100%;
+  font-size: 14px;
+  padding: 10px 40px;
+  border-bottom: 2px solid rgba(199, 199, 199, 0.4);
+  text-align: left;
+  color: var(--text-color);
+}
+
+.input-group label {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  text-align: center;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -moz-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -ms-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -o-transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  color: rgb(151, 151, 151);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.input-group input:focus + label,
+.input-group label.static {
+  top: -10px;
+  font-size: 12px;
+  color: var(--color-2);
+}
+
+.input-group input:focus ~ .underline {
+  transform-origin: right !important;
+  transform: scaleX(1);
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+}
+
+.input-group input:focus ~ .icon {
+  color: var(--color-2);
+}
+
+.input-group .icon {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  font-size: 22px;
+  color: var(--text-color);
+}
+
+.input-group .underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-top: 2px solid var(--color-2);
+  width: 100%;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  transform-origin: left;
+  transform: scaleX(0);
+  -webkit-transform: scaleX(0);
+  -moz-transform: scaleX(0);
+  -ms-transform: scaleX(0);
+  -o-transform: scaleX(0);
+  transition: 0.3s linear;
+  -webkit-transition: 0.3s linear;
+  -moz-transition: 0.3s linear;
+  -ms-transition: 0.3s linear;
+  -o-transition: 0.3s linear;
+}
+
+.errorMessage {
+  background: red;
+  color: #fff;
+  font-size: 12px;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.errorMessage:hover::after {
+  display: block;
+  animation: fade-slide-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  -webkit-animation: fade-slide-up 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fade-slide-up {
+  0% {
+    transform: translateY(10px);
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    -o-transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+.errorMessage::after {
+  position: absolute;
+  content: attr(error);
+  min-width: 150px;
+  bottom: 150%;
+  padding: 10px;
+  background: rgba(255, 0, 0, 0.212);
+  color: red;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  text-align: center;
+  display: none;
+}
+
+.errorMessage::before {
+  position: absolute;
+  content: "";
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  -webkit-border-radius: inherit;
+  -moz-border-radius: inherit;
+  -ms-border-radius: inherit;
+  -o-border-radius: inherit;
+  background: rgba(255, 0, 0, 0.315);
+  animation: blink-fade 1s linear infinite;
+  -webkit-animation: blink-fade 1s linear infinite;
+}
+
+@keyframes blink-fade {
+  0% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.8);
+    -webkit-transform: scale(1.8);
+    -moz-transform: scale(1.8);
+    -ms-transform: scale(1.8);
+    -o-transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.button-group button {
+  margin-top: 15px;
+}
+
+.submit {
+  margin-top: 45px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  width: 100%;
+  transition: 0.1s linear;
+  -webkit-transition: 0.1s linear;
+  -moz-transition: 0.1s linear;
+  -ms-transition: 0.1s linear;
+  -o-transition: 0.1s linear;
+}
+
+.submit:hover {
+  transform: translateY(2px);
+  -webkit-transform: translateY(2px);
+  -moz-transform: translateY(2px);
+  -ms-transform: translateY(2px);
+  -o-transform: translateY(2px);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.redirect-link {
+  font-size: 14px;
+  text-align: center;
+  display: block;
+}
+
+@media (max-width: 800px) {
+  .inner-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 250px 1fr;
+    grid-template-areas:
+      "info-side"
+      "form-side";
+  }
+
+  .info-section {
+    display: flex;
+    justify-content: center;
+    align-items: initial;
+    text-align: center;
+    padding-top: 50px;
+  }
+
+  .info-section .text {
+    width: 90%;
+    color: #fff;
+    font-size: 18px;
+  }
+
+  .info-section .text span {
+    font-size: 35px;
+  }
+  .info-section .text p {
+    opacity: 0.6;
+    word-spacing: 5px;
+    font-size: 14px;
+  }
+
+  .formbox {
+    min-width: 60%;
+    padding: 20px;
+    transform: translateY(-80px);
+    -webkit-transform: translateY(-80px);
+    -moz-transform: translateY(-80px);
+    -ms-transform: translateY(-80px);
+    -o-transform: translateY(-80px);
+    background-color: #fff;
+    box-shadow: 0 0 10px #00000035;
+    z-index: 5;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+
+  .form-title {
+    font-size: 20px;
+  }
+
+  .wave {
+    position: absolute;
+    width: 100vw;
+    top: initial;
+    right: 0;
+    bottom: 0;
+    transform: translateY(10px) scaleY(0.8);
+    -webkit-transform: translateY(10px) scaleY(0.8);
+    -moz-transform: translateY(10px) scaleY(0.8);
+    -ms-transform: translateY(10px) scaleY(0.8);
+    -o-transform: translateY(10px) scaleY(0.8);
+    transform-origin: bottom;
+  }
+}
+
+@media (max-width: 500px) {
+  .formbox {
+    min-width: 90%;
+    padding: 20px 30px;
+  }
+}

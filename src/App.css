@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "regularFont";
+  src: url("./fonts/text-font/Karla-Regular.ttf");
+}
+
+@font-face {
+  font-family: "boldFont";
+  src: url("./fonts/text-font/Montserrat-Bold.ttf");
+}
+
+:root {
+  /* variables */
+  --color-1: #210a3c;
+  --color-1-translucent: #210a3cde;
+  --color-1-transparent: #210a3c30;
+  --color-2: #006fa7;
+  --color-2-translucent: #006fa7d3;
+  --color-2-transparent: #006fa730;
+  --color-3: #e31859;
+  --color-3-translucent: #e31859d3;
+  --color-3-transparent: #e3185930;
+
+  --text-color: rgb(88, 88, 88);
+  --gradient: linear-gradient(to right bottom, #210a3c, #006fa7);
+  --radius: 5px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  outline: none;
+  font-family: "regularFont" !important;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+b {
+  font-family: "boldFont" !important;
+  letter-spacing: 0px;
+}
+
+.d-none {
+  display: none;
+}
+.hidden {
+  opacity: 0;
+}
+
+button,
+.button {
+  border: none;
+  padding: 15px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: var(--radius);
+  -webkit-border-radius: var(--radius);
+  -moz-border-radius: var(--radius);
+  -ms-border-radius: var(--radius);
+  -o-border-radius: var(--radius);
+  box-shadow: 5px 5px 15px #00000030;
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+  background: var(--color-1);
+  text-decoration: none;
+}
+button.prime,
+.button.prime {
+  background-color: var(--color-2);
+}
+button.secondary,
+.button.secondary {
+  background-color: var(--color-3);
+}
+button.white,
+.button.white {
+  background: #fff;
+  color: var(--color-1);
+}
+
+.bg-main {
+  background-image: url(/img/backgroundMain.svg);
+  background-size: cover;
+  background-position: center;
+  /* background: var(--color-2); */
+}
+.bg-primary {
+  background-image: url(/img/backgroundPrimary.svg);
+  background-size: cover;
+  background-position: center;
+}
+.bg-secondary {
+  background-image: url(/img/backgroundSecondary.svg);
+  background-size: cover;
+  background-position: center;
+  /* background: var(--color-3); */
+}
+.bg-modal {
+  background-image: url(/img/modalBackground.svg);
+  background-size: cover;
+  background-position: top;
+}
+.back-button {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  background: var(--color-1-transparent);
+  color: var(--color-1);
+  display: inline;
+  padding: 5px 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.back-button span {
+  margin-left: 15px;
+}
