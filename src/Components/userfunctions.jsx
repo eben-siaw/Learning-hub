@@ -6,7 +6,7 @@ export const register = async (newuser) =>
 
 export const login = async (user) => {
   try {
-    const { data } = await axios.post(BASE_URL + "users/login"); 
+    const { data } = await axios.post(BASE_URL + "users/login", user); 
     !data.error && localStorage.setItem("usertoken", data);
     return data;
   } catch (error) {
