@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux';
 import {courseEntry} from "./Coursefunctions";
 
 
-const URL = "https://nilee-nodedatabase.herokuapp.com/"  
+const URL = "https://nilee-nodedatabase.herokuapp.com"  
 
 const Actions = ({user}) => { 
   
