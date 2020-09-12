@@ -1,12 +1,20 @@
 import PageHeader from "../components/PageHeader";    
 import axios from 'axios';
 import React, { Fragment, useEffect, useState } from "react";
-import {Container,Paper,Grid,Typography, Button,Avatar, IconButton,CardContent,} from '@material-ui/core';  
+import {Container, 
+  Paper, 
+  Grid, 
+  Typography,  
+  Button, 
+  Avatar,  
+  IconButton, 
+  CardContent 
+} from '@material-ui/core';  
 import DeleteIcon from '@material-ui/icons/Delete'; 
 import BookIcon from '@material-ui/icons/Book'
 import { Link } from 'react-router-dom';
 
-const URL = "http://localhost:5050"
+const URL = "https://nilee-nodedatabase.herokuapp.com";
 
 const Courses = ({user}) => { 
 
@@ -25,7 +33,7 @@ const Courses = ({user}) => {
 
   const deleteCourse = async id => {
 		try {
-      await axios.delete(URL + `/courses/${user.id}/course/delete/${id}`) 
+      await axios.delete(URL + `/courses/${user._id}/course/delete/${id}`) 
        .then(res=>{ 
         return res.data;
       })
@@ -46,15 +54,14 @@ const Courses = ({user}) => {
           item
           xs={6}
           sm={6}
-          key={course._id}
           style={{ marginBottom: 20, position: 'relative' }}>
-          <Paper
+          <Paper 
+           key={course._id}
             style={{
               padding: 10,
               height: '100%',
             }}>
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
-            
+            <div style={{ display: 'flex', flexDirection: 'row' }}>   
               <Typography
                 variant="h6"
                 style={{
@@ -64,7 +71,9 @@ const Courses = ({user}) => {
               </Typography>
             </div>
             <CardContent> 
-              <div style={{display:'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+              <div style={{display:'flex', 
+               alignItems: 'center',  
+               justifyContent: 'space-between'}}>
                 <Link
                   to={`/dashboard/streams/new`}
                   style={{ textDecoration: 'none' }}>
