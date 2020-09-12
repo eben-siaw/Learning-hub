@@ -6,8 +6,8 @@ const useChat = () => {
   const socketRef = useRef();
 
   useEffect(() => {
-    socketRef.current = socketIOClient(
-      "http://localhost:7000"
+    socketRef.current = socketIOClient( 
+      "https://nilee-chatserver.herokuapp.com"
     );
 
     socketRef.current.on(

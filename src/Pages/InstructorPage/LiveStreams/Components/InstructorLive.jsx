@@ -20,7 +20,6 @@ class Instructorlive extends Component {
   componentDidUpdate() {
     this.buildPlayer();
   }
-
   buildPlayer() {
     if (this.player || !this.props.stream) {
       return;
@@ -28,7 +27,7 @@ class Instructorlive extends Component {
     const { id } = this.props.match.params;
     this.player = flv.createPlayer({
       type: "flv",
-      url: `http://localhost:8000/live/${id}.flv`,
+      url: `https://rtmp-server.herokuapp.com/live/${id}.flv`,
     });
     this.player.attachMediaElement(this.videoRef.current);
     this.player.load();
