@@ -32,11 +32,10 @@ export const setLoggedIn = bool => {
 export const createStream = (formValues) => async (dispatch, getState) => {  
   try {   
     // getState gets the current state in the store
-     const userId = getState().auth.user._id 
+     const {user} = getState().auth 
 
-    const response = await axios.post(URL + `/streams/createstreams`, {
+    const response = await axios.post(URL + `/streams/${user._id}/createstreams`, {
       ...formValues,  
-        userId
     });
 
     dispatch({ type: CREATE_STREAM, payload: response.data }); 
