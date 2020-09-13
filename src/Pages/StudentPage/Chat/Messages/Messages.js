@@ -1,5 +1,6 @@
 import Avatar from "@material-ui/core/Avatar";
 import React from "react";
+import { useSelector} from 'react-redux';
 
 const Messages = ({ messages }) => {
   return (
@@ -11,7 +12,8 @@ const Messages = ({ messages }) => {
   );
 };
 
-const CommentItem = ({ comment }) => {
+const CommentItem = ({ comment }) => { 
+  const user = useSelector(state => state.auth.user)
   return (
     <div className="comment">
       <div className="avatar">
@@ -19,7 +21,7 @@ const CommentItem = ({ comment }) => {
       </div>
       <div className="message">
         <span style={{ fontSize: "14px" }}>
-          <b className="username">Nilee User</b> {comment}
+        <b className="username">{user.first_name}</b> {comment}
         </span>
       </div>
       <style jsx>{`
