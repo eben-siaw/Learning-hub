@@ -32,10 +32,11 @@ export const setLoggedIn = bool => {
 export const createStream = (formValues) => async (dispatch, getState) => {  
   try {   
     // getState gets the current state in the store
-     const {user} = getState().auth 
+     const userId = getState().auth.user._id 
 
-    const response = await axios.post(URL + `/streams/${user._id}/createstreams`, {
-      ...formValues, 
+    const response = await axios.post(URL + `/streams/createstreams`, {
+      ...formValues,  
+        userId
     });
 
     dispatch({ type: CREATE_STREAM, payload: response.data }); 
@@ -48,20 +49,16 @@ export const createStream = (formValues) => async (dispatch, getState) => {
   }
 };
 
-export const fetchStreams = () => async (dispatch, getState) => { 
-
-   const {user} = getState().auth 
-
-  const response = await axios.get(URL + `/streams/${user._id}/getstreams`);
+export const fetchStreams = () => async (dispatch) => { 
+ 
+  const response = await axios.get(URL + `/streams/getstreams`);
 
   dispatch({ type: FETCH_STREAMS, payload: response.data });
 };
 
-export const fetchSingleStream = (id) => async (dispatch, getState) => { 
+export const fetchSingleStream = (id) => async (dispatch) => { 
  
-  const {user} = getState().auth 
-
-  const response = await axios.get(URL + `/streams/${user._id}/stream/${id}`);
+  const response = await axios.get(URL + `/streams/stream/${id}`);
 
   dispatch({ type: FETCH_SINGLE_STREAM, payload: response.data });
 };
