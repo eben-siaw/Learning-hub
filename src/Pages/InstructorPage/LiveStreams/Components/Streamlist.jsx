@@ -60,7 +60,7 @@ const StreamList = () => {
                 {reduceDescription(stream.description)}
               </p>
             </div>  
-            <p>{stream.user.first_name}</p>
+            {stream.user.first_name}
           </div>
           <div className="actions">
             <Link
