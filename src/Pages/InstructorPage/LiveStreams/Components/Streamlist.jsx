@@ -10,7 +10,7 @@ const StreamList = () => {
   const state = useSelector((state) => state.streams);
   const authUserId = useSelector((state) => state.auth.user._id);
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
-  const streams = Object.values(state);
+  const streams = Object.values(state).reverse();
   
 
   const onItemDelete = (streamId) => {
@@ -60,7 +60,6 @@ const StreamList = () => {
                 {reduceDescription(stream.description)}
               </p>
             </div> 
-            
           </div>
           <div className="actions">
             <Link
