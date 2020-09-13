@@ -1,3 +1,4 @@
+/*
 import React, { Component } from "react";
 import flv from "flv.js";
 import { connect } from "react-redux";
@@ -111,3 +112,4 @@ const mapDispatchToProps = (dispatch) => {
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(ViewerStreamWatch)
 );
+ */

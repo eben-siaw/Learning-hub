@@ -78,7 +78,8 @@ class Instructorlive extends Component {
           }
 
           .comments-wrapper {
-            padding: 20px 0;
+            padding: 20px 0; 
+            margin-bottom: 10px;
           }
 
           .comments-tag {
