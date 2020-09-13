@@ -57,8 +57,11 @@ export const fetchStreams = () => async (dispatch, getState) => {
   dispatch({ type: FETCH_STREAMS, payload: response.data });
 };
 
-export const fetchSingleStream = (id) => async (dispatch) => {
-  const response = await axios.get(URL + `/streams/stream/${id}`);
+export const fetchSingleStream = (id) => async (dispatch, getState) => { 
+ 
+  const {user} = getState().auth 
+
+  const response = await axios.get(URL + `/streams/${user._id}/stream/${id}`);
 
   dispatch({ type: FETCH_SINGLE_STREAM, payload: response.data });
 };
