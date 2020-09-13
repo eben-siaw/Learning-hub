@@ -10,7 +10,7 @@ const StreamList = () => {
   const state = useSelector((state) => state.streams);
   const authUserId = useSelector((state) => state.auth.user._id);
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
-  const streams = Object.values(state).reverse();
+  const streams = Object.values(state);
   
 
   const onItemDelete = (streamId) => {
@@ -59,7 +59,8 @@ const StreamList = () => {
               <p style={{ fontSize: "14px" }}>
                 {reduceDescription(stream.description)}
               </p>
-            </div>
+            </div> 
+            
           </div>
           <div className="actions">
             <Link
@@ -71,7 +72,7 @@ const StreamList = () => {
           </div>
           {stream.user._id === authUserId ? (
             <AuthOptions
-              streamId={stream.id}
+              streamId={stream._id}
               onDelete={() => onItemDelete(stream._id)}
             />
           ) : (

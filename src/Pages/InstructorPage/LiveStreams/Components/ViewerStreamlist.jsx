@@ -9,7 +9,7 @@ const ViewerStreamList = () => {
   const state = useSelector((state) => state.streams);
   const authUserId = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
-  const streams = Object.values(state).reverse();
+  const streams = Object.values(state);
 
   const onItemDelete = (streamId) => {
     dispatch(deleteStream(streamId));

@@ -12,7 +12,7 @@ class Instructorlive extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const id = this.props.match.params.id;
     this.props.fetchStream(id);
     this.buildPlayer();
   }
@@ -24,7 +24,7 @@ class Instructorlive extends Component {
     if (this.player || !this.props.stream) {
       return;
     }
-    const { id } = this.props.match.params;
+    const id  = this.props.match.params.id;
     this.player = flv.createPlayer({
       type: "flv",
       url: `https://rtmp-server.herokuapp.com/live/${id}.flv`,
