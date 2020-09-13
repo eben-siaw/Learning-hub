@@ -1,6 +1,5 @@
 import {URL} from "../Pages/InstructorPage/api/streams";  
 import axios from 'axios';
-import useSelector from 'react-redux';
 
 import {  
   LOGGED_IN,
@@ -53,13 +52,13 @@ export const fetchStreams = () => async (dispatch, getState) => {
 
    const {user} = getState().auth 
 
-  const response = await streams.get(URL + `/streams/${user._id}/getstreams`);
+  const response = await axios.get(URL + `/streams/${user._id}/getstreams`);
 
   dispatch({ type: FETCH_STREAMS, payload: response.data });
 };
 
 export const fetchSingleStream = (id) => async (dispatch) => {
-  const response = await streams.get(URL + `/streams/stream/${id}`);
+  const response = await axios.get(URL + `/streams/stream/${id}`);
 
   dispatch({ type: FETCH_SINGLE_STREAM, payload: response.data });
 };
