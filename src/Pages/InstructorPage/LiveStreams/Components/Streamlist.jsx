@@ -59,11 +59,12 @@ const StreamList = () => {
               <p style={{ fontSize: "14px" }}>
                 {reduceDescription(stream.description)}
               </p>
-            </div> 
+            </div>  
+            <p>{stream.user.first_name}</p>
           </div>
           <div className="actions">
             <Link
-              to={`/dashboard/streams/watch/${stream._id}`}
+              to={`/dashboard/streams/watch/${stream.id}`}
               className="button prime"
             >
                Go live
@@ -72,7 +73,7 @@ const StreamList = () => {
           {stream.user._id === authUserId ? (
             <AuthOptions
               streamId={stream._id}
-              onDelete={() => onItemDelete(stream._id)}
+              onDelete={() => onItemDelete(stream.id)}
             />
           ) : (
             ""
