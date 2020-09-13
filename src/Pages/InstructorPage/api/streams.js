@@ -1,5 +1,2 @@
-import axios from 'axios';
 
-export default axios.create({
-  baseURL: 'https://nilee-jsonserver.herokuapp.com',
-});
+ export const URL = "https://nilee-nodedatabase.herokuapp.com"

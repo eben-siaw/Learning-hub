@@ -4,7 +4,8 @@ import { fetchStreams, deleteStream } from "../../../../actions";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const StreamList = () => {
+const StreamList = () => { 
+
   const dispatch = useDispatch();
   const state = useSelector((state) => state.streams);
   const authUserId = useSelector((state) => state.auth.user._id);
@@ -28,7 +29,8 @@ const StreamList = () => {
     }
     return description;
   };
-
+ 
+  
   const renderStreams = () => {
     return streams.map((stream, index) => {
       const color = Math.ceil(Math.random() * 3);

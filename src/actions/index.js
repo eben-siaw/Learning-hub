@@ -1,5 +1,6 @@
-import streams from "../Pages/InstructorPage/api/streams"; 
+import {URL} from "../Pages/InstructorPage/api/streams";  
 import axios from 'axios';
+import useSelector from 'react-redux';
 
 import {  
   LOGGED_IN,
@@ -13,8 +14,6 @@ import {
   DELETE_STREAM,
 } from "./types";
 
-const BASE_URL = "http://localhost:5050"
-
 
 // get the current user and send to the store with the reducers
 export const setCurrentUser = decoded => {
@@ -23,7 +22,6 @@ export const setCurrentUser = decoded => {
      payload: decoded 
   };
 }
-
 
 export const setLoggedIn = bool => {
   return {
@@ -35,10 +33,10 @@ export const setLoggedIn = bool => {
 export const createStream = (formValues) => async (dispatch, getState) => {  
   try {   
     // getState gets the current state in the store
-     const {user} = getState().auth
-    const response = await streams.post("/streams", {
+     const {user} = getState().auth 
+
+    const response = await axios.post(URL + `/streams/${user._id}/createstreams`, {
       ...formValues, 
-       user
     });
 
     dispatch({ type: CREATE_STREAM, payload: response.data }); 
@@ -51,21 +49,24 @@ export const createStream = (formValues) => async (dispatch, getState) => {
   }
 };
 
-export const fetchStreams = () => async (dispatch) => {
-  const response = await streams.get("/streams");
+export const fetchStreams = () => async (dispatch, getState) => { 
+
+   const {user} = getState().auth 
+
+  const response = await streams.get(URL + `/streams/${user._id}/getstreams`);
 
   dispatch({ type: FETCH_STREAMS, payload: response.data });
 };
 
 export const fetchSingleStream = (id) => async (dispatch) => {
-  const response = await streams.get(`/streams/${id}`);
+  const response = await streams.get(URL + `/streams/stream/${id}`);
 
   dispatch({ type: FETCH_SINGLE_STREAM, payload: response.data });
 };
 
 export const editStream = (id, formValues) => async (dispatch) => {
   try {
-    const response = await streams.patch(`/streams/${id}`, formValues);
+    const response = await axios.patch(URL + `/streams/edit/${id}`, formValues);
     dispatch({ type: EDIT_STREAM, payload: response.data });
     return window.location = "/dashboard/streams";
   } catch (err) {
@@ -79,7 +80,7 @@ export const editStream = (id, formValues) => async (dispatch) => {
 };
 
 export const deleteStream = (id) => async (dispatch) => {
-  await streams.delete(`/streams/${id}`);
+  await axios.delete(URL + `/streams/delete/${id}`);
 
   dispatch({ type: DELETE_STREAM, payload: id });
 };
