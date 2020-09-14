@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
   
 
-const videodetails = () =>
+const Videodetails = () =>
 {  
     const classes = useStyles();  
 
@@ -128,7 +128,6 @@ const videodetails = () =>
                             </div>
                         )}
                     </Dropzone>
-                     {drop(files[0])}
                 </div> 
 
                 <br/>
@@ -159,4 +158,4 @@ const videodetails = () =>
 
 }  
 
-export default videodetails;
+export default Videodetails;

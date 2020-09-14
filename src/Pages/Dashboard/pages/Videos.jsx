@@ -4,7 +4,7 @@ import PageHeader from "../components/PageHeader";
 import ViewerVideolist from "../../InstructorPage/Videos/Components/ViewerVideolist";
 import EditVideo from "../../InstructorPage/Videos/Components/EditVideo";
 import VideoList from "../../InstructorPage/Videos/Components/Videolist"; 
-import Instructorlive from "../../InstructorPage/Videos/Components/InstructorVideo";
+import InstructorVideo from "../../InstructorPage/Videos/Components/InstructorVideo";
 import UploadVideo from "../../InstructorPage/Videos/UploadVideo";
 
 function Videos() {
@@ -37,8 +37,7 @@ function Videos() {
         <Route
           exact
           path="/dashboard/videos/watch/:videoId"
-          render={() => <Instructorlive/>}
-        /> 
+          component={InstructorVideo}/> 
       </div>
     </div>
   );

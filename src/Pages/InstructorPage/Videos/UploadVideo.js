@@ -11,7 +11,6 @@ const UploadVideo = (props) => {
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>
-        <h3>Create New Stream</h3>
         <div className="form-wrapper">
           <Videodetails/>
         </div>

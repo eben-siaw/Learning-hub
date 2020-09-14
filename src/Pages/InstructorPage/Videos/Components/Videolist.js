@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import axios from 'axios'; 
+
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -64,13 +66,13 @@ const Videolist = () => {
                 {reduceDescription(video.description)}
               </p>  
               <span style={{ fontSize: "15px", paddingTop: 20 }}>
-              {video.user.first_name}
+              {video.instructor.first_name}
               </span>         
             </div>      
           </div>
           <div className="actions">
             <Link
-              to={`/dashboard/streams/watch/${video._id}`}
+              to={`/dashboard/videos/watch/${video._id}`}
               className="button prime"
             >
                Play Video
@@ -78,8 +80,7 @@ const Videolist = () => {
           </div>
           {video.instructor._id === authUserId ? (
             <AuthOptions
-              streamId={stream._id}
-              onDelete={() => onItemDelete(video._id)}
+              streamId={video._id}
             />
           ) : (
             ""

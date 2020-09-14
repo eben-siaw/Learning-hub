@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, {useEffect, useState} from "react";
 import Chat from "../../../StudentPage/Chat/Chat";
-import { withRouter, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
+import axios from 'axios'
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 
-const Instructorlive = (props) => {
+const InstructorVideo = (props) => {
  
   // get the id related to the video  
-  const videoId = props.match.params.videoId
+  const {videoId} = props.match.params
 
   // declare the states  
   const [Video, setVideo] = useState([])  
@@ -86,5 +87,5 @@ const Instructorlive = (props) => {
     );
   } 
 
-export default Instructorlive
+export default InstructorVideo;
 

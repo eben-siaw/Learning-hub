@@ -13,14 +13,6 @@ const EditStream = (props) => {
   const errorMessage = state.editError || "";
   console.log(errorMessage);
 
-  useEffect(() => {
-    dispatch(fetchSingleStream(id));
-  }, [dispatch, id]);
-
-  const onFormSubmit = (formValues) => {
-    dispatch(editStream(id, formValues));
-  };
-
   return (
     <div>
       <div className="create-stream-wrapper">
@@ -35,7 +27,6 @@ const EditStream = (props) => {
           </div>
           <StreamDetails
             editDetails={editDetails || {}}
-            onSubmit={onFormSubmit}
           />
         </div>
       </div>
