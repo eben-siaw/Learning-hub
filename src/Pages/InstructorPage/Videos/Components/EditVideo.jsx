@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { editStream, fetchSingleStream } from "../../../../actions";
 import StreamDetails from "./StreamDetails";
 
 const EditStream = (props) => {
