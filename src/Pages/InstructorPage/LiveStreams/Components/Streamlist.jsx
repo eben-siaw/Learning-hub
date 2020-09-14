@@ -58,8 +58,10 @@ const StreamList = () => {
               </h5>
               <p style={{ fontSize: "14px" }}>
                 {reduceDescription(stream.description)}
-              </p> 
+              </p>  
+              <p style={{ fontSize: "14px" }}>
               {stream.user.first_name}
+              </p>         
             </div>      
           </div>
           <div className="actions">

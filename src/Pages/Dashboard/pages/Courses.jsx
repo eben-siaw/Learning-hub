@@ -105,7 +105,7 @@ const Courses = ({user}) => {
     <div>  
    <PageHeader title="Course Hub" useSearch={true}/>  
    <Container>
-        <Grid className="course-list-container-inner">
+        <Grid alignItems="stretch" direction="row" className="course-list-container-inner">
           {renderCourses()}
         </Grid> 
         <style jsx>{` 
