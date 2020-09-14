@@ -1,12 +1,10 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
-import ViewerStreamList from "../../InstructorPage/LiveStreams/Components/ViewerStreamlist";
-import Startstream from "../../InstructorPage/LiveStreams/Startstream";
-import EditStream from "../../InstructorPage/LiveStreams/Components/EditStream";
-import ViewerStreamWatch from "../../InstructorPage/LiveStreams/Components/ViewerStreamWatch"; 
-import StreamList from "../../InstructorPage/LiveStreams/Components/Streamlist"; 
-import Instructorlive from "../../InstructorPage/LiveStreams/Components/InstructorLive";
+import ViewerVideolist from "../../InstructorPage/Videos/Components/ViewerVideolist";
+import EditVideo from "../../InstructorPage/Videos/Components/EditVideo";
+import VideoList from "../../InstructorPage/Videos/Components/Videolist"; 
+import Instructorlive from "../../InstructorPage/Videos/Components/InstructorVideo";
 import UploadVideo from "../../InstructorPage/Videos/UploadVideo";
 
 function Videos() {
@@ -17,7 +15,7 @@ function Videos() {
         <Route
           exact
           path="/dashboard/viewersvideo"
-          render={() => <ViewerStreamList />}
+          render={() => <ViewerVideolist />}
         />
         <Route
           exact
@@ -27,7 +25,7 @@ function Videos() {
 
        <Route   
        exact  
-       path="/dashboard/videoslist"
+       path="/dashboard/videos"
        render={() => <VideoList/> }
        /> 
 
