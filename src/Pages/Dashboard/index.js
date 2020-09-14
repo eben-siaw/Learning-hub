@@ -5,7 +5,7 @@ import DashboardNav from "./components/DashboardNav";
 import Home from "./pages/Home";
 import Videos from "./pages/Videos";
 import Courses from "./pages/Courses"; 
-import ViewerVideolist from '../InstructorPage/LiveStreams/Components/ViewerStreamlist';
+import ViewerVideolist from '../InstructorPage/Videos/Components/ViewerVideolist';
 import Settings from "./pages/Settings";
 import UserProfile from "./components/UserProfile";
 import Help from "./pages/Help";
