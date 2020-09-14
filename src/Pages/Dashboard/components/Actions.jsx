@@ -193,7 +193,7 @@ const JoinForm = ({ action }) => {
         if (res.error) {
           return throwError(res.error);
         }  
-        window.location.href = "/dashboard/viewerstreams";
+        window.location.href = "/dashboard/viewersvideo";
       });
   };
 

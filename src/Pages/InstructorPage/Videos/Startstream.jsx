@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createStream } from "../../../actions";
+import { createVideo } from "../../../actions";
 import StreamDetails from "./Components/StreamDetails";
 
 const Startstream = (props) => {
   const dispatch = useDispatch();
 
   const onFormSubmit = (formValues) => {
-    dispatch(createStream(formValues));
+    dispatch(createVideo(formValues));
   };
 
   // passing onSubmit as a prop to the Stream details child component

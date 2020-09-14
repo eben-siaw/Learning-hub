@@ -75,7 +75,7 @@ const Courses = ({user}) => {
                alignItems: 'center',  
                justifyContent: 'space-between'}}>
                 <Link
-                  to={`/dashboard/streams/new`}
+                  to={`/dashboard/videos/new`}
                   style={{ textDecoration: 'none' }}>
                   <Button
                     variant="outlined"

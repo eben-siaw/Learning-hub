@@ -3,9 +3,9 @@ import jwt_decode from 'jwt-decode';
 import { Route, Switch } from "react-router-dom";
 import DashboardNav from "./components/DashboardNav";
 import Home from "./pages/Home";
-import Streams from "./pages/Streams";
+import Videos from "./pages/Videos";
 import Courses from "./pages/Courses"; 
-import ViewerStreamList from '../InstructorPage/LiveStreams/Components/ViewerStreamlist';
+import ViewerVideolist from '../InstructorPage/LiveStreams/Components/ViewerStreamlist';
 import Settings from "./pages/Settings";
 import UserProfile from "./components/UserProfile";
 import Help from "./pages/Help";
@@ -51,9 +51,9 @@ class Dashboard extends Component  {
           <div className="content">
             <Switch>
               <Route exact path="/dashboard" render={() => <Home />} />
-              <Route path="/dashboard/streams" render={() => <Streams />} />
+              <Route path="/dashboard/videos" render={() => <Videos />} />
               <Route path="/dashboard/courses" render={() => <Courses user={this.state} />} />  
-              <Route exact path="/dashboard/viewerstreams" render={() => <ViewerStreamList user={this.state}/>} />
+              <Route exact path="/dashboard/viewerstreams" render={() => <ViewerVideolist user={this.state}/>} />
               <Route path="/dashboard/settings" render={() => <Settings />} />
               <Route path="/dashboard/help" render={() => <Help />} />
               <Route path="/dashboard" render={() => <NotFound />} />

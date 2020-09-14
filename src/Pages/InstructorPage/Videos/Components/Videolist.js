@@ -1,23 +1,29 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStreams, deleteStream } from "../../../../actions";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const ViewerStreamList = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.streams);
-  const authUserId = useSelector((state) => state.auth.user);
+const URL = "https://nilee-nodedatabase.herokuapp.com"; 
+
+const Videolist = () => { 
+
+  const authUserId = useSelector((state) => state.auth.user._id);
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
-  const streams = Object.values(state);
+  
+  
+  const [Videos, setVideos] = useState([]);
 
-  const onItemDelete = (streamId) => {
-    dispatch(deleteStream(streamId));
-  };
-
-  useEffect(() => {
-    dispatch(fetchStreams());
-  }, [dispatch]);
+  useEffect(() => { 
+    axios.get(URL + `/video/getVideos`)
+            .then(response => {
+                if (response.data.success) {
+                    console.log(response.data.videos)
+                    setVideos(response.data.videos)
+                } else {
+                    alert('Failed to get Videos')
+                }
+            })
+    }, [])
 
   const reduceDescription = (description) => {
     const { length } = description;
@@ -27,9 +33,10 @@ const ViewerStreamList = () => {
     }
     return description;
   };
-
-  const renderStreams = () => {
-    return streams.map((stream, index) => {
+ 
+  
+  const renderVideos = () => {
+    return Videos.map((video, index) => {
       const color = Math.ceil(Math.random() * 3);
       return (
         <div
@@ -51,25 +58,32 @@ const ViewerStreamList = () => {
             </div>
             <div className="detail-info">
               <h5 style={{ marginBottom: "5px", color: "var(--text-color)" }}>
-                {stream.title}
+                {video.title}
               </h5>
               <p style={{ fontSize: "14px" }}>
-                {reduceDescription(stream.description)}
-              </p> 
-              <p style={{ fontSize: "14px", paddingTop: '25px' }}> 
-                By {stream.user.first_name}
-              </p> 
-            </div>
+                {reduceDescription(video.description)}
+              </p>  
+              <span style={{ fontSize: "15px", paddingTop: 20 }}>
+              {video.user.first_name}
+              </span>         
+            </div>      
           </div>
           <div className="actions">
             <Link
-              to={`/dashboard/streams/watch/${stream.id}`}
+              to={`/dashboard/streams/watch/${video._id}`}
               className="button prime"
             >
-              Watch Live Stream
+               Play Video
             </Link>
           </div>
-         
+          {video.instructor._id === authUserId ? (
+            <AuthOptions
+              streamId={stream._id}
+              onDelete={() => onItemDelete(video._id)}
+            />
+          ) : (
+            ""
+          )}
         </div>
       );
     });
@@ -78,7 +92,7 @@ const ViewerStreamList = () => {
   const renderCreateButton = () => {
     if (isAuth) {
       return (
-        <Link className="add-button" to="/dashboard/viewerstreams/new">
+        <Link className="add-button" to="/dashboard/streams/new">
           <img width="50%" src="/img/addIconFlat.svg" alt="add Icon" />
         </Link>
       );
@@ -87,7 +101,7 @@ const ViewerStreamList = () => {
   return (
     <div className="stream-list-container">
       {renderCreateButton()}
-      <div className="stream-list-container-inner">{renderStreams()}</div>
+      <div className="stream-list-container-inner">{renderVideos()}</div>
       <style jsx>{`
         .stream-list-container-inner {
           height: 88vh;
@@ -210,53 +224,44 @@ const ViewerStreamList = () => {
       `}</style>
     </div>
   );
-}; 
-
-export default ViewerStreamList;
-
-
-/* 
-const AuthOptions = ({ streamId, onDelete }) => {
-  const [show, setShow] = useState(false);
-  return (
-    <div className="auth-options">
-      <i
-        onClick={() => setShow(!show)}
-        style={{
-          fontSize: "25px",
-          color: "var(--text-color)",
-          cursor: "pointer",
-        }}
-        className="ion-android-more-vertical"
-      ></i>
-      <div
-        className="option-list"
-        style={{ display: `${show ? "block" : "none"}` }}
-      >
-        <Link
-          to={`/dashboard/viewerstreams/edit/${streamId}`}
-          className="delete-button"
-          style={{ color: "var(--color-2)" }}
-        >
-          Edit
-        </Link>
-        <span
-          onClick={onDelete}
-          className="delete-button"
-          style={{ color: "red" }}
-        >
-          Delete
-        </span>
-      </div>
-    </div>
-  ); 
-   {stream.userId === authUserId ? (
-            <AuthOptions
-              streamId={stream.id}
-              onDelete={() => onItemDelete(stream.id)}
-            />
-          ) : (
-            ""
-          )}
 };
-*/
+
+  const AuthOptions = ({ streamId, onDelete }) => {
+    const [show, setShow] = useState(false);
+    return (
+      <div className="auth-options">
+        <i
+          onClick={() => setShow(!show)}
+          style={{
+            fontSize: "25px",
+            color: "var(--text-color)",
+            cursor: "pointer",
+          }}
+          className="ion-android-more-vertical"
+        ></i>
+        <div
+          className="option-list"
+          style={{ display: `${show ? "block" : "none"}` }}
+        >
+          <Link
+            to={`/dashboard/streams/edit/${streamId}`}
+            className="delete-button"
+            style={{ color: "var(--color-2)" }}
+          >
+            Edit
+          </Link>
+          <span
+            onClick={onDelete}
+            className="delete-button"
+            style={{ color: "red" }}
+          >
+            Delete
+          </span>
+        </div>
+      </div>
+    );
+  };
+
+
+
+export default Videolist;

@@ -8,7 +8,7 @@ const EditStream = (props) => {
   const dispatch = useDispatch();
   const {
     params: { id },
-  } = useRouteMatch("/dashboard/streams/edit/:id");
+  } = useRouteMatch("/dashboard/videos/edit/:id");
   const state = useSelector((state) => state.streams);
   const editDetails = state[`${id}`];
   const errorMessage = state.editError || "";

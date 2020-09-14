@@ -1,44 +1,35 @@
 import React, { Component } from "react";
-import flv from "flv.js";
-import { connect } from "react-redux";
 import Chat from "../../../StudentPage/Chat/Chat";
-import { fetchSingleStream } from "../../../../actions";
 import { withRouter, Link } from "react-router-dom";
 
-class Instructorlive extends Component {
-  constructor(props) {
-    super(props);
-    this.videoRef = React.createRef();
-  }
+const URL = "https://nilee-nodedatabase.herokuapp.com";
 
-  componentDidMount() {
-    const {id} = this.props.match.params;
-    this.props.fetchStream(id);
-    this.buildPlayer();
-  }
+const Instructorlive = (props) => {
+ 
+  // get the id related to the video  
+  const videoId = props.match.params.videoId
 
-  componentDidUpdate() {
-    this.buildPlayer();
-  }
-  buildPlayer() {
-    if (this.player || !this.props.stream) {
-      return;
-    }
-    const {id}  = this.props.match.params;
-    this.player = flv.createPlayer({
-      type: "flv",
-      url: `https://rtmp-server.herokuapp.com/live/${id}.flv`,
-    });
-    this.player.attachMediaElement(this.videoRef.current);
-    this.player.load();
-  }
+  // declare the states  
+  const [Video, setVideo] = useState([])  
+  
+  const videovariable = { 
+     videoId: videoId
+  } 
 
-  render() {
-    if (!this.props.stream) {
-      return "Preparing stream...";
-    }
+  useEffect(() => { 
+      axios.post(URL + "/video/getVideo", videovariable)  
+      .then(response => { 
+          if(response.data.success) { 
+              console.log(response.data.video) 
+              setVideo(response.data.video)
+          } 
+          else { 
+              alert("Failed to get Video")
+          }
+      })    
 
-    const { title, description } = this.props.stream;
+    }) 
+
 
     return (
       <div className="stream-wrapper">
@@ -50,12 +41,12 @@ class Instructorlive extends Component {
         </div>
         <div>
           <video
-            ref={this.videoRef}
+            src={URL +`/${Video.filePath}`}
             style={{ width: "100%", height: 400 }}
             controls={true}
           />
-          <h3 className="title">{title}</h3>
-          <p>{description}</p>
+          <h3 className="title">{Video.title}</h3>
+          <p>{Video.description}</p>
         </div>
         <div className="comments-wrapper">
           <small className="comments-tag">
@@ -93,21 +84,7 @@ class Instructorlive extends Component {
         `}</style>
       </div>
     );
-  }
-}
+  } 
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    stream: state.streams[ownProps.match.params.id],
-  };
-};
+export default Instructorlive
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchStream: (id) => dispatch(fetchSingleStream(id)),
-  };
-};
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Instructorlive)
-);

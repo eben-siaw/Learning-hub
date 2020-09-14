@@ -28,6 +28,7 @@ export const setLoggedIn = bool => {
   };
 };
 
+/*
 export const createStream = (formValues) => async (dispatch, getState) => {  
   try {   
     // getState gets the current state in the store
@@ -83,4 +84,4 @@ export const deleteStream = (id) => async (dispatch) => {
   dispatch({ type: DELETE_STREAM, payload: id });
 };
 
-//dispatch sends our streams to the db, form values and the user
+//dispatch sends our streams to the db, form values and the user */

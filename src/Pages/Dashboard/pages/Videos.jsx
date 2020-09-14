@@ -7,37 +7,38 @@ import EditStream from "../../InstructorPage/LiveStreams/Components/EditStream";
 import ViewerStreamWatch from "../../InstructorPage/LiveStreams/Components/ViewerStreamWatch"; 
 import StreamList from "../../InstructorPage/LiveStreams/Components/Streamlist"; 
 import Instructorlive from "../../InstructorPage/LiveStreams/Components/InstructorLive";
+import UploadVideo from "../../InstructorPage/Videos/UploadVideo";
 
-function Streams() {
+function Videos() {
   return (
     <div>
-      <PageHeader title="Streams" useSearch={true} />
+      <PageHeader title="Videos" useSearch={true} />
       <div className="content-box">
         <Route
           exact
-          path="/dashboard/viewerstreams"
+          path="/dashboard/viewersvideo"
           render={() => <ViewerStreamList />}
         />
         <Route
           exact
-          path="/dashboard/streams/new"
-          render={() => <Startstream />}
+          path="/dashboard/videos/new"
+          render={() => <UploadVideo />}
         /> 
 
        <Route   
        exact  
-       path="/dashboard/streams"
-       render={() => <StreamList/> }
+       path="/dashboard/videoslist"
+       render={() => <VideoList/> }
        /> 
 
         <Route
           exact
-          path="/dashboard/streams/edit/:id"
-          render={() => <EditStream />}
+          path="/dashboard/videos/edit/:videoId"
+          render={() => <EditVideo />}
         /> 
         <Route
           exact
-          path="/dashboard/streams/watch/:id"
+          path="/dashboard/videos/watch/:videoId"
           render={() => <Instructorlive/>}
         /> 
       </div>
@@ -45,4 +46,4 @@ function Streams() {
   );
 }
 
-export default Streams;
+export default Videos;
