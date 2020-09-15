@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react';
 import axios from 'axios'; 
 import {TextField, Select, InputLabel, FormControl, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles'; 
-import Dropzone from 'react-dropzone';
+import {useDropzone} from 'react-dropzone';
 import Button from '@material-ui/core/Button';  
 import {useSelector} from 'react-redux';
 import UploadIcon from '@material-ui/icons/CloudUpload';    
@@ -36,14 +36,17 @@ const useStyles = makeStyles((theme) => ({
   
 
 const Videodetails = () =>
-{  
+{   
     const classes = useStyles();  
+  
+    const {getRootProps, getInputProps, acceptedFiles} = useDropzone({handleOnDrop}); 
+
 
     const userId = useSelector(state => state.auth.user._id)
    
     const [videotitle, setvideoTitle] = useState(""); 
     const [description, setdescription] = useState("");  
-    const [FilePath, setFilePath] = useState("")
+    const [Filename, setFileName] = useState("")
    
    const handleDescription = (event) => { 
    setdescription(event.currentTarget.value)
@@ -52,8 +55,10 @@ const Videodetails = () =>
    const handleTitle = (event) => { 
    setvideoTitle(event.currentTarget.value)
    }  
+  
 
-  const drop = (files) => { 
+
+  const handleOnDrop = (files) => { 
 
    let formData = new FormData(); 
 
@@ -62,25 +67,27 @@ const Videodetails = () =>
    } 
 
    console.log(files)
-   formData.append("file", files[0])  // log the uploaded file
+   formData.append("file", files[0])  // console log the uploaded file
 
    //send the video files to the backend
    axios.post(URL + `/video/uploadfiles`, formData, config)
    .then(response => {
        if (response.data.success) {
-           let variable = {
-               filePath: response.data.filePath,
-               fileName: response.data.fileName
-           }
-           setFilePath(response.data.filePath)
-                
+           setFileName(response.data.filename)               
         }
     })
       .catch(error => { 
-        console.log(error.message);
+        console.log({error: 'Internal Server error'});
       })
 
-  }
+  } 
+
+  const files = acceptedFiles.map(file => (
+    <li style={{listStyle:'none'}} key={file.path}>
+      {file.path} - {file.size} bytes
+    </li>
+  ));
+
   //submit all the video details to the backend mongo database
   const handleSubmit = (event) => { 
        event.preventDefault()
@@ -92,7 +99,7 @@ const Videodetails = () =>
       instructor: userId,
       title: videotitle, 
       description: description, 
-      filePath: FilePath
+      filename: Filename
     }
   
    axios.post(URL + `/video/saveVideo`, videoDetails)
@@ -115,21 +122,16 @@ const Videodetails = () =>
                 <h1 style={{fontSize: '1em'}}>Click to upload Video</h1>
             </div>
            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Dropzone 
-                       onDrop ={drop}
-                        multiple={false}
-                        maxSize={800000000}>
-                        {({ getRootProps, getInputProps }) => (
-                            <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                {...getRootProps()}
-                            >
+                    <div {...getRootProps({className: 'dropzone'})}>
+                       
+                    <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex',  
+                      alignItems: 'center', justifyContent: 'center' }}>
                                 <input {...getInputProps()} /> 
                                 <UploadIcon  style={{ fontSize: '3rem' }}/>
                             </div>
-                        )}
-                    </Dropzone>
+                    </div> 
+                    {files}
                 </div> 
-
                 <br/>
 
           <TextField
