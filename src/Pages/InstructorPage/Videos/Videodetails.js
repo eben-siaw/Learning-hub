@@ -1,11 +1,12 @@
-import React, {useEffect, useState } from 'react';  
+import React, {useEffect, useState, useCallback } from 'react';  
 import axios from 'axios'; 
-import {TextField, Select, InputLabel, FormControl, Typography} from '@material-ui/core';
+import {TextField, Select, Fab, FormControl, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles'; 
 import {useDropzone} from 'react-dropzone';
 import Button from '@material-ui/core/Button';  
-import {useSelector} from 'react-redux';
-import UploadIcon from '@material-ui/icons/CloudUpload';    
+import {useSelector} from 'react-redux';   
+import AddIcon from '@material-ui/icons/Add';  
+import {storage} from '../../../Firebase/firebase';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -39,15 +40,14 @@ const Videodetails = () =>
 {   
     const classes = useStyles();  
   
-    const {getRootProps, getInputProps, acceptedFiles} = useDropzone({handleOnDrop}); 
-
-
     const userId = useSelector(state => state.auth.user._id)
-   
+    
+     const [videoFile, setVideoFile] = useState("")
+
     const [videotitle, setvideoTitle] = useState(""); 
     const [description, setdescription] = useState("");  
-    const [Filename, setFileName] = useState("")
-   
+    const [firebaseVideo, setfirebaseVideo] = useState(""); 
+
    const handleDescription = (event) => { 
    setdescription(event.currentTarget.value)
    }  
@@ -55,84 +55,79 @@ const Videodetails = () =>
    const handleTitle = (event) => { 
    setvideoTitle(event.currentTarget.value)
    }  
-  
-
-
-  const handleOnDrop = (files) => { 
-
-   let formData = new FormData(); 
-
-   const config = { 
-   header: { 'content-type': 'multipart/form-data'} 
-   } 
-
-   console.log(files)
-   formData.append("file", files[0])  // console log the uploaded file
-
-   //send the video files to the backend
-   axios.post(URL + `/video/uploadfiles`, formData, config)
-   .then(response => {
-       if (response.data.success) {
-           setFileName(response.data.filename)               
-        }
-    })
-      .catch(error => { 
-        console.log({error: 'Internal Server error'});
-      })
-
+    
+  const handleOnChange = (event) => { 
+   setVideoFile(event.target.files[0]); 
   } 
 
-  const files = acceptedFiles.map(file => (
-    <li style={{listStyle:'none'}} key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
-  ));
+ //submit all the video details to the backend mongo database
+    const handleSubmit = (event) => { 
+    
+     event.preventDefault();
 
-  //submit all the video details to the backend mongo database
-  const handleSubmit = (event) => { 
-       event.preventDefault()
-    //validation  
+     //validation  
      if(videotitle === "" || description === "") { 
-      return alert("All Fields are Required" )
-     }
-       const videoDetails = { 
-      instructor: userId,
-      title: videotitle, 
-      description: description, 
-      filename: Filename
-    }
+     return alert("All Fields are Required" )
+     } 
   
-   axios.post(URL + `/video/saveVideo`, videoDetails)
-   .then(response => { 
-    if(response.data.success){  
-       window.location = "/dashboard/videos"
-    }else{ 
-      alert("Failed to upload video")
-    }
-   }).catch(error => { 
-     console.log(error.message)
+     console.log(videoFile); 
+
+     //uploading task to storage 
+
+     let videoObject = {}
+  
+     const uploadTask = storage.ref(`/videos/${videoFile.name}`).put(videoFile);
+   
+      uploadTask.on('state_changed',
+      (snapshot) => {},
+      (error) => {
+      alert(error);
+      },
+      () => { 
+      storage.ref('videos').child(videoFile.name).getDownloadURL().then(url => {  
+    
+      setfirebaseVideo({url})
+    
+      const details = { 
+        instructor: userId,  
+        title: videotitle, 
+        description: description, 
+        videoName: videoFile.name, 
+        video: url 
+      }
+
+     // saving video data to mongo
+     axios.post(URL + `/video/saveVideo`, details)
+     .then(response => { 
+     if(response.data.success){  
+     alert("Video Uploaded")
+     window.location = "/dashboard/videos"
+     } 
+     else{ 
+     alert("Failed to upload video")
+     }
     }) 
 
-  }
+   }) 
+}) 
 
-     return( 
+ }
+     return(   
+     <div> 
+        <label htmlFor="video">
+        <input
+          style={{ display: 'none' }}
+          id="video"
+          name="video"  
+          type="file"
+          onChange={handleOnChange} 
+        />
+        <Fab color="primary" size="large" component="span" aria-label="add">
+          <AddIcon />
+        </Fab>
+      </label>
    
-      <div className={classes.root}>         
-            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-                <h1 style={{fontSize: '1em'}}>Click to upload Video</h1>
-            </div>
-           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div {...getRootProps({className: 'dropzone'})}>
-                       
-                    <div style={{ width: '300px', height: '240px', border: '1px solid lightgray', display: 'flex',  
-                      alignItems: 'center', justifyContent: 'center' }}>
-                                <input {...getInputProps()} /> 
-                                <UploadIcon  style={{ fontSize: '3rem' }}/>
-                            </div>
-                    </div> 
-                    {files}
-                </div> 
-                <br/>
+        <br/>
 
           <TextField
           label="title"

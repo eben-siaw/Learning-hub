@@ -37,8 +37,7 @@ const Videolist = () => {
   };
  
   
-  const renderVideos = () => {
-    return Videos.map((video, index) => {
+  const renderVideos = Videos.map((video, index) => {
       const color = Math.ceil(Math.random() * 3);
       return (
         <div
@@ -66,13 +65,12 @@ const Videolist = () => {
                 {reduceDescription(video.description)}
               </p>  
               <span style={{ fontSize: "15px", paddingTop: 20 }}>
-              {video.instructor.first_name}
               </span>         
             </div>      
           </div>
           <div className="actions">
             <Link
-              to={`/dashboard/videos/watch/${video._id}`}
+              to={`/dashboard/watch/${video._id}`}
               className="button prime"
             >
                Play Video
@@ -88,8 +86,7 @@ const Videolist = () => {
         </div>
       );
     });
-  };
-
+  
   const renderCreateButton = () => {
     if (isAuth) {
       return (
@@ -98,133 +95,140 @@ const Videolist = () => {
         </Link>
       );
     }
-  };
-  return (
-    <div className="stream-list-container">
-      {renderCreateButton()}
-      <div className="stream-list-container-inner">{renderVideos()}</div>
-      <style jsx>{`
-        .stream-list-container-inner {
-          height: 88vh;
-          overflow: auto;
-          padding-bottom: 20px;
-        }
-        .stream-list-container-inner::-webkit-scrollbar {
-          display: none;
-        }
-        .stream-list-container-inner {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: auto;
-          grid-gap: 20px;
-          padding: 20px 0;
-          overflow: auto;
-        }
-
-        .add-button {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          box-shadow: 0 0 10px #00000095;
-          position: absolute;
-          right: 20px;
-          bottom: 100px;
-          z-index: 10;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #fff;
-        }
-
-        .stream-card {
-          width: 99%;
-          min-height: 170px;
-          max-height: 200px;
-          background: #fff;
-          border-radius: 10px;
-          box-shadow: 0 0 5px #00000032;
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-        }
-
-        .stream-card .auth-options {
-          position: absolute;
-          top: 20px;
-          right: 20px;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: 0.2s;
-        }
-        .stream-card .auth-options:hover {
-          background: #00000025;
-        }
-        .stream-card .option-list {
-          position: absolute;
-          top: 110%;
-          right: 0;
-          font-size: 14px;
-          color: red;
-          box-shadow: 0 0 10px #00000025;
-          border-radius: 5px;
-          background: #fff;
-          overflow: hidden;
-        }
-
-        .stream-card .option-list > * {
-          padding: 10px 30px;
-          display: flex;
-          flex-direction: column;
-          cursor: pointer;
-        }
-
-        .stream-card .option-list > *:hover {
-          background: #f9f9f9;
-        }
-
-        .stream-card .detail {
-          display: flex;
-          margin-bottom: auto;
-        }
-        .stream-card .detail .detail-icon {
-          width: 50px;
-          height: 50px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 25px;
-        }
-        .stream-card .detail .detail-info {
-          flex: 1;
-          margin-left: 10px;
-          padding: 10px 0;
-        }
-
-        .stream-card .actions {
-          display: flex;
-          justify-content: flex-end;
-        }
-
-        .stream-card .actions .button {
-          font-weight: 300;
-          padding: 10px;
-        }
-
-        @media (max-width: 600px) {
+  }; 
+  if(Videos) { 
+    return (
+      <div className="stream-list-container">
+        {renderCreateButton()}
+        <div className="stream-list-container-inner">{renderVideos}</div>
+        <style jsx>{`
           .stream-list-container-inner {
-            grid-template-columns: 1fr;
+            height: 88vh;
+            overflow: auto;
+            padding-bottom: 20px;
           }
-        }
-      `}</style>
-    </div>
-  );
+          .stream-list-container-inner::-webkit-scrollbar {
+            display: none;
+          }
+          .stream-list-container-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+            grid-gap: 20px;
+            padding: 20px 0;
+            overflow: auto;
+          }
+  
+          .add-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00000095;
+            position: absolute;
+            right: 20px;
+            bottom: 100px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+          }
+  
+          .stream-card {
+            width: 99%;
+            min-height: 170px;
+            max-height: 200px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #00000032;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+          }
+  
+          .stream-card .auth-options {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+          }
+          .stream-card .auth-options:hover {
+            background: #00000025;
+          }
+          .stream-card .option-list {
+            position: absolute;
+            top: 110%;
+            right: 0;
+            font-size: 14px;
+            color: red;
+            box-shadow: 0 0 10px #00000025;
+            border-radius: 5px;
+            background: #fff;
+            overflow: hidden;
+          }
+  
+          .stream-card .option-list > * {
+            padding: 10px 30px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+          }
+  
+          .stream-card .option-list > *:hover {
+            background: #f9f9f9;
+          }
+  
+          .stream-card .detail {
+            display: flex;
+            margin-bottom: auto;
+          }
+          .stream-card .detail .detail-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+          }
+          .stream-card .detail .detail-info {
+            flex: 1;
+            margin-left: 10px;
+            padding: 10px 0;
+          }
+  
+          .stream-card .actions {
+            display: flex;
+            justify-content: flex-end;
+          }
+  
+          .stream-card .actions .button {
+            font-weight: 300;
+            padding: 10px;
+          }
+  
+          @media (max-width: 600px) {
+            .stream-list-container-inner {
+              grid-template-columns: 1fr;
+            }
+          }
+        `}</style>
+      </div>
+    );
+  }
+  else{ 
+    return( 
+      <div> Loading... </div>
+  )   
+  }
 };
 
   const AuthOptions = ({ streamId, onDelete }) => {

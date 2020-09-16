@@ -42,7 +42,7 @@ const InstructorVideo = (props) => {
         </div>
         <div>
           <video
-            src={URL +`/${Video.filename}`}
+            src={URL +`/${Video.video}`}
             style={{ width: "100%", height: 400 }}
             controls={true}
           />
