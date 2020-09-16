@@ -1,8 +1,6 @@
 import React, { useState, useEffect} from "react";
 import axios from 'axios'; 
 
-const URL = "http://localhost:5050" 
-
 const CourseList = () => {  
    
   const [list, setList] = useState("")

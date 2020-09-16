@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from 'axios'; 
-
+import axios from "axios";
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -14,18 +13,18 @@ const Videolist = () => {
   
   
   const [Videos, setVideos] = useState([]);
+ 
+  const getvideos = async() => {  
+   
+      const res = await axios.get(URL + `/video/getVideos`);     
+      setVideos(res.data);     
+  } 
 
+   console.log(Videos); 
+   
   useEffect(() => { 
-    axios.get(URL + `/video/getVideos`)
-            .then(response => {
-                if (response.data.success) {
-                    console.log(response.data.videos)
-                    setVideos(response.data.videos)
-                } else {
-                    alert('Failed to get Videos')
-                }
-            })
-    }, [])
+   getvideos();       
+  }, [])
 
   const reduceDescription = (description) => {
     const { length } = description;
@@ -37,16 +36,24 @@ const Videolist = () => {
   };
  
   
-  const renderVideos = Videos.map((video, index) => {
-      const color = Math.ceil(Math.random() * 3);
-      return (
+  const renderVideos = () => {   
+   
+    const color = Math.ceil(Math.random() * 3);   
+
+   return Videos.map((videos, index) => {  
+
+      return ( 
+        <a 
+        href={`/dashboard/videos/watch/${videos._id}`}
+          >
         <div
-          key={index}
-          className="stream-card"
+          className="stream-card" 
+          key={videos._id}
           style={{
             borderLeft: `3px solid var(--color-${color})`,
           }}
-        >
+        > 
+         
           <div className="detail">
             <div
               className="detail-icon"
@@ -59,34 +66,30 @@ const Videolist = () => {
             </div>
             <div className="detail-info">
               <h5 style={{ marginBottom: "5px", color: "var(--text-color)" }}>
-                {video.title}
+                {videos.title}
               </h5>
               <p style={{ fontSize: "14px" }}>
-                {reduceDescription(video.description)}
+                {reduceDescription(videos.description)}
               </p>  
               <span style={{ fontSize: "15px", paddingTop: 20 }}>
               </span>         
             </div>      
           </div>
-          <div className="actions">
-            <Link
-              to={`/dashboard/watch/${video._id}`}
-              className="button prime"
-            >
-               Play Video
-            </Link>
-          </div>
-          {video.instructor._id === authUserId ? (
+        
+            
+          {/*videos.instructor._id === authUserId ? (
             <AuthOptions
-              streamId={video._id}
+              streamId={videos._id}
             />
           ) : (
             ""
-          )}
-        </div>
+          )*/}
+        </div> 
+        </a>
       );
     });
   
+  }
   const renderCreateButton = () => {
     if (isAuth) {
       return (
@@ -96,11 +99,11 @@ const Videolist = () => {
       );
     }
   }; 
-  if(Videos) { 
+  if(Videos != null) { 
     return (
       <div className="stream-list-container">
         {renderCreateButton()}
-        <div className="stream-list-container-inner">{renderVideos}</div>
+        <div className="stream-list-container-inner">{renderVideos()}</div>
         <style jsx>{`
           .stream-list-container-inner {
             height: 88vh;
