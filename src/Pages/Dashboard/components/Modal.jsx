@@ -31,6 +31,7 @@ function Modal({ component: Component, onClose, buttonTitle, onClick }) {
           align-items: center;
           justify-content: center;
           animation: pop-in 0.5s cubic-bezier(0.04, 1.22, 0.78, 1.09);
+          background-color: #fff;
         }
 
         @keyframes pop-in {
