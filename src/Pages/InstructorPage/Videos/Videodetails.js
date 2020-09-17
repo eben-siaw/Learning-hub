@@ -6,7 +6,10 @@ import {useDropzone} from 'react-dropzone';
 import Button from '@material-ui/core/Button';  
 import {useSelector} from 'react-redux';   
 import AddIcon from '@material-ui/icons/Add';   
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';  
+import InputAdornment from '@material-ui/core/InputAdornment';
+import DescIcon from '@material-ui/icons/Description' 
+import TitleIcon from '@material-ui/icons/TitleSharp'
 import {storage} from '../../../Firebase/firebase';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
@@ -14,10 +17,11 @@ const URL = "https://nilee-nodedatabase.herokuapp.com";
 const useStyles = makeStyles((theme) => ({ 
 
     root: { 
-        display: 'flex',  
-        flexDirection: 'column',  
+      display: 'flex',  
+      flexWrap: 'wrap', 
+      lineHeight: 6
     }, 
-   
+ 
 }));
   
 
@@ -115,34 +119,35 @@ const Videodetails = () =>
         <br/>
        <li style={{listStyle: 'none', paddingTop: '6px'}}> {videoFile.name} </li>
         <br/>
-        
-       <div>
-          <TextField
+              
+         <TextField
           label="Title" 
           fullWidth
-          id="outlined-size-normal" 
           onChange={handleTitle}  
-          value={videotitle}
+          value={videotitle} 
         />      
-         </div>
-    
-        <div> 
+       <br/>
         <TextField
           label="Description" 
-          fullWidth
-          id="outlined-size-normal"  
+          fullWidth 
+          variant="outlined" 
           onChange={handleDescription}  
-          value={description}
+          value={description} 
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <DescIcon />
+              </InputAdornment>
+            ),
+          }}
         />  
-         </div>
-    
+       
          <br/> 
-         
-         <div style={{marginTop: '30px'}}> 
+    
          <Button onClick={handleSubmit} color="secondary"
           variant="contained" 
           startIcon={<CloudUploadIcon />} > Submit video </Button> 
-         </div>
+       
       </div>
 
      );   
