@@ -1,36 +1,35 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import Actions from "../components/Actions";
 import PageHeader from "../components/PageHeader";
 import CourseList from "../components/CourseList";
-import jwt_decode from 'jwt-decode'; 
+import jwt_decode from "jwt-decode";
 
-class Home extends Component {  
-  constructor() { 
-    super(); 
-   this.state = { 
-    first_name: "", 
-    email: "", 
-    last_name: "", 
-    _id: null
+class Home extends Component {
+  constructor() {
+    super();
+    this.state = {
+      first_name: "",
+      email: "",
+      last_name: "",
+      _id: null,
+    };
   }
-  }
- 
-  componentDidMount() {  
-   const token = localStorage.usertoken;
-    if(!token) { 
+
+  componentDidMount() {
+    const token = localStorage.usertoken;
+    if (!token) {
       window.location = "/";
     }
-   const decoded = jwt_decode(token); 
-   this.setState({ 
-     _id: decoded._id, 
-     first_name: decoded.first_name,  
-     email: decoded.email,
-     last_name: decoded.last_name
-   })
-  } 
+    const decoded = jwt_decode(token);
+    this.setState({
+      _id: decoded._id,
+      first_name: decoded.first_name,
+      email: decoded.email,
+      last_name: decoded.last_name,
+    });
+  }
 
- render(){  
-
+  render() {
     return (
       <div className="container">
         <PageHeader title="Dashboard" useSearch={false} />
@@ -39,9 +38,12 @@ class Home extends Component {
             <div>
               <h3>Welcome Back!</h3>
               <h5>Educational content & Studies made easy.</h5>
-              <p>You can start by either joining a course or creating a course</p>
               <p>
-                Links are provided below. Enjoy your stay with Nilee by Dawn Of Abstraction
+                You can start by either joining a course or creating a course
+              </p>
+              <p>
+                Links are provided below. Enjoy your stay with Nilee by Dawn Of
+                Abstraction
               </p>
             </div>
             <div className="icon">
@@ -50,13 +52,13 @@ class Home extends Component {
           </div>
           <div className="info-box">
             <Actions user={this.state} />
-            <CourseList/>
+            <CourseList />
           </div>
         </div>
         <style jsx>{`
           .container-inner {
-            max-height: 87vh;
-            overflow-y: auto;
+            max-height: 88vh;
+            overflow: auto;
           }
           .container-inner::-webkit-scrollbar {
             display: none;
@@ -72,7 +74,7 @@ class Home extends Component {
             align-items: center;
             margin-bottom: 30px;
           }
-  
+
           .welcome-card .icon {
             display: flex;
             align-items: center;
@@ -85,7 +87,7 @@ class Home extends Component {
           .welcome-card > div:first-child {
             flex: 1;
           }
-  
+
           .welcome-card h3,
           .welcome-card h5 {
             color: #fff;
@@ -103,22 +105,29 @@ class Home extends Component {
             color: #ffffffaa;
             margin-bottom: 10px;
           }
-  
+
           .info-box {
             display: flex;
             flex-wrap: wrap;
           }
-  
+
           @media (max-width: 500px) {
+            .container-inner {
+              max-height: 76vh;
+            }
+            .welcome-card {
+              max-width: 100%;
+              padding: 10px;
+            }
             .welcome-card h3 {
               font-size: 20px;
             }
             .welcome-card h5 {
-              font-size: 16px;
+              font-size: 14px;
               margin-bottom: 10px;
             }
             .welcome-card p {
-              font-size: 14px;
+              font-size: 12px;
             }
             .welcome-card .icon {
               display: none;
@@ -127,7 +136,7 @@ class Home extends Component {
         `}</style>
       </div>
     );
-      }
+  }
 }
 
 export default Home;

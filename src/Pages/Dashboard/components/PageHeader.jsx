@@ -11,7 +11,6 @@ export default function PageHeader({ title, useSearch }) {
             <input placeholder="Search" type="text" name="search" id="search" />
           </div>
         )}
-        <Notification />
       </div>
       <style jsx>{`
         .page-header {
@@ -34,23 +33,16 @@ export default function PageHeader({ title, useSearch }) {
           padding: 10px 15px;
           border-radius: 10px;
           background: #dfdfdf;
-          margin-right: 20px;
           border: none;
         }
 
         @media (max-width: 740px) {
           .page-header {
-            flex-direction: column-reverse;
-            align-items: initial;
+            align-items: center;
           }
-          .page-header .options {
-            flex: 1;
-            margin-bottom: 10px;
-          }
-
-          .page-header .options input {
-            width: 100%;
-            flex: 1;
+          .page-header h2 {
+            color: var(--color-1);
+            font-size: 18px;
           }
         }
       `}</style>

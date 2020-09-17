@@ -2,30 +2,26 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
-const URL = "https://nilee-nodedatabase.herokuapp.com"; 
+const URL = "https://nilee-nodedatabase.herokuapp.com";
 
 const ViewerVideolist = () => {
- 
   const authUserId = useSelector((state) => state.auth.user);
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
- 
 
   const [Videos, setVideos] = useState([]);
 
-  useEffect(() => { 
-    axios.get(URL + `/video/getVideos`)
-            .then(response => {
-                if (response.data.success) {
-                    console.log(response.data.videos)
-                    setVideos(response.data.videos)
-                } else {
-                    alert('Failed to get Videos')
-                }
-            })
-    }, [])
-
+  useEffect(() => {
+    axios.get(URL + `/video/getVideos`).then((response) => {
+      if (response.data.success) {
+        console.log(response.data.videos);
+        setVideos(response.data.videos);
+      } else {
+        alert("Failed to get Videos");
+      }
+    });
+  }, []);
 
   const reduceDescription = (description) => {
     const { length } = description;
@@ -63,10 +59,10 @@ const ViewerVideolist = () => {
               </h5>
               <p style={{ fontSize: "14px" }}>
                 {reduceDescription(video.description)}
-              </p> 
-              <p style={{ fontSize: "14px", paddingTop: '25px' }}> 
+              </p>
+              <p style={{ fontSize: "14px", paddingTop: "25px" }}>
                 By {video.instructor.first_name}
-              </p> 
+              </p>
             </div>
           </div>
           <div className="actions">
@@ -77,7 +73,6 @@ const ViewerVideolist = () => {
               Watch Video
             </Link>
           </div>
-         
         </div>
       );
     });
@@ -97,14 +92,6 @@ const ViewerVideolist = () => {
       {renderCreateButton()}
       <div className="stream-list-container-inner">{renderVideos()}</div>
       <style jsx>{`
-        .stream-list-container-inner {
-          height: 88vh;
-          overflow: auto;
-          padding-bottom: 20px;
-        }
-        .stream-list-container-inner::-webkit-scrollbar {
-          display: none;
-        }
         .stream-list-container-inner {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -218,10 +205,9 @@ const ViewerVideolist = () => {
       `}</style>
     </div>
   );
-}; 
+};
 
 export default ViewerVideolist;
-
 
 /* 
 const AuthOptions = ({ streamId, onDelete }) => {

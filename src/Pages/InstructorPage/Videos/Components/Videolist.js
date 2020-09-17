@@ -4,27 +4,24 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-const URL = "https://nilee-nodedatabase.herokuapp.com"; 
+const URL = "https://nilee-nodedatabase.herokuapp.com";
 
-const Videolist = () => { 
-
+const Videolist = () => {
   const authUserId = useSelector((state) => state.auth.user._id);
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
-  
-  
-  const [Videos, setVideos] = useState([]);
- 
-  const getvideos = async() => {  
-   
-      const res = await axios.get(URL + `/video/getVideos`);     
-      setVideos(res.data);     
-  } 
 
-   console.log(Videos); 
-   
-  useEffect(() => { 
-   getvideos();       
-  }, [])
+  const [Videos, setVideos] = useState([]);
+
+  const getvideos = async () => {
+    const res = await axios.get(URL + `/video/getVideos`);
+    setVideos(res.data);
+  };
+
+  console.log(Videos);
+
+  useEffect(() => {
+    getvideos();
+  }, []);
 
   const reduceDescription = (description) => {
     const { length } = description;
@@ -34,62 +31,53 @@ const Videolist = () => {
     }
     return description;
   };
- 
-  
-  const renderVideos = () => {   
-   
-    const color = Math.ceil(Math.random() * 3);   
 
-   return Videos.map((videos, index) => {  
+  const renderVideos = () => {
+    const color = Math.ceil(Math.random() * 3);
 
-      return ( 
-        <a 
-        href={`/dashboard/videos/watch/${videos._id}`}
+    return Videos.map((videos, index) => {
+      return (
+        <a href={`/dashboard/videos/watch/${videos._id}`}>
+          <div
+            className="stream-card"
+            key={videos._id}
+            style={{
+              borderLeft: `3px solid var(--color-${color})`,
+            }}
           >
-        <div
-          className="stream-card" 
-          key={videos._id}
-          style={{
-            borderLeft: `3px solid var(--color-${color})`,
-          }}
-        > 
-         
-          <div className="detail">
-            <div
-              className="detail-icon"
-              style={{ background: `var(--color-${color}-transparent)` }}
-            >
-              <i
-                className="ion-videocamera"
-                style={{ color: `var(--color-${color})` }}
-              ></i>
+            <div className="detail">
+              <div
+                className="detail-icon"
+                style={{ background: `var(--color-${color}-transparent)` }}
+              >
+                <i
+                  className="ion-videocamera"
+                  style={{ color: `var(--color-${color})` }}
+                ></i>
+              </div>
+              <div className="detail-info">
+                <h5 style={{ marginBottom: "5px", color: "var(--text-color)" }}>
+                  {videos.title}
+                </h5>
+                <p style={{ fontSize: "14px" }}>
+                  {reduceDescription(videos.description)}
+                </p>
+                <span style={{ fontSize: "15px", paddingTop: 20 }}></span>
+              </div>
             </div>
-            <div className="detail-info">
-              <h5 style={{ marginBottom: "5px", color: "var(--text-color)" }}>
-                {videos.title}
-              </h5>
-              <p style={{ fontSize: "14px" }}>
-                {reduceDescription(videos.description)}
-              </p>  
-              <span style={{ fontSize: "15px", paddingTop: 20 }}>
-              </span>         
-            </div>      
-          </div>
-        
-            
-          {/*videos.instructor._id === authUserId ? (
+
+            {/*videos.instructor._id === authUserId ? (
             <AuthOptions
               streamId={videos._id}
             />
           ) : (
             ""
           )*/}
-        </div> 
+          </div>
         </a>
       );
     });
-  
-  }
+  };
   const renderCreateButton = () => {
     if (isAuth) {
       return (
@@ -98,21 +86,13 @@ const Videolist = () => {
         </Link>
       );
     }
-  }; 
-  if(Videos != null) { 
+  };
+  if (Videos != null) {
     return (
       <div className="stream-list-container">
         {renderCreateButton()}
         <div className="stream-list-container-inner">{renderVideos()}</div>
         <style jsx>{`
-          .stream-list-container-inner {
-            height: 88vh;
-            overflow: auto;
-            padding-bottom: 20px;
-          }
-          .stream-list-container-inner::-webkit-scrollbar {
-            display: none;
-          }
           .stream-list-container-inner {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -121,7 +101,7 @@ const Videolist = () => {
             padding: 20px 0;
             overflow: auto;
           }
-  
+
           .add-button {
             width: 60px;
             height: 60px;
@@ -136,7 +116,7 @@ const Videolist = () => {
             justify-content: center;
             background: #fff;
           }
-  
+
           .stream-card {
             width: 99%;
             min-height: 170px;
@@ -150,7 +130,7 @@ const Videolist = () => {
             display: flex;
             flex-direction: column;
           }
-  
+
           .stream-card .auth-options {
             position: absolute;
             top: 20px;
@@ -177,18 +157,18 @@ const Videolist = () => {
             background: #fff;
             overflow: hidden;
           }
-  
+
           .stream-card .option-list > * {
             padding: 10px 30px;
             display: flex;
             flex-direction: column;
             cursor: pointer;
           }
-  
+
           .stream-card .option-list > *:hover {
             background: #f9f9f9;
           }
-  
+
           .stream-card .detail {
             display: flex;
             margin-bottom: auto;
@@ -207,17 +187,17 @@ const Videolist = () => {
             margin-left: 10px;
             padding: 10px 0;
           }
-  
+
           .stream-card .actions {
             display: flex;
             justify-content: flex-end;
           }
-  
+
           .stream-card .actions .button {
             font-weight: 300;
             padding: 10px;
           }
-  
+
           @media (max-width: 600px) {
             .stream-list-container-inner {
               grid-template-columns: 1fr;
@@ -226,50 +206,45 @@ const Videolist = () => {
         `}</style>
       </div>
     );
-  }
-  else{ 
-    return( 
-      <div> Loading... </div>
-  )   
+  } else {
+    return <div> Loading... </div>;
   }
 };
 
-  const AuthOptions = ({ streamId, onDelete }) => {
-    const [show, setShow] = useState(false);
-    return (
-      <div className="auth-options">
-        <i
-          onClick={() => setShow(!show)}
-          style={{
-            fontSize: "25px",
-            color: "var(--text-color)",
-            cursor: "pointer",
-          }}
-          className="ion-android-more-vertical"
-        ></i>
-        <div
-          className="option-list"
-          style={{ display: `${show ? "block" : "none"}` }}
+const AuthOptions = ({ streamId, onDelete }) => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="auth-options">
+      <i
+        onClick={() => setShow(!show)}
+        style={{
+          fontSize: "25px",
+          color: "var(--text-color)",
+          cursor: "pointer",
+        }}
+        className="ion-android-more-vertical"
+      ></i>
+      <div
+        className="option-list"
+        style={{ display: `${show ? "block" : "none"}` }}
+      >
+        <Link
+          to={`/dashboard/streams/edit/${streamId}`}
+          className="delete-button"
+          style={{ color: "var(--color-2)" }}
         >
-          <Link
-            to={`/dashboard/streams/edit/${streamId}`}
-            className="delete-button"
-            style={{ color: "var(--color-2)" }}
-          >
-            Edit
-          </Link>
-          <span
-            onClick={onDelete}
-            className="delete-button"
-            style={{ color: "red" }}
-          >
-            Delete
-          </span>
-        </div>
+          Edit
+        </Link>
+        <span
+          onClick={onDelete}
+          className="delete-button"
+          style={{ color: "red" }}
+        >
+          Delete
+        </span>
       </div>
-    );
-  };
-
-
+    </div>
+  );
+};
 
 export default Videolist;

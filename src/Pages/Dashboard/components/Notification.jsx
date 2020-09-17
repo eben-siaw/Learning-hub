@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Notification() {
+export default function Notification({ onHeader }) {
   const [openNotification, setOpenNotification] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
@@ -18,7 +18,7 @@ export default function Notification() {
     );
   };
   return (
-    <div className="notification">
+    <div className={`notification ${onHeader ? "inverse" : ""}`}>
       <span
         onClick={() => setOpenNotification(!openNotification)}
         className={`ion-ios-bell-outline icon active`}
@@ -29,13 +29,16 @@ export default function Notification() {
       <style jsx>{`
         .notification {
           margin-left: auto;
-          margin-right: 50px;
         }
 
         .notification .icon {
           font-size: 28px;
           color: var(--color-1);
           cursor: pointer;
+        }
+
+        .notification.inverse .icon {
+          color: #fff;
         }
         .notification .icon.active::after {
           content: "";
@@ -48,7 +51,9 @@ export default function Notification() {
           top: 3px;
           border: 2px solid #fff;
         }
-
+        .notification.inverse .icon.active::after {
+          border: 2px solid var(--color-1);
+        }
         .notification .list {
           position: absolute;
           right: -10px;

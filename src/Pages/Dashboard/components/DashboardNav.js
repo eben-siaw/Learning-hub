@@ -1,15 +1,14 @@
-import React,{useContext} from "react";
+import React, { useContext, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
+import Notification from "./Notification";
 
-
-export default function DashboardNav() { 
-  
-  const logouthandler = ()=>{
-    localStorage.removeItem("usertoken")
+export default function DashboardNav() {
+  const logouthandler = () => {
+    localStorage.removeItem("usertoken");
     window.location = "/login";
-}
+  };
 
   return (
     <div className="nav-bar">
@@ -19,7 +18,10 @@ export default function DashboardNav() {
       <div className="general-menu">
         <NavLinks />
       </div>
-      <MobileMenu />
+      <div className="header-notification">
+        <Notification onHeader={true} />
+        <MobileMenu />
+      </div>
       <div className="signout-box">
         <button onClick={logouthandler}>
           <i className="ion-log-out"></i>
@@ -44,6 +46,11 @@ export default function DashboardNav() {
           justify-content: center;
           padding: 20px 0;
           width: 100%;
+        }
+
+        .header-notification {
+          display: none;
+          align-items: center;
         }
 
         .list-box {
@@ -90,6 +97,9 @@ export default function DashboardNav() {
         }
 
         @media (max-width: 500px) {
+          .header-notification {
+            display: flex;
+          }
           .nav-bar {
             flex-direction: row;
             justify-content: space-between;

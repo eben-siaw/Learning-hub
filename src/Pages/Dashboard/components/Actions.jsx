@@ -1,60 +1,60 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import InputField from "../../../Components/InputField";
-import { v1 as uuid } from "uuid"; 
-import axios from 'axios'; 
-import {useSelector} from 'react-redux';
-import {courseEntry} from "./Coursefunctions";
+import { v1 as uuid } from "uuid";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { courseEntry } from "./Coursefunctions";
 
+const URL = "https://nilee-nodedatabase.herokuapp.com";
 
-const URL = "https://nilee-nodedatabase.herokuapp.com"  
-
-const Actions = ({user}) => { 
-  
-  const CreateForm = ({action}) => {    
- 
-    const addcourse = async newcourse => {     
+const Actions = ({ user }) => {
+  const CreateForm = ({ action }) => {
+    const addcourse = async (newcourse) => {
       try {
-       return await axios.post(URL + `/courses/${user._id}/addcourse`, newcourse); 
+        return await axios.post(
+          URL + `/courses/${user._id}/addcourse`,
+          newcourse
+        );
       } catch (error) {
         return { error: "Internal Server Error" };
       }
-    } 
-  
+    };
+
     const [data, setData] = useState({
       course_name: "",
       meetingId: uuid(),
-    }); 
-  
+    });
+
     const [error, setError] = useState({
       isTrue: false,
       message: "",
     });
-  
+
     const throwError = (message) => {
       setError({ isTrue: true, message });
       setTimeout(() => setError({ isTrue: false, message: "" }), 5000);
     };
-  
+
     const onChange = ({ target }) => {
       setData({ ...data, [target.name]: target.value });
     };
-  
+
     const submit = async () => {
       const isValid = Object.values(data).includes("") === false;
       if (isValid) {
-        await addcourse({...data}).then((data) => {
-          if(data.error) return throwError(data.error);   
-           window.location.href = "/dashboard/courses";
+        await addcourse({ ...data }).then((data) => {
+          if (data.error) return throwError(data.error);
+          window.location.href = "/dashboard/courses";
         });
       }
     };
-  
+
     return (
       <form action={action}>
         <div className={`error-display ${error.isTrue ? "" : "hidden"}`}>
           <p>{error.message}</p>
-        </div> 
+        </div>
         <InputField
           name="course_name"
           label="Course name here"
@@ -81,7 +81,6 @@ const Actions = ({user}) => {
       </form>
     );
   };
-
 
   const [modalState, setModalState] = useState({
     create: false,
@@ -164,11 +163,16 @@ const Actions = ({user}) => {
             flex: 1;
           }
         }
+        @media (max-width: 500px) {
+          .card {
+            max-width: 100%;
+            flex: 1;
+          }
+        }
       `}</style>
     </div>
   );
-}; 
-
+};
 
 const JoinForm = ({ action }) => {
   const [meetingId, setMeetingId] = useState("");
@@ -192,7 +196,7 @@ const JoinForm = ({ action }) => {
         console.log(res);
         if (res.error) {
           return throwError(res.error);
-        }  
+        }
         window.location.href = "/dashboard/viewersvideo";
       });
   };

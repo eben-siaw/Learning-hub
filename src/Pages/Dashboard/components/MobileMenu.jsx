@@ -17,19 +17,16 @@ export default function MobileMenu() {
         <NavLinks />
       </div>
       <style jsx>{`
-        .mobile-menu {
-          display: none;
-        }
-
         .menu-btn {
           font-size: 30px;
           color: #fff;
           cursor: pointer;
+          margin-left: 20px;
         }
 
         .menu-list {
           position: fixed;
-          top: 80px;
+          top: 60px;
           right: 0;
           left: 0;
           background: var(--color-1);
@@ -51,8 +48,8 @@ export default function MobileMenu() {
         }
 
         @media (max-width: 500px) {
-          .mobile-menu {
-            display: initial;
+          .menu-list {
+            padding: 5px 20px;
           }
         }
       `}</style>

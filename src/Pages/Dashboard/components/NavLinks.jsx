@@ -1,13 +1,11 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 
-export default function NavLinks(props) {  
-
-
-  const logouthandler = ()=>{
-    localStorage.removeItem("usertoken")
+export default function NavLinks(props) {
+  const logouthandler = () => {
+    localStorage.removeItem("usertoken");
     window.location = "/login";
-}
+  };
   const link = (value = "") => `/dashboard${value}`;
   return (
     <div className="list-box">
@@ -27,7 +25,14 @@ export default function NavLinks(props) {
         <i className="ion-ios-help-outline"></i>
       </NavLink>
       <div className="signout-box-in">
-        <button onClick={() => logouthandler()}>
+        <button
+          style={{
+            background: "#fff",
+            fontSize: "18px",
+            color: "var(--color-1)",
+          }}
+          onClick={() => logouthandler()}
+        >
           <i className="ion-log-out"></i>
         </button>
       </div>

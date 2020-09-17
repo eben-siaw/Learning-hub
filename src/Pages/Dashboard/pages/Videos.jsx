@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import ViewerVideolist from "../../InstructorPage/Videos/Components/ViewerVideolist";
 import EditVideo from "../../InstructorPage/Videos/Components/EditVideo";
-import VideoList from "../../InstructorPage/Videos/Components/Videolist"; 
+import VideoList from "../../InstructorPage/Videos/Components/Videolist";
 import InstructorVideo from "../../InstructorPage/Videos/Components/InstructorVideo";
 import UploadVideo from "../../InstructorPage/Videos/UploadVideo";
 
@@ -21,24 +21,36 @@ function Videos() {
           exact
           path="/dashboard/videos/new"
           render={() => <UploadVideo />}
-        /> 
+        />
 
-       <Route   
-       exact  
-       path="/dashboard/videos"
-       render={() => <VideoList/> }
-       /> 
+        <Route exact path="/dashboard/videos" render={() => <VideoList />} />
 
         <Route
           exact
           path="/dashboard/videos/edit/:videoId"
           render={() => <EditVideo />}
-        /> 
+        />
         <Route
           exact
           path="/dashboard/videos/watch/:videoId"
-          component={InstructorVideo}/> 
+          component={InstructorVideo}
+        />
       </div>
+      <style jsx>{`
+        .content-box {
+          height: 88vh;
+          overflow: auto;
+        }
+        .content-box::-webkit-scrollbar {
+          display: none;
+        }
+        @media (max-width: 500px) {
+          .content-box {
+            height: 76vh;
+            overflow: auto;
+          }
+        }
+      `}</style>
     </div>
   );
 }

@@ -1,15 +1,13 @@
-import React, { useState, useEffect} from "react";
-import axios from 'axios'; 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const CourseList = () => {  
-   
-  const [list, setList] = useState("")
+const CourseList = () => {
+  const [list, setList] = useState("");
 
   return (
     <div className="course-list">
       <h5>Your Courses</h5>
-      {list.length < 1 ? <Empty /> : <div className="list">  
-       </div>}
+      {list.length < 1 ? <Empty /> : <div className="list"></div>}
       <style jsx>{`
         .course-list {
           background: rgba(0, 0, 0, 0.04);
@@ -21,7 +19,7 @@ const CourseList = () => {
           min-height: 300px;
         }
         .course-list h5 {
-          margin-bottom: 20px; 
+          margin-bottom: 20px;
           margin-left: 150px;
           color: var(--color-1);
         }
@@ -31,10 +29,19 @@ const CourseList = () => {
             margin: 20px 0;
           }
         }
+
+        @media (max-width: 500px) {
+          .course-list {
+            padding: 15px 10px;
+            margin-left: 0px;
+            min-width: 100%;
+            min-height: 300px;
+          }
+        }
       `}</style>
     </div>
   );
-}
+};
 
 const Empty = () => {
   return (
@@ -67,6 +74,6 @@ const Empty = () => {
       `}</style>
     </div>
   );
-}; 
+};
 
 export default CourseList;
