@@ -16,24 +16,8 @@ const useStyles = makeStyles((theme) => ({
     root: { 
         display: 'flex',  
         flexDirection: 'column',  
-        alignItems: 'center', 
-        maxWidth: 700,  
-        margin: '2rem auto'
     }, 
    
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-
-    select: { 
-      width: 500
-    },
-
-   field: { 
-     width: 500
-   }
-
 }));
   
 
@@ -115,7 +99,7 @@ const Videodetails = () =>
 
  }
      return(   
-     <div style={{display: 'flex', flexDirection: 'column'}}> 
+     <div className={classes.root}> 
         <label htmlFor="video">
         <input
           style={{ display: 'none' }}
@@ -131,13 +115,13 @@ const Videodetails = () =>
         <br/>
        <li style={{listStyle: 'none', paddingTop: '6px'}}> {videoFile.name} </li>
         <br/>
-      
+       
+       <div style={{display: 'flex',  justifyContent: 'center', alignItems: 'center'}}>  
           <TextField
           label="Title"
           id="outlined-size-normal" 
           onChange={handleTitle}  
           value={videotitle}
-          className={classes.field}
         />     
         <br/> 
 
@@ -146,8 +130,9 @@ const Videodetails = () =>
           id="outlined-size-normal"  
           onChange={handleDescription}  
           value={description}
-          className={classes.field}
-        />
+        /> 
+        </div> 
+
          <br/> 
          
          <div style={{marginTop: '30px'}}> 
