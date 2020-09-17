@@ -1,25 +1,31 @@
 import React from "react";
 import PageHeader from "../components/PageHeader";
+import {useSelector} from 'react-redux';
 
-function Settings() {
+function Settings() { 
+
+  const user = useSelector(state => state.auth.user)
   return (
     <div>
       <PageHeader title="Settings" useSearch={true} /> 
 
       <div> 
      
-      <h1 style={{fontSize: 16}}> Streaming Configuration </h1> 
+      <h1 style={{fontSize: 16}}> Account Settings </h1> 
 
-      <div style={{paddingTop: 50}}> 
-      <span> After creating a course as an Instructor which redirects you to the streams, <br/> 
-        open or install <a href="https://obsproject.com/">OBS studio</a>  on your PC and open settings add a custom stream and use rtmp://localhost-live as the URL or server.  </span> 
-        <br/>  
+      <div style={{paddingTop: 50}}>  
 
-        <div style={{paddingTop: 50}}> 
-        <span> You can get the Stream key or stream number after creating a stream which can be seen at the url, the key will be a number. You are now ready to go. </span> 
-        </div>
-      </div>   
-
+      <span> <div style={{fontSize: 16, color: 'dodgerblue'}}> First name </div>  {user.first_name} </span>
+     <div style={{paddingTop: '19px'}}></div>
+     <hr/>
+      <span> <div style={{fontSize: 16, color: 'dodgerblue'}}> Last name </div>  {user.last_name} </span>   
+      <div style={{paddingTop: '19px'}}></div> 
+      <hr/>
+       <span>  <div style={{fontSize: 16, color: 'dodgerblue'}}> Nationality  </div> {user.country} </span>      
+       <div style={{paddingTop: '19px'}}></div> 
+       <hr/>
+       <span>  <div style={{fontSize: 16, color: 'dodgerblue'}}> Region </div>  {user.region} </span> 
+     </div>
       </div>
     </div>
   );

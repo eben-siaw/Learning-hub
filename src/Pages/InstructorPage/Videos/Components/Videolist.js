@@ -62,7 +62,8 @@ const Videolist = () => {
                 <p style={{ fontSize: "14px" }}>
                   {reduceDescription(videos.description)}
                 </p>
-                <span style={{ fontSize: "15px", paddingTop: 20 }}></span>
+                <p style={{ fontSize: "15px", paddingTop: 14 }}>  
+                </p>
               </div>
             </div>
 

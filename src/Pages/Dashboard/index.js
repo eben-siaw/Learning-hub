@@ -34,7 +34,9 @@ class Dashboard extends Component {
       _id: decoded._id,
       first_name: decoded.first_name,
       email: decoded.email,
-      last_name: decoded.last_name,
+      last_name: decoded.last_name, 
+      country: decoded.country, 
+      region: decoded.region
     });
     this.props.setCurrentUser(decoded);
   }

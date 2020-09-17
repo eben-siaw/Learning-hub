@@ -61,17 +61,16 @@ const ViewerVideolist = () => {
                 {reduceDescription(video.description)}
               </p>
               <p style={{ fontSize: "14px", paddingTop: "25px" }}>
-                By {video.instructor.first_name}
               </p>
             </div>
           </div>
           <div className="actions">
-            <Link
-              to={`/dashboard/videos/watch/${video._id}`}
+            <a
+              href={`/dashboard/videos/watch/${video._id}`}
               className="button prime"
             >
               Watch Video
-            </Link>
+            </a>
           </div>
         </div>
       );

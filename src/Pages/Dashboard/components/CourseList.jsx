@@ -6,7 +6,6 @@ const CourseList = () => {
 
   return (
     <div className="course-list">
-      <h5>Your Courses</h5>
       {list.length < 1 ? <Empty /> : <div className="list"></div>}
       <style jsx>{`
         .course-list {
@@ -20,7 +19,6 @@ const CourseList = () => {
         }
         .course-list h5 {
           margin-bottom: 20px;
-          margin-left: 150px;
           color: var(--color-1);
         }
 

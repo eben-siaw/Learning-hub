@@ -5,7 +5,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {useDropzone} from 'react-dropzone';
 import Button from '@material-ui/core/Button';  
 import {useSelector} from 'react-redux';   
-import AddIcon from '@material-ui/icons/Add';  
+import AddIcon from '@material-ui/icons/Add';   
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import {storage} from '../../../Firebase/firebase';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
@@ -64,10 +65,11 @@ const Videodetails = () =>
     const handleSubmit = (event) => { 
     
      event.preventDefault();
-
+     
+    let errors = {};
      //validation  
      if(videotitle === "" || description === "") { 
-     return alert("All Fields are Required" )
+     return alert("All fields are required")
      } 
   
      console.log(videoFile); 
@@ -95,7 +97,6 @@ const Videodetails = () =>
         videoName: videoFile.name, 
         video: url 
       }
-
      // saving video data to mongo
      axios.post(URL + `/video/saveVideo`, details)
      .then(response => { 
@@ -104,7 +105,8 @@ const Videodetails = () =>
      window.location = "/dashboard/videos"
      } 
      else{ 
-     alert("Failed to upload video")
+     alert("Failed to upload video"); 
+      window.location = '/dashboard/videos/new'
      }
     }) 
 
@@ -122,15 +124,16 @@ const Videodetails = () =>
           type="file"
           onChange={handleOnChange} 
         />
-        <Fab color="primary" size="large" component="span" aria-label="add">
+        <Fab color="default" size="large" component="span" aria-label="add">
           <AddIcon />
         </Fab>
-      </label>
-   
+      </label> 
         <br/>
-
+       <li style={{listStyle: 'none', paddingTop: '6px'}}> {videoFile.name} </li>
+        <br/>
+      
           <TextField
-          label="title"
+          label="Title"
           id="outlined-size-normal" 
           onChange={handleTitle}  
           value={videotitle}
@@ -139,16 +142,19 @@ const Videodetails = () =>
         <br/> 
 
         <TextField
-          label="description"
+          label="Description"
           id="outlined-size-normal"  
           onChange={handleDescription}  
           value={description}
           className={classes.field}
         />
          <br/> 
-
-         <Button onClick={handleSubmit} color="primary" variant="contained" > Upload video </Button> 
-
+         
+         <div style={{marginTop: '30px'}}> 
+         <Button onClick={handleSubmit} color="secondary"
+          variant="contained" 
+          startIcon={<CloudUploadIcon />} > Submit video </Button> 
+         </div>
       </div>
 
      );   
