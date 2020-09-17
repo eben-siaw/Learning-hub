@@ -97,7 +97,7 @@ const Videodetails = () =>
    }) 
 }) 
 
- }
+}
      return(   
      <div className={classes.root}> 
         <label htmlFor="video">
@@ -116,22 +116,25 @@ const Videodetails = () =>
        <li style={{listStyle: 'none', paddingTop: '6px'}}> {videoFile.name} </li>
         <br/>
        
-       <div style={{display: 'flex',  justifyContent: 'center', alignItems: 'center'}}>  
+       <div style={{display: 'flex',  justifyContent: 'center', alignItems: 'center'}}>   
+       <div>
           <TextField
           label="Title"
           id="outlined-size-normal" 
           onChange={handleTitle}  
           value={videotitle}
-        />     
-        <br/> 
-
+        />      
+         </div>
+    
+        <div> 
         <TextField
           label="Description"
           id="outlined-size-normal"  
           onChange={handleDescription}  
           value={description}
-        /> 
-        </div> 
+        />  
+         </div>
+     </div> 
 
          <br/> 
          
