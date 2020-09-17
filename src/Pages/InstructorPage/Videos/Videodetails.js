@@ -115,7 +115,7 @@ const Videodetails = () =>
 
  }
      return(   
-     <div> 
+     <div style={{display: 'flex', flexDirection: 'column'}}> 
         <label htmlFor="video">
         <input
           style={{ display: 'none' }}
