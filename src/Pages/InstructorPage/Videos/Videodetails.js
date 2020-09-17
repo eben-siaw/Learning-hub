@@ -115,11 +115,11 @@ const Videodetails = () =>
         <br/>
        <li style={{listStyle: 'none', paddingTop: '6px'}}> {videoFile.name} </li>
         <br/>
-       
-       <div style={{display: 'flex',  justifyContent: 'center', alignItems: 'center'}}>   
+        
        <div>
           <TextField
-          label="Title"
+          label="Title" 
+          fullWidth
           id="outlined-size-normal" 
           onChange={handleTitle}  
           value={videotitle}
@@ -128,14 +128,14 @@ const Videodetails = () =>
     
         <div> 
         <TextField
-          label="Description"
+          label="Description" 
+          fullWidth
           id="outlined-size-normal"  
           onChange={handleDescription}  
           value={description}
         />  
          </div>
-     </div> 
-
+    
          <br/> 
          
          <div style={{marginTop: '30px'}}> 
