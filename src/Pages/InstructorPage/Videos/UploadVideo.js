@@ -30,7 +30,12 @@ const UploadVideo = (props) => {
           display: flex;
           align-items: center;
           justify-content: center;
-        }
+        } 
+        @media (max-width: 500px) {
+            .create-stream-wrapper {
+              height: 76vh; 
+            }
+          }
       `}</style>
     </div>
   );
