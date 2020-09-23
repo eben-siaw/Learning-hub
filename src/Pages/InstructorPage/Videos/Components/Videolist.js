@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import LoadingSpin from 'react-loading-spin';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 
@@ -11,10 +12,12 @@ const Videolist = () => {
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
 
   const [Videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   const getvideos = async () => {
     const res = await axios.get(URL + `/video/getVideos`);
-    setVideos(res.data);
+    setVideos(res.data); 
+    setLoading(false);
   };
 
   console.log(Videos);
@@ -37,7 +40,7 @@ const Videolist = () => {
 
     return Videos.map((videos, index) => {
       return (
-        <a href={`/dashboard/videos/watch/${videos._id}`}>
+        <a style={{textDecoration: 'none'}} href={`/dashboard/videos/watch/${videos._id}`}>
           <div
             className="stream-card"
             key={videos._id}
@@ -92,7 +95,8 @@ const Videolist = () => {
     return (
       <div className="stream-list-container">
         {renderCreateButton()}
-        <div className="stream-list-container-inner">{renderVideos()}</div>
+        <div className="stream-list-container-inner">{renderVideos()} 
+         {loading ? <LoadingSpin /> : null}</div>
         <style jsx>{`
           .stream-list-container-inner {
             display: grid;

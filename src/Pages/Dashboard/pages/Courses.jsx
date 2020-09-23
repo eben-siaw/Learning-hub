@@ -14,17 +14,22 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import BookIcon from "@material-ui/icons/Book";
 import { Link } from "react-router-dom";
+import LoadingSpin from 'react-loading-spin';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 
 const Courses = ({ user }) => {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState([]); 
+  const [loading, setLoading] = useState(true);
   // get Courses created by the authenticated logged in user, url params
 
   const getCourses = async () => {
     try {
-      const res = await axios.get(URL + `/courses/${user._id}/courses`);
-      setCourses(res.data);
+      await axios.get(URL + `/courses/${user._id}/courses`)  
+      .then(res => { 
+        setCourses(res.data);  
+        setLoading(false);
+      }) 
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +112,8 @@ const Courses = ({ user }) => {
           direction="row"
           className="course-list-container-inner"
         >
-          {renderCourses()}
+          {renderCourses()} 
+          {loading ? <LoadingSpin /> : null}
         </Grid>
         <style jsx>
           {`

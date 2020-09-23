@@ -1,13 +1,14 @@
+/*
 import { useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
-const useChat = () => {
+const useChat = () => { 
+  // react hooks for messages
   const [messages, setMessages] = useState([]);
   const socketRef = useRef();
 
   useEffect(() => {
     socketRef.current = socketIOClient( 
-      "https://nilee-chatserver.herokuapp.com"
     );
 
     socketRef.current.on(
@@ -29,4 +30,5 @@ const useChat = () => {
   return { messages, sendMessage };
 };
 
-export default useChat;
+export default useChat; 
+*/

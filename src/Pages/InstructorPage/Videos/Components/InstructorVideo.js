@@ -8,13 +8,17 @@ const URL = "https://nilee-nodedatabase.herokuapp.com";
 const InstructorVideo = (props) => {
   // get the id related to the video
   const { videoId } = props.match.params;
-
+  const [messagelist, setMessagelist] = useState([])
   // declare the states
   const [Video, setVideo] = useState([]);
-
+ 
   const videovariable = {
     videoId: videoId,
-  };
+  }; 
+
+  function UpdateComments(newComment) { 
+   setMessagelist(messagelist.concat(newComment));
+  }
 
   useEffect(() => {
     axios.post(URL + "/video/getVideo", videovariable).then((response) => {
@@ -24,8 +28,21 @@ const InstructorVideo = (props) => {
       } else {
         alert("Failed to get Video");
       }
-    });
-  });
+    });  
+
+    axios.post(URL + `/comment/getComments`, videovariable)  
+    .then(response => { 
+       if(response.data.success) { 
+        console.log('response.data.comments', response.data.comments) 
+       setMessagelist(response.data.comments) 
+       } 
+       else { 
+          alert("failed to get comments") 
+       }
+    }) 
+
+    
+  }, []);
 
   return (
     <div className="stream-wrapper">
@@ -48,7 +65,7 @@ const InstructorVideo = (props) => {
         <small className="comments-tag">
           <b>Comments:</b>
         </small>
-        <Chat />
+        <Chat messagelist={messagelist} postId={Video._id}  refreshFunc={UpdateComments}/>
       </div>
       <style jsx>{`
         .title {

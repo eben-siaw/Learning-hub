@@ -1,14 +1,18 @@
 import Avatar from "@material-ui/core/Avatar";
-import React from "react";
+import React from "react"; 
+import moment from 'moment'; 
+import ClockIcon from '@material-ui/icons/History'
 import { useSelector} from 'react-redux';
 
-const Messages = ({ messages }) => {
+const Messages = ({messagelist}) => { 
+
   return (
     <div className="comments-list">
-      {messages.reverse().map((comment, index) => (
+      {messagelist.reverse().map((comment, index) => (
         <CommentItem key={index} comment={comment} />
       ))}
-    </div>
+    </div> 
+
   );
 };
 
@@ -22,7 +26,8 @@ const CommentItem = ({ comment }) => {
       <div className="message">
         <span style={{ fontSize: "14px" }}>
         <b className="username">{user.first_name}</b> {comment}
-        </span>
+        </span> 
+        <span> <ClockIcon/> {moment(Date.parse(comment.createdAt)).fromNow()} </span>
       </div>
       <style jsx>{`
         .comment {

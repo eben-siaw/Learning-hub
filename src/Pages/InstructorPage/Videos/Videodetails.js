@@ -11,6 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import DescIcon from '@material-ui/icons/Description' 
 import TitleIcon from '@material-ui/icons/TitleSharp'
 import {storage} from '../../../Firebase/firebase';
+import LoadingSpin from 'react-loading-spin'
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -31,11 +32,12 @@ const Videodetails = () =>
   
     const userId = useSelector(state => state.auth.user._id)
     
-     const [videoFile, setVideoFile] = useState("")
-
+    const [videoFile, setVideoFile] = useState("")
     const [videotitle, setvideoTitle] = useState(""); 
     const [description, setdescription] = useState("");  
     const [firebaseVideo, setfirebaseVideo] = useState(""); 
+  
+    const [loading, setLoading] = useState(false) 
 
    const handleDescription = (event) => { 
    setdescription(event.currentTarget.value)
@@ -54,7 +56,7 @@ const Videodetails = () =>
     
      event.preventDefault();
      
-    let errors = {};
+     let errors = {};
      //validation  
      if(videotitle === "" || description === "") { 
      return alert("All fields are required")
@@ -65,7 +67,9 @@ const Videodetails = () =>
      //uploading task to storage 
 
      let videoObject = {}
-  
+    
+     setLoading(true);
+
      const uploadTask = storage.ref(`/videos/${videoFile.name}`).put(videoFile);
    
       uploadTask.on('state_changed',
@@ -88,11 +92,11 @@ const Videodetails = () =>
      // saving video data to mongo
      axios.post(URL + `/video/saveVideo`, details)
      .then(response => { 
-     if(response.data.success){  
-     alert("Video Uploaded")
+     if(response.data.success){   
+     alert("Video Uploaded") 
+     setLoading(false);
      window.location = "/dashboard/videos"
-     } 
-     else{ 
+     }else{ 
      alert("Failed to upload video"); 
       window.location = '/dashboard/videos/new'
      }
@@ -147,8 +151,10 @@ const Videodetails = () =>
     
          <Button onClick={handleSubmit} color="secondary"
           variant="contained" 
-          startIcon={<CloudUploadIcon />} > Submit video </Button> 
-       
+          startIcon={<CloudUploadIcon />} > Submit video </Button>  
+
+        {loading ? <LoadingSpin  /> : null } 
+
       </div>
 
      );   
