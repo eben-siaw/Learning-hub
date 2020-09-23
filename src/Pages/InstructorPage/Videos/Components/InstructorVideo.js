@@ -46,7 +46,7 @@ const InstructorVideo = (props) => {
   return (
     <div className="stream-wrapper">
       <div style={{ padding: "20px 0" }}>
-        <Link to="/dashboard/streams" class="back-button">
+        <Link to="/dashboard/videos" class="back-button">
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>

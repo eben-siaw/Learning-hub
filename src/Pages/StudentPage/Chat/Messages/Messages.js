@@ -26,8 +26,8 @@ const CommentItem = ({ comment }) => {
       <div className="message">
         <span style={{ fontSize: "14px" }}>
         <b className="username">{comment.user.first_name}</b> {comment.content}
-        </span> 
-        <span> <ClockIcon/> {moment(Date.parse(comment.createdAt)).fromNow()} </span>
+        </span>  
+        <span style={{paddingLeft: 250}}> <ClockIcon/> {moment(Date.parse(comment.createdAt)).fromNow()} </span>
       </div>
       <style jsx>{`
         .comment {
