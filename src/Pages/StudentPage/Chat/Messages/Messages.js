@@ -21,11 +21,11 @@ const CommentItem = ({ comment }) => {
   return (
     <div className="comment">
       <div className="avatar">
-        <Avatar alt="Cute Kitten" src="http://placekitten.com/200/200" />
+        <Avatar>N</Avatar>
       </div>
       <div className="message">
         <span style={{ fontSize: "14px" }}>
-        <b className="username">{user.first_name}</b> {comment}
+        <b className="username">{comment.user.first_name}</b> {comment.content}
         </span> 
         <span> <ClockIcon/> {moment(Date.parse(comment.createdAt)).fromNow()} </span>
       </div>

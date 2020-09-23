@@ -16,10 +16,6 @@ const InstructorVideo = (props) => {
     videoId: videoId,
   }; 
 
-  function UpdateComments(newComment) { 
-   setMessagelist(messagelist.concat(newComment));
-  }
-
   useEffect(() => {
     axios.post(URL + "/video/getVideo", videovariable).then((response) => {
       if (response.data.success) {
@@ -39,10 +35,13 @@ const InstructorVideo = (props) => {
        else { 
           alert("failed to get comments") 
        }
-    }) 
-
+    })    
     
-  }, []);
+  }, []); 
+
+  function UpdateComments(newComment) { 
+    setMessagelist(messagelist.concat(newComment));
+  }
 
   return (
     <div className="stream-wrapper">
