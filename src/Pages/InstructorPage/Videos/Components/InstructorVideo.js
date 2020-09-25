@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Chat from "../../../StudentPage/Chat/Chat";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { DefaultPlayer as Video} from 'react-html5video'; 
+import 'react-html5video/dist/styles.css'
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 
@@ -10,7 +12,7 @@ const InstructorVideo = (props) => {
   const { videoId } = props.match.params;
   const [messagelist, setMessagelist] = useState([])
   // declare the states
-  const [Video, setVideo] = useState([]);
+  const [video, setVideo] = useState([]);
  
   const videovariable = {
     videoId: videoId,
@@ -52,19 +54,22 @@ const InstructorVideo = (props) => {
         </Link>
       </div>
       <div>
-        <video
-          src={Video.video}
-          style={{ width: "100%", height: 400 }}
-          controls={true}
-        />
-        <h3 className="title">{Video.title}</h3>
-        <p className="desc">{Video.description}</p>
+        <Video
+          key={video.video}   
+          controls={['PlayPause', 'Seek', 'Time', 'Fullscreen']}
+          width='100%'
+          height='100%'>  
+          <source src={video.video} type="video/mp4"/>  
+        </Video> 
+
+        <h3 className="title">{video.title}</h3>
+        <p className="desc">{video.description}</p>
       </div>
       <div className="comments-wrapper">
         <small className="comments-tag">
           <b>Comments:</b>
         </small>
-        <Chat messagelist={messagelist} postId={Video._id}  refreshFunc={UpdateComments}/>
+        <Chat messagelist={messagelist} postId={video._id}  refreshFunc={UpdateComments}/>
       </div>
       <style jsx>{`
         .title {

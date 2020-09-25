@@ -112,9 +112,11 @@ const Courses = ({ user }) => {
           direction="row"
           className="course-list-container-inner"
         >
-          {renderCourses()} 
-          {loading ? <LoadingSpin /> : null}
-        </Grid>
+          {renderCourses()}   
+          <div style={{paddingTop: 50}}> 
+          {loading ? <LoadingSpin /> : null} 
+          </div>
+        </Grid> 
         <style jsx>
           {`
             .course-list-container-inner {
