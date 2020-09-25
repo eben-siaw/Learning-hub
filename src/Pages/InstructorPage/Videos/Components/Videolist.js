@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
+import axios from "axios"; 
+import VideoThumbnail from 'react-video-thumbnail';
 import LoadingSpin from 'react-loading-spin';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
@@ -47,7 +48,14 @@ const Videolist = () => {
             style={{
               borderLeft: `3px solid var(--color-${color})`,
             }}
-          >
+          > 
+          <VideoThumbnail
+            videoUrl={videos.video} 
+            cors={true}
+            thumbnailHandler={(thumbnail) => console.log(thumbnail)}
+             width={180}
+            height={80}
+           />      
             <div className="detail">
               <div
                 className="detail-icon"
@@ -83,7 +91,7 @@ const Videolist = () => {
     });
   };
   const renderCreateButton = () => {
-    if (isAuth) {
+    if (authUserId) {
       return (
         <Link className="add-button" to="/dashboard/streams/new">
           <img width="50%" src="/img/addIconFlat.svg" alt="add Icon" />
