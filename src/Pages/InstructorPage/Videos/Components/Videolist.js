@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios"; 
-import VideoThumbnail from 'react-video-thumbnail';
-import LoadingSpin from 'react-loading-spin';
+import axios from "axios";
+import VideoThumbnail from "react-video-thumbnail";
+import LoadingSpin from "react-loading-spin";
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 
@@ -13,11 +13,11 @@ const Videolist = () => {
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
 
   const [Videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   const getvideos = async () => {
     const res = await axios.get(URL + `/video/getVideos`);
-    setVideos(res.data); 
+    setVideos(res.data);
     setLoading(false);
   };
 
@@ -41,21 +41,19 @@ const Videolist = () => {
 
     return Videos.map((videos, index) => {
       return (
-        <a style={{textDecoration: 'none'}} href={`/dashboard/videos/watch/${videos._id}`}>
-          <div
-            className="stream-card"
-            key={videos._id}
-            style={{
-              borderLeft: `3px solid var(--color-${color})`,
-            }}
-          > 
-          <VideoThumbnail
-            videoUrl={videos.video} 
-            cors={true}
-            thumbnailHandler={(thumbnail) => console.log(thumbnail)}
-             width={180}
-            height={80}
-           />      
+        <a
+          style={{ textDecoration: "none" }}
+          href={`/dashboard/videos/watch/${videos._id}`}
+        >
+          <div className="stream-card" key={videos._id}>
+            <div className="thumbnail">
+              <VideoThumbnail
+                snapshotAtTime={2}
+                videoUrl={videos.video}
+                cors={true}
+                width={100}
+              />
+            </div>
             <div className="detail">
               <div
                 className="detail-icon"
@@ -73,8 +71,7 @@ const Videolist = () => {
                 <p style={{ fontSize: "14px" }}>
                   {reduceDescription(videos.description)}
                 </p>
-                <p style={{ fontSize: "15px", paddingTop: 14 }}>  
-                </p>
+                <p style={{ fontSize: "15px", paddingTop: 14 }}></p>
               </div>
             </div>
 
@@ -103,8 +100,10 @@ const Videolist = () => {
     return (
       <div className="stream-list-container">
         {renderCreateButton()}
-        <div className="stream-list-container-inner">{renderVideos()} 
-         {loading ? <LoadingSpin /> : null}</div>
+        <div className="stream-list-container-inner">
+          {renderVideos()}
+          {loading ? <LoadingSpin /> : null}
+        </div>
         <style jsx>{`
           .stream-list-container-inner {
             display: grid;
@@ -133,15 +132,17 @@ const Videolist = () => {
           .stream-card {
             width: 99%;
             min-height: 170px;
-            max-height: 200px;
             background: #fff;
-            border-radius: 10px;
+            border-radius: 5px;
             box-shadow: 0 0 5px #00000032;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            padding: 0px;
+            display: grid;
+            grid-template-rows: 200px 1fr;
+            overflow: hidden;
+          }
+
+          .stream-card .thumbnail {
+            background: #f1f1f1;
           }
 
           .stream-card .auth-options {
@@ -185,6 +186,8 @@ const Videolist = () => {
           .stream-card .detail {
             display: flex;
             margin-bottom: auto;
+            padding: 20px;
+            background: #fff;
           }
           .stream-card .detail .detail-icon {
             width: 50px;
@@ -209,6 +212,13 @@ const Videolist = () => {
           .stream-card .actions .button {
             font-weight: 300;
             padding: 10px;
+          }
+          .react-thumbnail-generator {
+            width: 100%;
+          }
+          .react-thumbnail-generator .snapshot-generator {
+            width: 100% !important;
+            height: 200px !important;
           }
 
           @media (max-width: 600px) {

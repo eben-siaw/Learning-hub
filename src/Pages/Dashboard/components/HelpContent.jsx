@@ -1,23 +1,48 @@
 import React from "react";
 
 export default function HelpContent() {
-  return <div>  
-   <h1 style={{color: 'white', fontWeight: '100', fontSize: 16}}> How can I join a course? </h1> 
+  return (
+    <div className="help-content">
+      <h1> How can I join a course? </h1>
+      <span>
+        You can join a course with a meeting id created by your instructor,
+        <br />
+        your instructor will give you an id to join a course. After you join you
+        can see the current stream created by your instructor
+      </span>
 
-   <span style={{color: 'white'}}> You can join a course with a meeting id created by your instructor, <br/> 
-   your instructor will give you an id to join a course. After you join you can see the current stream created by your instructor </span>     
+      <h1> How can I create a course? </h1>
 
-   <div style={{paddingTop: 25}}> 
-   <h1 style={{color: 'white', fontWeight: '100', fontSize: 16}}> How can I create a course? </h1> 
+      <span>
+        You can create a course as an Instructor by clicking on the Create a
+        Course button at the Dashboard <br />
+      </span>
 
-   <span style={{color: 'white'}}> You can create a course as an Instructor by clicking on the Create a Course button at the Dashboard <br/>  </span>   
-   </div> 
+      <h1> How can I see my courses as an Instructor? </h1>
 
-   <div style={{paddingTop: 25}}> 
-   <h1 style={{color: 'white', fontWeight: '100', fontSize: 16}}> How can I see my courses as an Instructor? </h1> 
+      <span>
+        You can see your courses you created by going to the <br />
+        course hub page
+      </span>
+      <style jsx>{`
+        .help-content {
+          padding: 10px;
+          color: #fff;
+        }
 
-   <span style={{color: 'white'}}> You can see your courses you created by going to the <br/> 
-   course hub page  </span> 
-   </div>
-  </div>;
+        .help-content h1 {
+          font-weight: "100";
+          font-size: 18px;
+          line-height: 25px;
+        }
+        .help-content h1:not(:first-child) {
+          margin-top: 20px;
+        }
+
+        .help-content span {
+          color: #ffffff9a;
+        }
+      `}</style>
+    </div>
+  );
 }
