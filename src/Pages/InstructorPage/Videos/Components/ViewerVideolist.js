@@ -38,10 +38,10 @@ const ViewerVideolist = () => {
 
   const renderVideos = () => { 
 
-    return Videos.map((video, index) => { 
+    return Videos.map((videos, index) => { 
 
       const color = Math.ceil(Math.random() * 3); 
-      
+
       return ( 
         <a
         style={{ textDecoration: "none" }}
@@ -72,10 +72,10 @@ const ViewerVideolist = () => {
             </div>
             <div className="detail-info">
               <h5 style={{ marginBottom: "5px", color: "var(--text-color)" }}>
-                {video.title}
+                {videos.title}
               </h5>
               <p style={{ fontSize: "14px" }}>
-                {reduceDescription(video.description)}
+                {reduceDescription(videos.description)}
               </p>
               <p style={{ fontSize: "14px", paddingTop: "25px" }}>
               </p>
