@@ -90,7 +90,7 @@ const Videolist = () => {
   const renderCreateButton = () => {
     if (authUserId) {
       return (
-        <Link className="add-button" to="/dashboard/streams/new">
+        <Link className="add-button" to="/dashboard/videos/new">
           <img width="50%" src="/img/addIconFlat.svg" alt="add Icon" />
         </Link>
       );
