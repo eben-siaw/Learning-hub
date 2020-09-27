@@ -1,6 +1,5 @@
 import {LOGGED_IN, AUTH_USER } from '../actions/types';
 
-
 const INITIAL_STATE = {
   isLoggedIn: false,
   user: {}, 

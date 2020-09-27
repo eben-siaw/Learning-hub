@@ -48,8 +48,9 @@ const Videolist = () => {
           <div className="stream-card" key={videos._id}>
             <div className="thumbnail">
               <VideoThumbnail
+                videoUrl={videos.video}  
+                thumbnailHandler={(thumbnail) => console.log(thumbnail)}
                 snapshotAtTime={2}
-                videoUrl={videos.video}
                 cors={true}
                 width={100}
               />
@@ -71,7 +72,7 @@ const Videolist = () => {
                 <p style={{ fontSize: "14px" }}>
                   {reduceDescription(videos.description)}
                 </p>
-                <p style={{ fontSize: "15px", paddingTop: 14 }}></p>
+                <p style={{ fontSize: "15px" }}></p>
               </div>
             </div>
 
