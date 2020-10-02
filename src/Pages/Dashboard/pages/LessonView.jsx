@@ -32,8 +32,8 @@ function LessonView(props) {
      <div>    
          <Typography variant="body1">{lesson.lessonTitle}</Typography> 
          <br/> 
-         <FilePreviewerThumbnail file={{
-            url: `${lesson.fileUrl}` }}
+         <FilePreviewer file={{
+            url: `https://cors-anywhere.herokuapp.com/${lesson.fileUrl}` }}
         />
       
      </div> 
