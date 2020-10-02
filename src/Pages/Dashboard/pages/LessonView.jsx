@@ -33,7 +33,7 @@ function LessonView(props) {
          <Typography variant="body1">{lesson.lessonTitle}</Typography> 
          <br/> 
          <FilePreviewer file={{
-            url: `https://cors-anywhere.herokuapp.com/${lesson.fileUrl}` }}
+            url: `${lesson.fileUrl}` }}
         />
       
      </div> 
