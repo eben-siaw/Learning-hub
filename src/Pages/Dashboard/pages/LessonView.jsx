@@ -1,9 +1,9 @@
 import React from 'react'; 
 import { useEffect } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
-import FileViewer from 'react-file-viewer'; 
-import PageHeader from "../components/PageHeader"; 
+import { useState } from 'react'; 
+import {FilePreviewerThumbnail} from "react-file-previewer"; 
+import {Typography} from '@material-ui/core/Typography';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -19,7 +19,7 @@ function LessonView(props) {
 
  useEffect(() => { 
  
-    axios.get(local + `/lesson/viewlesson/${id}`).then(res => { 
+    axios.get(URL + `/lesson/viewlesson/${id}`).then(res => { 
       setView(res.data);  
       console.log(res.data);
     })
@@ -28,11 +28,13 @@ function LessonView(props) {
 
  return( 
 
-    <div> 
-     <div>   
-    
-         <FileViewer filePath={lesson.fileUrl}   
-         fileType={file} />
+    <div className="outer-content"> 
+     <div>    
+         <Typography variant="body1">{lesson.lessonTitle}</Typography> 
+         <br/>
+     <FilePreviewerThumbnail file={{
+            url: `https://cors-anywhere.herokuapp.com/${lesson.fileUrl}`}}
+        />
      </div> 
 
     </div>
