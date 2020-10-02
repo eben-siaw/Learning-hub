@@ -58,7 +58,7 @@ export default function CoursesTabs(props) {
  const {meetingId} = props.match.params;
 
   const classes = useStyles(); 
-  const theme = useTheme();
+  //const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -83,16 +83,16 @@ export default function CoursesTabs(props) {
           <Tab label="Guidelines" {...a11yProps(3)} />
         </Tabs>
       </AppBar> 
-      <TabPanel value={value} index={0} >
+      <TabPanel value={value} index={0}>
         <UploadVideo />
       </TabPanel>
-      <TabPanel value={value} index={1} >
+      <TabPanel value={value} index={1}>
        <Share meetingId={meetingId} />
       </TabPanel> 
-      <TabPanel value={value} index={2} >
+      <TabPanel value={value} index={2}>
        <SharedLessons />
       </TabPanel>
-      <TabPanel value={value} index={3} dir={theme.direction}>
+      <TabPanel value={value} index={3}>
         <Guidelines/>
       </TabPanel> 
      
