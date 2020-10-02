@@ -30,7 +30,7 @@ function LessonView(props) {
 
     <div className="outer-content"> 
      <div>    
-         <Typography variant="body1">{lesson.lessonTitle}</Typography> 
+         <Typography variant="body1">Click on the download icon to download {lesson.lessonTitle}</Typography> 
          <br/> 
          <FilePreviewer file={{
             url: `${lesson.fileUrl}` }}
