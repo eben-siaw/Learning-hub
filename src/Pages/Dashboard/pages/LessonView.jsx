@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react'; 
-import {FilePreviewerThumbnail} from "react-file-previewer"; 
+import FilePreviewer from "react-file-previewer"; 
 import Typography from '@material-ui/core/Typography';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
