@@ -1,6 +1,6 @@
 import axios from "axios";  
 import jwt_decode from 'jwt-decode';
-const URL = "https://nilee-nodedatabase.herokuapp.com/" 
+const URL = "https://nilee-nodedatabase.herokuapp.com" 
 
 const local = "http://localhost:5050"; 
 
