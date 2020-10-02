@@ -37,12 +37,12 @@ class Home extends Component {
           <div className="welcome-card">
             <div>
               <h3>Welcome Back!</h3>
-              <h5>Educational content & Studies made easy.</h5>
+              <h5>Educational contents & Studies made easy.</h5>
               <p>
-                You can start by either joining a course or creating a course
+                You can start by either joining a course or creating a course as an Instructor
               </p>
               <p>
-                Links are provided below. Enjoy your stay with Nilee by Dawn Of
+                Links are provided below. Enjoy your stay with EduNal by Dawn Of
                 Abstraction
               </p>
             </div>

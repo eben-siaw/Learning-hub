@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Videodetails from './Videodetails';
+import ShareMaterials from './ShareMaterials';
 
-const UploadVideo = ({meetingId}) => {
+const Share = ({meetingId}) => {
   
   return (
     <div>
@@ -11,9 +11,9 @@ const UploadVideo = ({meetingId}) => {
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>
-        <h3>Click to upload video</h3>
+        <h3>Share lessons</h3>
         <div className="form-wrapper">
-          <Videodetails/>
+          <ShareMaterials meetingId={meetingId}/>
         </div>
       </div>
       <style jsx>{`
@@ -42,4 +42,4 @@ const UploadVideo = ({meetingId}) => {
   );
 };
 
-export default UploadVideo;
+export default Share;

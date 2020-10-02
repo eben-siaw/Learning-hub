@@ -1,5 +1,6 @@
 export const AUTH_USER = "AUTH_USER"; 
-export const LOGGED_IN = "LOGGED_IN"
+export const LOGGED_IN = "LOGGED_IN"; 
+export const MEETING_ID = "MEETING_ID";
 export const CREATE_STREAM = "CREATE_STREAM";
 export const CREATE_STREAM_FAILED = "CREATE_STREAM_FAILED";
 export const FETCH_STREAMS = "FETCH_STREAMS";

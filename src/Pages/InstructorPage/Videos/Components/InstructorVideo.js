@@ -56,7 +56,7 @@ const InstructorVideo = (props) => {
       <div>
         <Video
           key={video.video}   
-          controls={['PlayPause', 'Seek', 'Time', 'Fullscreen']}
+          controls={['PlayPause', 'Seek', 'Time', 'Fullscreen', 'Volume']}
           width='100%'
           height='100%'>  
           <source src={video.video} type="video/mp4"/>  

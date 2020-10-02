@@ -1,4 +1,6 @@
-import axios from "axios";
+import axios from "axios"; 
+const local = "http://localhost:5050/"; 
+
 const BASE_URL = "https://nilee-nodedatabase.herokuapp.com/";
 
 export const register = async (newuser) =>

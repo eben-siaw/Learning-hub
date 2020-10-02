@@ -5,12 +5,12 @@ function InfoSection({ isLogin }) {
     <div className="info-section">
       <div className="text">
         <span>
-          Welcome to <b>Nilee</b>
+          Welcome to <b>EduNal</b>
         </span>
         {isLogin ? (
           <p>Log in to access your account</p>
         ) : (
-          <p>Sign up to Nilee for a new account</p>
+          <p>Sign up to EduNal for a new account</p>
         )}
       </div>
     </div>

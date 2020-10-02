@@ -7,6 +7,7 @@ import VideoThumbnail from "react-video-thumbnail";
 import LoadingSpin from "react-loading-spin";
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
+const local = "http://localhost:5050"; 
 
 const Videolist = () => {
   const authUserId = useSelector((state) => state.auth.user._id);
@@ -69,20 +70,20 @@ const Videolist = () => {
                 <h5 style={{ marginBottom: "5px", color: "var(--text-color)" }}>
                   {videos.title}
                 </h5>
-                <p style={{ fontSize: "14px" }}>
+                <p style={{ fontSize: "14px", color: "grey"}}>
                   {reduceDescription(videos.description)}
                 </p>
-                <p style={{ fontSize: "15px" }}></p>
+                <p style={{ fontSize: "15px", color: "black" }}>{videos.instructor.first_name} {videos.instructor.last_name}</p>
               </div>
             </div>
 
-            {/*videos.instructor._id === authUserId ? (
+            {videos.instructor._id === authUserId ? (
             <AuthOptions
               streamId={videos._id}
             />
           ) : (
             ""
-          )*/}
+          )}
           </div>
         </a>
       );

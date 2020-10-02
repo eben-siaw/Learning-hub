@@ -2,20 +2,24 @@ import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import InputField from "../../../Components/InputField";
 import { v1 as uuid } from "uuid";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import axios from "axios"; 
+
 import { courseEntry } from "./Coursefunctions";
 
-const URL = "https://nilee-nodedatabase.herokuapp.com";
+const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
-const Actions = ({ user }) => {
-  const CreateForm = ({ action }) => {
+const local = "http://localhost:5050"; 
+
+const Actions = ({ user }) => {  
+
+  const CreateForm = ({ action }) => { 
+
     const addcourse = async (newcourse) => {
       try {
-        return await axios.post(
-          URL + `/courses/${user._id}/addcourse`,
-          newcourse
-        );
+      return await axios.post(URL + `/courses/${user._id}/addcourse`, 
+       newcourse).then(res => { 
+        return res.data;
+      })
       } catch (error) {
         return { error: "Internal Server Error" };
       }
@@ -24,7 +28,8 @@ const Actions = ({ user }) => {
     const [data, setData] = useState({
       course_name: "",
       meetingId: uuid(),
-    });
+    }); 
+ 
 
     const [error, setError] = useState({
       isTrue: false,
@@ -41,13 +46,13 @@ const Actions = ({ user }) => {
     };
 
     const submit = async () => {
-      const isValid = Object.values(data).includes("") === false;
-      if (isValid) {
-        await addcourse({ ...data }).then((data) => {
-          if (data.error) return throwError(data.error);
-          window.location.href = "/dashboard/courses";
+      const isValid = Object.values(data).includes("") === false;   
+      if (isValid && data.meetingId) {
+        await addcourse({ ...data }).then((results) => {
+          if (results.error) return throwError(results.error);
+          window.location.href = `/dashboard/instructorhub`;
         });
-      }
+      } 
     };
 
     return (
@@ -174,12 +179,13 @@ const Actions = ({ user }) => {
   );
 };
 
-const JoinForm = ({ action }) => {
+const JoinForm = ({ action}) => { 
+   
   const [meetingId, setMeetingId] = useState("");
   const [error, setError] = useState({
     isTrue: false,
     message: "",
-  });
+  }); 
 
   const throwError = (message) => {
     setError({ isTrue: true, message });
@@ -191,13 +197,13 @@ const JoinForm = ({ action }) => {
   };
 
   const submit = async () => {
-    if (meetingId)
-      await courseEntry({ meetingId: meetingId }).then((res) => {
+      if (meetingId)    
+     await courseEntry({ meetingId: meetingId }).then((res) => {  
         console.log(res);
         if (res.error) {
           return throwError(res.error);
         }
-        window.location.href = "/dashboard/viewersvideo";
+        window.location.href = `/dashboard/coursehub/${meetingId}`;
       });
   };
 
@@ -223,5 +229,7 @@ const JoinForm = ({ action }) => {
     </form>
   );
 };
+
+
 
 export default Actions;

@@ -1,8 +1,8 @@
-import {LOGGED_IN, AUTH_USER } from '../actions/types';
+import {LOGGED_IN, AUTH_USER, MEETING_ID } from '../actions/types';
 
 const INITIAL_STATE = {
   isLoggedIn: false,
-  user: {}, 
+  user: {},  
 };
 
 export function auth(state = INITIAL_STATE, action) {

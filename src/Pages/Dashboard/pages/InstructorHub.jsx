@@ -11,28 +11,27 @@ import {
   IconButton,
   CardContent,
 } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 import BookIcon from "@material-ui/icons/Book";
 import { Link } from "react-router-dom";
-import LoadingSpin from 'react-loading-spin'; 
- import {useSelector} from 'react-redux';
-
-// Course Hub
+import LoadingSpin from 'react-loading-spin';
+import {useSelector} from 'react-redux'; 
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
-const local = "http://localhost:5050";
+//const local = "http://localhost:5050"; 
 
-const Courses = (props) => {  
-  
-  const meetingId =  props.match.params.meetingId;
-
+const InstructorHub = () => { 
+ 
   const [courses, setCourses] = useState([]); 
   const [loading, setLoading] = useState(true);
   // get Courses created by the authenticated logged in user, url params
+ 
+  const user = useSelector(state => state.auth.user._id)
 
   const getCourses = async () => {
     try {
-      await axios.get(URL + `/courses/coursehub`)  
+      await axios.get(URL + `/courses/${user}/courses`)  
       .then(res => { 
         setCourses(res.data);  
         setLoading(false);
@@ -42,14 +41,24 @@ const Courses = (props) => {
     }
   };
 
+  const deleteCourse = async (id) => {
+    try {
+      await axios
+        .delete(URL + `/courses/${user}/course/delete/${id}`)
+        .then((res) => {
+          return res.data;
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getCourses();
   });
 
-  const renderCourses = courses.map((course, index) => {  
-     
-      if(course.meetingId == meetingId) {  
-
+  const renderCourses = () => {
+    return courses.map((course, index) => {
       return (
         <Grid md={6} xs={12} key={index} item style={{ position: "relative" }}>
           <Paper
@@ -59,7 +68,7 @@ const Courses = (props) => {
             }}
           >
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <Typography variant="h6">{course.course_name}</Typography> 
+              <Typography variant="h6">{course.course_name}</Typography>
             </div>
             <CardContent>
               <div
@@ -70,7 +79,7 @@ const Courses = (props) => {
                 }}
               >
                 <Link
-                  to={`/dashboard/lessons/${course.meetingId}`}
+                  to={`/dashboard/courseview/${course.meetingId}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Button
@@ -81,21 +90,27 @@ const Courses = (props) => {
                       marginRight: 10,
                     }}
                   >
-                    View course
+                    Proceed
                   </Button>
                 </Link>
+                <IconButton
+                  onClick={() => deleteCourse(course._id)}
+                  aria-label="delete"
+                  color="secondary"
+                >
+                  <DeleteIcon />
+                </IconButton>
               </div>
             </CardContent>
           </Paper>
         </Grid>
-      );  
-    } 
+      );
     });
-  
+  };
 
- if(meetingId) { 
   return (
     <div>
+      <PageHeader title="Instructor Hub" useSearch={true} />
       <Container>
         <Grid
           container
@@ -103,7 +118,7 @@ const Courses = (props) => {
           direction="row"
           className="course-list-container-inner"
         >
-          {renderCourses}   
+          {renderCourses()}   
           <div style={{paddingTop: 50}}> 
           {loading ? <LoadingSpin /> : null} 
           </div>
@@ -128,16 +143,7 @@ const Courses = (props) => {
         </style>
       </Container>
     </div>
-  ); 
-
- }
- else { 
-  return(  
-   <div>   
-   <div> No Courses Found </div>  
-   </div>
-  ) 
-  }
+  );
 };
 
-export default Courses;
+export default InstructorHub;

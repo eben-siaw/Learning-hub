@@ -4,7 +4,8 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';     
 import { Provider } from 'react-redux'; 
 import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './action_reducers';
+import rootReducer from './action_reducers'; 
+import promiseMiddleware from 'redux-promise';
 import reduxThunk from 'redux-thunk';
  
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

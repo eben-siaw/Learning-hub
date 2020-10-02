@@ -4,14 +4,21 @@ import { Route, Switch } from "react-router-dom";
 import DashboardNav from "./components/DashboardNav";
 import Home from "./pages/Home";
 import Videos from "./pages/Videos";
-import Courses from "./pages/Courses";
+import CourseHub from "./pages/CourseHub";
 import ViewerVideolist from "../InstructorPage/Videos/Components/ViewerVideolist";
 import Settings from "./pages/Settings";
 import UserProfile from "./components/UserProfile";
 import Help from "./pages/Help";
 import NotFound from "../../Components/NotFound";
 import { connect } from "react-redux";
-import { setCurrentUser } from "../../actions/index";
+import { setCurrentUser, setLoggedIn } from "../../actions/index"; 
+import {setCurrentCourse} from "../../actions/index";
+import CoursesTabs from "./pages/CourseTablayout/CoursesTabs";
+import Lessons from './pages/Lessons';
+import InstructorHub from "./pages/InstructorHub";
+import LessonCourse from "./pages/LessonsCourse";
+import LessonView from "./pages/LessonView";
+
 
 class Dashboard extends Component {
   constructor() {
@@ -38,8 +45,11 @@ class Dashboard extends Component {
       country: decoded.country, 
       region: decoded.region
     });
-    this.props.setCurrentUser(decoded);
+    this.props.setCurrentUser(decoded);  
+    this.props.setLoggedIn(true); 
+
   }
+    
 
   render() {
     return (
@@ -49,19 +59,32 @@ class Dashboard extends Component {
 
           <div className="content">
             <Switch>
-              <Route exact path="/dashboard" render={() => <Home />} />
-              <Route path="/dashboard/videos" render={() => <Videos />} />
+              <Route exact path="/dashboard" render={() => <Home />} /> 
+
+              <Route path="/dashboard/videos" render={() => <Videos />} /> 
+               
+               <Route path="/dashboard/lessons"  
+               component={LessonCourse}  
+               />
+
               <Route
-                path="/dashboard/courses"
-                render={() => <Courses user={this.state} />}
-              />
+                path="/dashboard/coursehub/:meetingId"
+                component={CourseHub}
+              />  
+
+              <Route path="/dashboard/courseview/:meetingId"  
+              component={CoursesTabs} 
+              /> 
+        
               <Route
                 exact
-                path="/dashboard/viewerstreams"
-                render={() => <ViewerVideolist user={this.state} />}
+                path="/dashboard/instructorhub"
+                component={InstructorHub}
               />
-              <Route path="/dashboard/settings" render={() => <Settings />} />
-              <Route path="/dashboard/help" render={() => <Help />} />
+              <Route path="/dashboard/settings" render={() => <Settings />} /> 
+
+              <Route path="/dashboard/help" render={() => <Help />} /> 
+
               <Route path="/dashboard" render={() => <NotFound />} />
             </Switch>
           </div>
@@ -121,4 +144,4 @@ class Dashboard extends Component {
   }
 }
 
-export default connect(null, { setCurrentUser })(Dashboard);
+export default connect(null, { setCurrentUser, setLoggedIn })(Dashboard);

@@ -2,7 +2,8 @@ import streams from "../Pages/InstructorPage/api/streams";
 
 import {  
   LOGGED_IN,
-  AUTH_USER,
+  AUTH_USER, 
+  MEETING_ID,
   CREATE_STREAM,
   CREATE_STREAM_FAILED,
   FETCH_STREAMS,
@@ -24,9 +25,18 @@ export const setCurrentUser = decoded => {
 export const setLoggedIn = bool => {
   return {
      type: LOGGED_IN,
-     payload: bool,
+     payload: bool
   };
 };
+
+export const setCurrentCourse = (decode) => {    
+  
+    return { 
+    type: MEETING_ID, 
+    payload: decode
+ 
+  }
+}
 
 /*
 export const createStream = (formValues) => async (dispatch, getState) => {  

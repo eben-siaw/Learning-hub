@@ -14,7 +14,7 @@ import {storage} from '../../../Firebase/firebase';
 import LoadingSpin from 'react-loading-spin'
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
-
+const local = "http://localhost:5050";
 const useStyles = makeStyles((theme) => ({ 
 
     root: { 

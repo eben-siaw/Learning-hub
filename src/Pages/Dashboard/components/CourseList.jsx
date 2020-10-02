@@ -45,7 +45,7 @@ const Empty = () => {
   return (
     <div className="empty-list">
       <i className="ion-android-happy"></i>
-      <p>View your created courses at Course Hub</p>
+      <p>View your created courses at Instructor Hub</p>
       <style jsx>{`
         .empty-list {
           display: flex;

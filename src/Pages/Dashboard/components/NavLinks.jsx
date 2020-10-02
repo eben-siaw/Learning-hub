@@ -1,11 +1,16 @@
-import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext } from "react"; 
+import { NavLink } from "react-router-dom"; 
+import {useSelector} from 'react-redux';
 
-export default function NavLinks(props) {
-  const logouthandler = () => {
+export default function NavLinks(props) { 
+ 
+ const meetingId = useSelector(state => state.course.data)
+
+  const logouthandler = () => { 
     localStorage.removeItem("usertoken");
-    window.location = "/login";
-  };
+    window.location = "/login"; 
+  }; 
+
   const link = (value = "") => `/dashboard${value}`;
   return (
     <div className="list-box">
@@ -14,10 +19,16 @@ export default function NavLinks(props) {
       </NavLink>
       <NavLink to={link(`/videos`)}>
         <i className="ion-ios-videocam-outline"></i>
-      </NavLink>
-      <NavLink to={link(`/courses`)}>
+      </NavLink>  
+      <NavLink to={link(`/coursehub/${meetingId}`)}>
         <i className="ion-ios-book-outline"></i>
+      </NavLink> 
+      <NavLink to={link(`/lessons`)}>
+        <i className="ion-ios-list-outline"></i>
       </NavLink>
+      <NavLink to={link(`/instructorhub`)}>
+        <i className="ion-ios-information-outline"></i>
+      </NavLink> 
       <NavLink to={link(`/settings`)}>
         <i className="ion-ios-gear-outline"></i>
       </NavLink>

@@ -5,10 +5,11 @@ export default function HelpContent() {
     <div className="help-content">
       <h1> How can I join a course? </h1>
       <span>
-        You can join a course with a meeting id created by your instructor,
+        You can join a course with the meeting id created by your instructor,  
+        after joining you will be redirected to the Course hub page.
         <br />
         your instructor will give you an id to join a course. After you join you
-        can see the current stream created by your instructor
+        can see the current stream created by your instructor.
       </span>
 
       <h1> How can I create a course? </h1>
@@ -22,7 +23,7 @@ export default function HelpContent() {
 
       <span>
         You can see your courses you created by going to the <br />
-        course hub page
+        Instructor hub page
       </span>
       <style jsx>{`
         .help-content {
