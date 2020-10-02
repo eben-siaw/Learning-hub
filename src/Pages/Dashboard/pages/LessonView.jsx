@@ -12,10 +12,12 @@ const local = "http://localhost:5050"
 function LessonView(props) { 
   
  const file = "docx"
-
+ 
  const {id} = props.match.params;
 
- const [lesson, setView] = useState({})
+ const [lesson, setView] = useState({}) 
+ 
+ const data = lesson.fileUrl; 
 
  useEffect(() => { 
  
@@ -32,10 +34,10 @@ function LessonView(props) {
      <div>    
          <Typography variant="body1">{lesson.lessonTitle}</Typography> 
          <br/> 
-         <div>{lesson.fileUrl}</div>
-    {/* <FilePreviewerThumbnail file={{
-            url: `https://cors-anywhere.herokuapp.com/${lesson.fileUrl}`}}
-    />*/}
+         <FilePreviewerThumbnail file={{
+            url: data }}
+        />
+      
      </div> 
 
     </div>
