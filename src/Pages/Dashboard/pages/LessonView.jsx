@@ -17,8 +17,6 @@ function LessonView(props) {
 
  const [lesson, setView] = useState({}) 
  
- const data = lesson.fileUrl; 
-
  useEffect(() => { 
  
     axios.get(URL + `/lesson/viewlesson/${id}`).then(res => { 
@@ -35,7 +33,7 @@ function LessonView(props) {
          <Typography variant="body1">{lesson.lessonTitle}</Typography> 
          <br/> 
          <FilePreviewerThumbnail file={{
-            url: data }}
+            url: `${lesson.fileUrl}` }}
         />
       
      </div> 
