@@ -1,12 +1,37 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "axios";   
+import {Link} from 'react-router-dom'
+import Typography from '@material-ui/core/Typography';
+import {useSelector} from 'react-redux';
 
-const CourseList = () => {
-  const [list, setList] = useState("");
+const URL = "https://nilee-nodedatabase.herokuapp.com"; 
+
+const CourseList = () => { 
+ 
+  const user = useSelector(state => state.auth.user._id);
+
+  const [list, setList] = useState({}); 
+  
+ const getCourse = () => { 
+  
+  axios.get(URL + `/courses/${user}/currentcourse`).then(res => { 
+    setList(res.data); 
+  })
+
+ }
+
+  useEffect(() => { 
+   getCourse();
+  }, [])
 
   return (
-    <div className="course-list">
-      {list.length < 1 ? <Empty /> : <div className="list"></div>}
+    <div className="course-list">  
+     <h5 style={{color: "CadetBlue", fontSize: '1.1em'}}>Your Courses</h5>
+      {list.length < 1 ? <Empty /> : <div className="list">  
+       <Typography variant="body1" style={{color: "DarkSlateGrey", fontSize: '1.4em', fontFamily: 'sans-serif, Arial, Helvetica'}}> {list.course_name}  </Typography>  
+       <br/>
+        <Link style={{color: "DarkSlateGrey"}} to="/dashboard/instructorhub"> Show more </Link>
+       </div>}
       <style jsx>{`
         .course-list {
           background: rgba(0, 0, 0, 0.04);
@@ -16,6 +41,14 @@ const CourseList = () => {
           margin-left: 20px;
           min-width: 350px;
           min-height: 300px;
+        } 
+        .list { 
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+         -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
         }
         .course-list h5 {
           margin-bottom: 20px;
@@ -45,7 +78,7 @@ const Empty = () => {
   return (
     <div className="empty-list">
       <i className="ion-android-happy"></i>
-      <p>View your created courses at Instructor Hub</p>
+      <p>You have not created a course</p>
       <style jsx>{`
         .empty-list {
           display: flex;
