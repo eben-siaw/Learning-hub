@@ -47,7 +47,8 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1, 
+    flexWrap: "wrap",
   // 
     backgroundColor: theme.palette.background.paper,
   },
@@ -68,9 +69,9 @@ export default function CoursesTabs(props) {
     setValue(index);
   };
   return (
-    <div className={classes.root}>
-      <AppBar position="static" 
-      >
+    <div className={classes.root}> 
+       <div className="bar-box">
+      <AppBar position="static">
         <Tabs value={value}  
         onChange={handleChange}  
         aria-label="simple tabs example"  
@@ -94,8 +95,15 @@ export default function CoursesTabs(props) {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <Guidelines/>
-      </TabPanel> 
-     
-    </div>
+      </TabPanel>  
+      </div>   
+       <style jsx>{`
+          @media (max-width: 500px) {
+          .bar-box {
+            height: 76vh;
+            overflow: auto;
+          } 
+        } `}</style>
+    </div> 
   );
 }

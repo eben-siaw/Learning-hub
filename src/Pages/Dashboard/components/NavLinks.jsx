@@ -1,5 +1,6 @@
 import React, { useContext } from "react"; 
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";  
+import SchoolIcon from  '@material-ui/icons/SchoolOutlined';
 import {useSelector} from 'react-redux';
 
 export default function NavLinks(props) { 
@@ -26,8 +27,8 @@ export default function NavLinks(props) {
       <NavLink to={link(`/lessons`)}>
         <i className="ion-ios-list-outline"></i>
       </NavLink>
-      <NavLink to={link(`/instructorhub`)}>
-        <i className="ion-ios-information-outline"></i>
+      <NavLink to={link(`/instructorhub`)}> 
+      <i className="ion-android-contact"></i>
       </NavLink> 
       <NavLink to={link(`/settings`)}>
         <i className="ion-ios-gear-outline"></i>
