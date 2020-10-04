@@ -58,7 +58,7 @@ const Videodetails = () =>
      
      let errors = {};
      //validation  
-     if(videotitle === "" || description === "") { 
+     if(videotitle === "" || description === "" || videoFile === "") { 
      return alert("All fields are required")
      } 
   
