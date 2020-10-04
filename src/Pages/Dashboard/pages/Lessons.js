@@ -73,7 +73,7 @@ const Lessons = () => {
   );
  }   
  })
-   if(meetingId) { 
+   if(lessons.meetingId == meetingId) { 
     return( 
      <div>  
        <div> 
@@ -86,7 +86,7 @@ const Lessons = () => {
   } 
   else { 
     return( 
-    <div> No lessons found.. Please join a course </div>
+    <div> No lessons found. Please join a course </div>
     )
   } 
 } 

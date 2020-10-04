@@ -12,12 +12,11 @@ const CourseList = () => {
 
   const [list, setList] = useState({}); 
   
- const getCourse = () => { 
+ const getCourse = async () => { 
   
-  axios.get(URL + `/courses/${user}/currentcourse`).then(res => { 
-    setList(res.data); 
-  })
-
+  const res = await axios.get(URL + `/courses/${user}/currentcourse`) 
+    setList(res.data);  
+    console.log(res.data);
  }
 
   useEffect(() => { 
@@ -27,10 +26,10 @@ const CourseList = () => {
   return (
     <div className="course-list">  
      <h5 style={{color: "CadetBlue", fontSize: '1.1em'}}>Your Courses</h5>
-      {list.length < 1 ? <Empty /> : <div className="list">  
+      {list.length < 1 && list == null ? <Empty /> : <div className="list">  
        <Typography variant="body1" style={{color: "DarkSlateGrey", fontSize: '1.4em', fontFamily: 'sans-serif, Arial, Helvetica'}}> {list.course_name}  </Typography>  
        <br/>
-        <Link style={{color: "DarkSlateGrey"}} to="/dashboard/instructorhub"> Show more </Link>
+        <Link style={{color: "CadetBlue"}} to="/dashboard/instructorhub"> Show more </Link>
        </div>}
       <style jsx>{`
         .course-list {

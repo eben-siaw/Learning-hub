@@ -93,7 +93,7 @@ const Courses = (props) => {
     });
   
 
- if(meetingId) { 
+ if(courses.meetingId == meetingId) { 
   return (
     <div>
       <Container>
@@ -134,7 +134,7 @@ const Courses = (props) => {
  else { 
   return(  
    <div>   
-   <div> No Courses Found </div>  
+   <div> You haven't join a course. Please join a course </div>  
    </div>
   ) 
   }

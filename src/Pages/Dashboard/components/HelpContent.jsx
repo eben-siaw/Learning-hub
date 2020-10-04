@@ -9,7 +9,7 @@ export default function HelpContent() {
         after joining you will be redirected to the Course hub page.
         <br />
         your instructor will give you an id to join a course. After you join you
-        can see the current stream created by your instructor.
+        can see the current course created by your instructor and also available lesson materials.
       </span>
 
       <h1> How can I create a course? </h1>
