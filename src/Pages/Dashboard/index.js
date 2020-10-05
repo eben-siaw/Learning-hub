@@ -34,7 +34,7 @@ class Dashboard extends Component {
   componentDidMount() {
     const token = localStorage.usertoken;
     if (!token) {
-      window.location = "/login";
+      window.location = "/";
     }
     const decoded = jwt_decode(token);
     this.setState({
