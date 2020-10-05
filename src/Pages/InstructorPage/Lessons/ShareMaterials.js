@@ -30,7 +30,12 @@ const ShareMaterials = ({meetingId}) => {
   const handleFileSubmit = (event) => {  
 
     event.preventDefault();
-    //firebase cloud
+    //firebase cloud 
+
+    if(title === "" || file === "") { 
+      return alert("All Fields are required")
+      } 
+
     const uploadTask = storage.ref(`/lessons/${file.name}`).put(file);
     
      console.log(file);

@@ -90,9 +90,9 @@ const Videolist = () => {
     });
   };
   const renderCreateButton = () => {
-    if (authUserId) {
+    if (Videos.instructor._id === authUserId) {
       return (
-        <Link className="add-button" to="/dashboard/videos/new">
+        <Link className="add-button" to="/dashboard/instructorhub">
           <img width="50%" src="/img/addIconFlat.svg" alt="add Icon" />
         </Link>
       );
