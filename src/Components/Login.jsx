@@ -159,7 +159,7 @@ class Login extends React.Component {
                 {" "}
                 <span className="redirect-link">
                   {" "}
-                  Not a Nilee member?{" "}
+                  Not an Edunal member? Register{" "}
                 </span>{" "}
               </Link>
             </form>
