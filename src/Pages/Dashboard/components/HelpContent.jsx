@@ -24,6 +24,12 @@ export default function HelpContent() {
       <span>
         You can see your courses you created by going to the <br />
         Instructor hub page
+      </span> 
+   
+      <h1> Video Guidelines </h1>
+      <span>
+        You can Upload contents after a course has been created. Note: Videos should be of learning type only. <br />
+        Instructor hub page
       </span>
       <style jsx>{`
         .help-content {
