@@ -51,6 +51,12 @@ export default function MobileMenu() {
           .menu-list {
             padding: 5px 20px;
           }
+        } 
+
+        @media (max-width: 380px) { 
+          .menu-btn { 
+            margin-right: 68px;
+          }
         }
       `}</style>
     </div>

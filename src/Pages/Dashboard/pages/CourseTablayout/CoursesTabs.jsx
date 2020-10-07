@@ -10,7 +10,11 @@ import Box from '@material-ui/core/Box';
 import Share from '../../../InstructorPage/Lessons/Share';
 import Guidelines from '../../../InstructorPage/Lessons/Guidelines';
 import UploadVideo from '../../../InstructorPage/Videos/UploadVideo';
-import SharedLessons from '../../../InstructorPage/Lessons/SharedLessons';
+import SharedLessons from '../../../InstructorPage/Lessons/SharedLessons'; 
+import UploadIcon from '@material-ui/icons/CloudUpload'; 
+import ShareIcon from '@material-ui/icons/Share'; 
+import ListIcon from '@material-ui/icons/List'; 
+import GuidelinesIcon from '@material-ui/icons/ViewAgenda';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,8 +52,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1, 
-    flexWrap: "wrap",
-  // 
+    width: '100%',
     backgroundColor: theme.palette.background.paper,
   },
 }));
@@ -59,7 +62,7 @@ export default function CoursesTabs(props) {
  const {meetingId} = props.match.params;
 
   const classes = useStyles(); 
-  //const theme = useTheme();
+  const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -70,18 +73,19 @@ export default function CoursesTabs(props) {
   };
   return (
     <div className={classes.root}> 
-       <div className="bar-box">
-      <AppBar position="static">
+       <div className="mobile-box">
+      <AppBar position="static" color="transparent">
         <Tabs value={value}  
         onChange={handleChange}  
         aria-label="simple tabs example"  
-        variant="scrollable"
+        variant="scrollable"  
+        textColor="primary"
         scrollButtons="auto"
         centered>
-          <Tab label="Upload Videos" {...a11yProps(0)} />
-          <Tab label="Share materials" {...a11yProps(1)} /> 
-          <Tab label="Shared lessons" {...a11yProps(2) } />
-          <Tab label="Guidelines" {...a11yProps(3)} />
+          <Tab label="Upload Videos" icon={<UploadIcon />} {...a11yProps(0)} />
+          <Tab label="Share materials" icon={<ShareIcon /> } {...a11yProps(1)} /> 
+          <Tab label="Shared lessons" icon={<ListIcon />} {...a11yProps(2) } />
+          <Tab label="Guidelines" icon={<GuidelinesIcon/>} {...a11yProps(3)} />
         </Tabs>
       </AppBar> 
       <TabPanel value={value} index={0}>
@@ -97,11 +101,12 @@ export default function CoursesTabs(props) {
         <Guidelines/>
       </TabPanel>  
       </div>   
-       <style jsx>{`
+       <style jsx>{` 
           @media (max-width: 500px) {
-          .bar-box {
+          .mobile-box {
             height: 76vh;
-            overflow: auto;
+            overflow: auto; 
+            margin-right: 35px;
           } 
         } `}</style>
     </div> 

@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';  
 import { makeStyles } from '@material-ui/core/styles'; 
-import {  deepPurple } from '@material-ui/core/colors';
+import {deepOrange,  deepPurple } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper'; 
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.secondary,
     }, 
     orange: {
-      color: theme.palette.getContrastText(deepPurple[500]),
-      backgroundColor: deepPurple[500],
+      color: theme.palette.getContrastText(deepOrange[500]),
+      backgroundColor: deepOrange[500],
     },
   }));
 
@@ -80,10 +80,21 @@ const SharedLessons = () => {
     return( 
      
      <div>  
-       <div> 
+       <div className="lesson-inner"> 
       {renderLessons}  
       {loading ? <LoadingSpin /> : null}
-      </div>
+      </div> 
+     <style jsx>{ 
+       ` 
+        @media (max-width: 500px) {
+          .lesson-inner {
+            height: 76vh;
+            overflow: auto; 
+            margin-right: 14px;
+          }  
+        }
+    `}  
+     </style>
      </div>   
 
     );
