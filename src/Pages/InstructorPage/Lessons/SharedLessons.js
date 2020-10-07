@@ -61,7 +61,6 @@ const SharedLessons = () => {
   if(lesson.instructor._id == userId) {   
 
      return(  
-
       <div className={classes.root}>   
         <a style={{textDecoration: 'none'}} href={`/dashboard/lessons/view/${lesson._id}`}>   
        <Grid container spacing={4}>  

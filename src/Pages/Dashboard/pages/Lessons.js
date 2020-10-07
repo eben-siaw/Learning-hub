@@ -47,7 +47,10 @@ const Lessons = () => {
       setLoading(false);
      setLessons(res.data);
      console.log(res.data)
-    });
+    }) 
+    .catch(error => {
+      setErrors(error);
+    })
  }
 
    useEffect(() => { 
