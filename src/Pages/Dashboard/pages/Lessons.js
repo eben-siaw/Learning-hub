@@ -73,7 +73,7 @@ const Lessons = () => {
   );
  }   
  })
-   if(lessons.meetingId == meetingId) { 
+   if(meetingId) { 
     return( 
      <div>  
        <div> 

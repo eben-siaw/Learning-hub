@@ -93,7 +93,7 @@ const Courses = (props) => {
     });
   
 
- if(courses.meetingId == meetingId) { 
+ if(meetingId) { 
   return (
     <div>
       <Container>

@@ -1,33 +1,26 @@
 import React, { useEffect } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import StreamDetails from "./StreamDetails";
+import VideoUpdate from './VideoUpdate';
+import axios from "axios";
 
-const EditStream = (props) => {
-  const dispatch = useDispatch();
-  const {
-    params: { id },
-  } = useRouteMatch("/dashboard/videos/edit/:id");
-  const state = useSelector((state) => state.streams);
-  const editDetails = state[`${id}`];
-  const errorMessage = state.editError || "";
-  console.log(errorMessage);
+const EditVideo = () => { 
+
+  const { params: { id }, 
+} = useRouteMatch("/dashboard/videos/edit/:id");   
 
   return (
     <div>
       <div className="create-stream-wrapper">
-        <Link to="/dashboard/streams" class="back-button">
+        <Link to="/dashboard/videos" class="back-button">
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>
-        <h3>Edit Existing Stream</h3>
+        <h3>Edit Existing Video</h3>
         <div className="form-wrapper">
-          <div className={`error-display ${errorMessage ? "" : "hidden"}`}>
+          {/* <div className={`error-display ${errorMessage ? "" : "hidden"}`}>
             <p>{errorMessage}</p>
-          </div>
-          <StreamDetails
-            editDetails={editDetails || {}}
-          />
+           </div>*/}
+          <VideoUpdate videoId={id} />
         </div>
       </div>
       <style jsx>{`
@@ -51,4 +44,4 @@ const EditStream = (props) => {
   );
 };
 
-export default EditStream;
+export default EditVideo;

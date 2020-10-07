@@ -9,11 +9,14 @@ import LoadingSpin from "react-loading-spin";
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 const local = "http://localhost:5050"; 
 
-const Videolist = () => {
-  const authUserId = useSelector((state) => state.auth.user._id);
+const Videolist = () => { 
+
+  const authUserId = useSelector((state) => state.auth.user._id);  
+
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
 
-  const [Videos, setVideos] = useState([]);
+  const [Videos, setVideos] = useState([]); 
+
   const [loading, setLoading] = useState(true);
 
   const getvideos = async () => {
@@ -21,6 +24,11 @@ const Videolist = () => {
     setVideos(res.data);
     setLoading(false);
   };
+  
+ const onItemDelete = async id => { 
+   const res = await axios.delete(URL + `/video/${authUserId}/deleteVideo/${id}`); 
+   return res.data;
+ }
 
   console.log(Videos);
 
@@ -42,10 +50,7 @@ const Videolist = () => {
 
     return Videos.map((videos, index) => {
       return (
-        <a
-          style={{ textDecoration: "none" }}
-          href={`/dashboard/videos/watch/${videos._id}`}
-        >
+      
           <div className="stream-card" key={videos._id}>
             <div className="thumbnail">
               <VideoThumbnail
@@ -54,9 +59,13 @@ const Videolist = () => {
                 snapshotAtTime={2}
                 cors={true}
                 width={100}
-              />
-            </div>
-            <div className="detail">
+              /> 
+            </div> 
+            <div className="detail"> 
+            <a
+             style={{ textDecoration: "none" }}
+             href={`/dashboard/videos/watch/${videos._id}`}
+            >
               <div
                 className="detail-icon"
                 style={{ background: `var(--color-${color}-transparent)` }}
@@ -74,18 +83,21 @@ const Videolist = () => {
                   {reduceDescription(videos.description)}
                 </p>
                 <p style={{ fontSize: "15px", color: "black" }}>{videos.instructor.first_name} {videos.instructor.last_name}</p>
-              </div>
-            </div>
-
-            {videos.instructor._id === authUserId ? (
-            <AuthOptions
-              streamId={videos._id}
+              </div>  
+              </a>
+              {videos.instructor._id === authUserId ? (
+            <AuthOptions 
+             onDelete={() => onItemDelete(videos._id)}
+              videoId={videos._id}
             />
           ) : (
             ""
           )}
+            </div>
+
+           
           </div>
-        </a>
+
       );
     });
   };
@@ -236,7 +248,7 @@ const Videolist = () => {
   }
 };
 
-const AuthOptions = ({ streamId, onDelete }) => {
+const AuthOptions = ({ videoId, onDelete }) => {
   const [show, setShow] = useState(false);
   return (
     <div className="auth-options">
@@ -254,12 +266,12 @@ const AuthOptions = ({ streamId, onDelete }) => {
         style={{ display: `${show ? "block" : "none"}` }}
       >
         <Link
-          to={`/dashboard/streams/edit/${streamId}`}
+          to={`/dashboard/videos/edit/${videoId}`}
           className="delete-button"
           style={{ color: "var(--color-2)" }}
         >
           Edit
-        </Link>
+        </Link> 
         <span
           onClick={onDelete}
           className="delete-button"

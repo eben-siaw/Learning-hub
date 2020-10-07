@@ -27,7 +27,7 @@ function Videos() {
 
         <Route
           exact
-          path="/dashboard/videos/edit/:videoId"
+          path="/dashboard/videos/edit/:id"
           render={() => <EditVideo />}
         />
         <Route
