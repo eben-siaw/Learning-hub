@@ -82,10 +82,10 @@ export default function CoursesTabs(props) {
         textColor="primary"
         scrollButtons="auto"
         centered>
-          <Tab label="Upload Videos" icon={<UploadIcon />} {...a11yProps(0)} />
-          <Tab label="Share materials" icon={<ShareIcon /> } {...a11yProps(1)} /> 
-          <Tab label="Shared lessons" icon={<ListIcon />} {...a11yProps(2) } />
-          <Tab label="Guidelines" icon={<GuidelinesIcon/>} {...a11yProps(3)} />
+          <Tab  label="Upload Videos" icon={<UploadIcon />} {...a11yProps(0)} />
+          <Tab  label="Share materials" icon={<ShareIcon /> } {...a11yProps(1)} /> 
+          <Tab  label="Shared lessons" icon={<ListIcon />} {...a11yProps(2) } />
+          <Tab  label="Guidelines" icon={<GuidelinesIcon/>} {...a11yProps(3)} />
         </Tabs>
       </AppBar> 
       <TabPanel value={value} index={0}>
