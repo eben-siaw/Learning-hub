@@ -13,8 +13,10 @@ import TitleIcon from '@material-ui/icons/TitleSharp'
 import {storage} from '../../../Firebase/firebase';
 import LoadingSpin from 'react-loading-spin'
 
-const URL = "https://nilee-nodedatabase.herokuapp.com"; 
-const local = "http://localhost:5050";
+const URL = "https://nilee-nodedatabase.herokuapp.com";  
+
+const local = "http://localhost:5050"; 
+
 const useStyles = makeStyles((theme) => ({ 
 
     root: { 
@@ -147,14 +149,17 @@ const Videodetails = () =>
           }}
         />  
        
-         <br/> 
-    
+         <br/>  
+
+         <div>  
          <Button onClick={handleSubmit} color="secondary"
           variant="contained" 
           startIcon={<CloudUploadIcon />} > Submit video </Button>  
-
-        {loading ? <LoadingSpin  /> : null } 
-
+          </div>
+         
+         <div style={{padding: 10}}> 
+         {loading ? <LoadingSpin  /> : null } 
+         </div>
       </div>
 
      );   
