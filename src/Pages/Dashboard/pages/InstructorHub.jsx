@@ -24,7 +24,8 @@ const URL = "https://nilee-nodedatabase.herokuapp.com";
 const InstructorHub = () => { 
  
   const [courses, setCourses] = useState([]); 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
+  const [errors, setErrors] = useState("")
   // get Courses created by the authenticated logged in user, url params
  
   const user = useSelector(state => state.auth.user._id)

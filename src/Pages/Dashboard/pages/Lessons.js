@@ -33,11 +33,13 @@ const Lessons = () => {
       
  const classes = useStyles();
     
- const meetingId = useSelector(state => state.course.data)
+ const meetingId = useSelector(state => state.course.data);
   
   const [lessons, setLessons] = useState([]); 
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
+
+  const [errors, setErrors] = useState("")
 
  const getLessons = () => { 
     axios.get(URL + "/lesson/getlessons") 

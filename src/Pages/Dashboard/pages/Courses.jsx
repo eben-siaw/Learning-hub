@@ -27,7 +27,8 @@ const Courses = (props) => {
   const meetingId =  props.match.params.meetingId;
 
   const [courses, setCourses] = useState([]); 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState("");
   // get Courses created by the authenticated logged in user, url params
 
   const getCourses = async () => {
@@ -70,7 +71,7 @@ const Courses = (props) => {
                 }}
               >
                 <Link
-                  to={`/dashboard/lessons/${course.meetingId}`}
+                  to={`/dashboard/lessons`}
                   style={{ textDecoration: "none" }}
                 >
                   <Button

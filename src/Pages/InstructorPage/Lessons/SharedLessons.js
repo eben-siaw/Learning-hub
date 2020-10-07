@@ -32,12 +32,13 @@ const SharedLessons = () => {
       
  const classes = useStyles();
     
-  
  const userId = useSelector(state => state.auth.user._id);
 
   const [lessons, setLessons] = useState([]); 
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
+
+  const [errors, setErrors] = useState("")
 
  const getLessons = () => { 
     axios.get(URL + "/lesson/getlessons") 
@@ -45,7 +46,10 @@ const SharedLessons = () => {
       setLoading(false);
      setLessons(res.data);
      console.log(res.data)
-    });
+    }) 
+    .catch(error => { 
+      setErrors(error);
+    })
  }
 
    useEffect(() => { 
@@ -72,12 +76,6 @@ const SharedLessons = () => {
       </div> 
   );
  }   
- else {  
-     return(  
-    <div> No lessons found </div>
-    )
- }
-
  })
      
     return( 

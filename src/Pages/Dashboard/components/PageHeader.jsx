@@ -1,7 +1,11 @@
-import React from "react";
+import React from "react"; 
+import {useState} from "react";
 import Notification from "./Notification";
 
-export default function PageHeader({ title, useSearch }) {
+export default function PageHeader({ title, useSearch }) { 
+ 
+  const [search, searchResults] = useState("")
+  
   return (
     <div className="page-header">
       <h2>{title}</h2>
