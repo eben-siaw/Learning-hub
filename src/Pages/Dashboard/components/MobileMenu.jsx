@@ -21,7 +21,7 @@ export default function MobileMenu() {
           font-size: 30px;
           color: #fff;
           cursor: pointer;
-          margin-left: 20px;
+          margin-left: 30px;
         }
 
         .menu-list {
@@ -55,7 +55,7 @@ export default function MobileMenu() {
 
         @media (max-width: 380px) { 
           .menu-btn { 
-            margin-right: 44px;
+            margin-right: 58px;
           }
         }
       `}</style>
