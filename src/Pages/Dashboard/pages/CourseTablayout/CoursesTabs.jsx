@@ -51,8 +51,8 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1, 
-    width: '100%',
+    flexGrow: 1,  
+    width: '75%',
     backgroundColor: theme.palette.background.paper,
   },
 }));
