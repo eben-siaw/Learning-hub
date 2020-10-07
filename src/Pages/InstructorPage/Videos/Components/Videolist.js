@@ -25,9 +25,17 @@ const Videolist = () => {
     setLoading(false);
   };
   
- const onItemDelete = async id => { 
-   const res = await axios.delete(URL + `/video/${authUserId}/deleteVideo/${id}`); 
-   return res.data;
+ const onItemDelete = async id => {  
+   try {
+      await axios.delete(URL + `/video/removeVideo/${id}`).then(res => { 
+        if(res.data) { 
+          window.location = "/dashboard/videos";
+        }
+      })
+   } catch (error) {
+     console.log(error);
+   }
+ 
  }
 
   console.log(Videos);
@@ -51,7 +59,11 @@ const Videolist = () => {
     return Videos.map((videos, index) => {
       return (
       
-          <div className="stream-card" key={videos._id}>
+          <div className="stream-card" key={videos._id}> 
+            <a
+             style={{ textDecoration: "none" }}
+             href={`/dashboard/videos/watch/${videos._id}`}
+            >
             <div className="thumbnail">
               <VideoThumbnail
                 videoUrl={videos.video}  
@@ -59,13 +71,10 @@ const Videolist = () => {
                 snapshotAtTime={2}
                 cors={true}
                 width={100}
-              /> 
+              />  
             </div> 
+            </a>
             <div className="detail"> 
-            <a
-             style={{ textDecoration: "none" }}
-             href={`/dashboard/videos/watch/${videos._id}`}
-            >
               <div
                 className="detail-icon"
                 style={{ background: `var(--color-${color}-transparent)` }}
@@ -82,9 +91,8 @@ const Videolist = () => {
                 <p style={{ fontSize: "14px", color: "grey"}}>
                   {reduceDescription(videos.description)}
                 </p>
-                <p style={{ fontSize: "15px", color: "black" }}>{videos.instructor.first_name} {videos.instructor.last_name}</p>
-              </div>  
-              </a>
+                <p style={{ fontSize: "15px", color: "grey" }}>{videos.instructor.first_name} {videos.instructor.last_name}</p>
+              </div>   
               {videos.instructor._id === authUserId ? (
             <AuthOptions 
              onDelete={() => onItemDelete(videos._id)}
@@ -93,9 +101,7 @@ const Videolist = () => {
           ) : (
             ""
           )}
-            </div>
-
-           
+            </div> 
           </div>
 
       );

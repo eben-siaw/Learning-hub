@@ -64,7 +64,7 @@ const VideoUpdate = ({videoId}) =>
 
      // update video title and description 
 
-     axios.put(URL + `/video/${userId}/updateVideo/${videoId}`, details) 
+     axios.patch(URL + `/video/updateVideo/${videoId}`, details) 
      .then(res => {  
      if(res.data){    
      alert("Video Updated") 
