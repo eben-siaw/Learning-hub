@@ -8,7 +8,8 @@ export const courseEntry = async (join) => {
   try {
     const {data} = await axios.post(URL + "/courses/join", {
       ...join,
-    });  
+    });   
+    data.status && localStorage.setItem("coursetoken", data.token);
     return data;
   } catch (error) {
     return { error: "Internal Server Error" };

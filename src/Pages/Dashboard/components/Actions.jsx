@@ -201,10 +201,10 @@ const JoinForm = ({ action}) => {
      await courseEntry({ meetingId: meetingId }).then((res) => {  
         console.log(res);
         if (res.error) {
-          return throwError(res.error);
-        }
-        window.location.href = `/dashboard/coursehub/${meetingId}`;
-      });
+          return throwError('Course does not exist'); 
+        }   
+          window.location = `/dashboard/coursehub/${meetingId}`;
+      }) 
   };
 
   return (
