@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Videodetails from './Videodetails';
 
-const UploadVideo = ({meetingId}) => {
-  
+const UploadVideo = (props) => {
+  const {meetingId} = props.match.params;
   return (
     <div>
       <div className="create-stream-wrapper">
-        <Link to={`/dashboard/instructorhub`} className="back-button">
+        <Link to={`/courseview/${meetingId}/share`} className="back-button">
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import "./fonts/icon-font/ionicons.css"; 
+import "./fonts/icon-font/ionicons.css";  
+import CoursesTabs from "../src/Pages/Dashboard/pages/CourseTablayout/CoursesTabs";
 //Pages
 import Dashboard from "./Pages/Dashboard";
 import history from "./Pages/InstructorPage/history";
@@ -25,7 +26,9 @@ class App extends Component  {
 
         <Route path="/login" component={Login} />
 
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/dashboard" component={Dashboard} /> 
+
+        <Route path="/courseview/:meetingId/" component={CoursesTabs}  /> 
 
         {/* <Route path="/stream/new" component={Startstream} />
 

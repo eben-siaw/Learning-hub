@@ -2,16 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ShareMaterials from './ShareMaterials';
 
-const Share = ({meetingId}) => {
+const Share = (props) => {
   
+ const {meetingId} = props.match.params;
+
   return (
     <div>
       <div className="create-stream-wrapper">
-        <Link to={`/dashboard/instructorhub`} className="back-button">
+        <Link to={`/courseview/${meetingId}/upload`} className="back-button">
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>
-        <h3>Share lessons</h3>
+        <h3>Share lessons or documents</h3>
         <div className="form-wrapper">
           <ShareMaterials meetingId={meetingId}/>
         </div>

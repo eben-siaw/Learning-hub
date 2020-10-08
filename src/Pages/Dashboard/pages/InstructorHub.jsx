@@ -80,7 +80,7 @@ const InstructorHub = () => {
                 }}
               >
                 <Link
-                  to={`/dashboard/courseview/${course.meetingId}`}
+                  to={`/courseview/${course.meetingId}/upload`}
                   style={{ textDecoration: "none" }}
                 >
                   <Button

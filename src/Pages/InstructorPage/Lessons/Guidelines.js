@@ -6,7 +6,9 @@ function Guidelines() {
     return(  
 
   <div>
-      <span> Upload videos or share slides or lesson materials to people who join your course  </span>
+      <span> Share your course meeting id to allow people to view slides or lesson materials you have uploaded. </span> 
+         <br/>
+      <span> Upload videos related to your courses. </span>
   </div> 
 
  );

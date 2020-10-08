@@ -13,7 +13,7 @@ import NotFound from "../../Components/NotFound";
 import { connect } from "react-redux";
 import { setCurrentUser, setLoggedIn } from "../../actions/index"; 
 import {setCurrentCourse} from "../../actions/index";
-import CoursesTabs from "./pages/CourseTablayout/CoursesTabs";
+
 import Lessons from './pages/Lessons';
 import InstructorHub from "./pages/InstructorHub";
 import LessonCourse from "./pages/LessonsCourse";
@@ -71,11 +71,7 @@ class Dashboard extends Component {
                 path="/dashboard/coursehub/:meetingId"
                 component={CourseHub}
               />  
-
-              <Route path="/dashboard/courseview/:meetingId"  
-              component={CoursesTabs} 
-              /> 
-        
+          
               <Route
                 exact
                 path="/dashboard/instructorhub"
