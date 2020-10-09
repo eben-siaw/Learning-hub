@@ -69,7 +69,7 @@ const Lessons = () => {
        <Grid item xs={12}> 
         <Paper className={classes.paper}>   
         <Avatar className={classes.orange}>L</Avatar>
-         <Typography variant="h6"> {lesson.instructor.first_name} {lesson.instructor.last_name} posted a material: {lesson.lessonTitle}  </Typography>
+         <Typography variant="h6"> {lesson.instructor.first_name} {lesson.instructor.last_name} posted a lesson material: {lesson.lessonTitle}  </Typography>
          </Paper>
         </Grid>  
         </Grid>  
