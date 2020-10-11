@@ -11,7 +11,7 @@ const UploadVideo = (props) => {
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>
-        <h3>Click to upload video</h3>
+        <h3>Upload videos for your courses</h3>
         <div className="form-wrapper">
           <Videodetails/>
         </div>
