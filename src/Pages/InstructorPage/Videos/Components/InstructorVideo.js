@@ -70,7 +70,7 @@ const InstructorVideo = (props) => {
         <div className="likes-wrap">  
         <LikesDislike video userId={userId} videoId={videoId} />  
         <br /> 
-        <Divider style={{marginTop: 8}}/>  
+        <Divider className="line"/>  
         </div> 
         <h3 className="title">{video.title}</h3>
         <p className="desc">{video.description}</p>
@@ -96,7 +96,9 @@ const InstructorVideo = (props) => {
           padding: 20px 0;
           margin-bottom: 10px;
         }
-    
+        .line { 
+          margin-top: 9px; 
+        }
         .comments-tag {
           color: var(--color-3);
           background: var(--color-3-transparent);
@@ -108,10 +110,14 @@ const InstructorVideo = (props) => {
         @media (max-width: 500px) {
           .title {
             color: var(--color-2);
-            padding: 15px 0px 5px 0px;
+            padding: 24px 0px 5px 0px;
           }
           .desc {
             font-size: 14px;
+          } 
+
+          .line { 
+            display: none;
           }
         }
       `}</style>

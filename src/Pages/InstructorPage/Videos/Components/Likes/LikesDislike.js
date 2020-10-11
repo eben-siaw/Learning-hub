@@ -150,9 +150,9 @@ function LikesDislikes(props) {
     return ( 
  
      <React.Fragment>  
-     <div className="wrapper-likes"> 
-     <span key="comment-basic-like"> 
+     <div className="wrapper-likes">  
 
+     <span key="comment-basic-like"> 
       <Tooltip title="Like">  
       <LikeIcon type="like"    
       label="Like"
@@ -185,7 +185,13 @@ function LikesDislikes(props) {
        } 
        .tool2 { 
          padding-left: 28px;  
-       }
+       } 
+       @media (max-width: 480px) { 
+       .wrapper-likes { 
+         display: flex; 
+         flex-direction: row;   
+        }
+       } 
        `}</style>
     </React.Fragment>
     
