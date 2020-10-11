@@ -3,14 +3,20 @@ import Chat from "../../../StudentPage/Chat/Chat";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { DefaultPlayer as Video} from 'react-html5video'; 
-import 'react-html5video/dist/styles.css'
+import 'react-html5video/dist/styles.css' 
+import LikesDislike from './Likes/LikesDislike'; 
+import Divider  from "@material-ui/core/Divider"; 
+import {useSelector} from 'react-redux';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";
 
-const InstructorVideo = (props) => {
+const InstructorVideo = (props) => { 
   // get the id related to the video
   const { videoId } = props.match.params;
-  const [messagelist, setMessagelist] = useState([])
+  const [messagelist, setMessagelist] = useState([]) 
+
+  const userId = useSelector(state => state.auth.user._id);
+
   // declare the states
   const [video, setVideo] = useState([]);
  
@@ -60,8 +66,12 @@ const InstructorVideo = (props) => {
           width='100%'
           height='100%'>  
           <source src={video.video} type="video/mp4"/>  
-        </Video> 
-
+        </Video>   
+        <div className="likes-wrap">  
+        <LikesDislike video userId={userId} videoId={videoId} />  
+        <br /> 
+        <Divider style={{marginTop: 8}}/>  
+        </div> 
         <h3 className="title">{video.title}</h3>
         <p className="desc">{video.description}</p>
       </div>
@@ -79,12 +89,14 @@ const InstructorVideo = (props) => {
         .stream-wrapper::-webkit-scrollbar {
           display: none;
         }
-
+        .likes-wrap { 
+          padding-top: 20px;
+        }
         .comments-wrapper {
           padding: 20px 0;
           margin-bottom: 10px;
         }
-
+    
         .comments-tag {
           color: var(--color-3);
           background: var(--color-3-transparent);
