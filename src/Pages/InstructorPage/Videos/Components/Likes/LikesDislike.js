@@ -28,7 +28,7 @@ function LikesDislikes(props) {
     // mount life cycle method to retrieve lists of likes and dislikes if any
     useEffect(() => { 
 
-    axios.post(local + `/like/getLikes`, variable).then(response => { 
+    axios.post(URL + `/like/getLikes`, variable).then(response => { 
 
         if(response.data.success) { 
             console.log("getLikes", response.data); 
@@ -45,7 +45,7 @@ function LikesDislikes(props) {
         }
     }) 
 
-    axios.post(local + '/dislike/getDislikes', variable) 
+    axios.post(URL + '/dislike/getDislikes', variable) 
     .then(response => { 
         if (response.data.success) {
             //How many likes does this video or comment have  
@@ -70,7 +70,7 @@ function LikesDislikes(props) {
 
     if(LikesAction == null) {  
 
-        axios.post(local + `/like/upLike`, variable)
+        axios.post(URL + `/like/upLike`, variable)
         .then(response => {
             if (response.data.success) {
 
@@ -91,7 +91,7 @@ function LikesDislikes(props) {
         })
     } else { 
 
-        axios.post(local + `/like/unLike`, variable)
+        axios.post(URL + `/like/unLike`, variable)
         .then(response => {
             if (response.data.success) {
 
@@ -111,7 +111,7 @@ function LikesDislikes(props) {
 
     if (DisLikesAction !== null) {
 
-        axios.post(local + `/dislike/unDisLike`, variable)
+        axios.post(URL + `/dislike/unDisLike`, variable)
             .then(response => {
                 if (response.data.success) {
 
@@ -125,7 +125,7 @@ function LikesDislikes(props) {
 
     } else {
 
-        axios.post(local + `/dislike/upDisLike`, variable)
+        axios.post(URL + `/dislike/upDisLike`, variable)
             .then(response => {
                 if (response.data.success) {
 
