@@ -3,6 +3,8 @@ import axios from "axios";
 import {Link} from 'react-router-dom'
 import Typography from '@material-ui/core/Typography';
 import {useSelector} from 'react-redux';
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css" 
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -11,13 +13,18 @@ const CourseList = () => {
   const user = useSelector(state => state.auth.user._id);
 
   const [list, setList] = useState({}); 
-  
+  const [loading, setLoading] = useState(true);  
+
  const getCourse = async () => { 
   
   const res = await axios.get(URL + `/courses/${user}/currentcourse`) 
-    setList(res.data);  
-    console.log(res.data);
- }
+    if(res.data) { 
+      setList(res.data);   
+      setLoading(false);
+      console.log(res.data);
+    }
+  
+  }
 
   useEffect(() => { 
    getCourse();
@@ -26,7 +33,8 @@ const CourseList = () => {
   return (
     <div className="course-list">  
      <h5 style={{color: "CadetBlue", fontSize: '1.1em'}}>Your Courses</h5>
-      {list.length < 1 && list == null ? <Empty /> : <div className="list">  
+      {list.length < 1 || list == null ? <Empty /> : <div className="list">   
+      { loading ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} timeout={10000} /> : null}
        <Typography variant="body1" style={{color: "DarkSlateGrey", fontSize: '1.4em', fontFamily: 'sans-serif, Arial, Helvetica'}}> {list.course_name}  </Typography>  
        <br/>
         <Link style={{color: "CadetBlue"}} to="/dashboard/instructorhub"> Show more </Link>

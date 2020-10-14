@@ -1,21 +1,13 @@
 import React,{Component} from "react";
 import { Route } from "react-router-dom";
-import PageHeader from "../components/PageHeader";
+import Lessons from './Lessons';
+import PageHeader from "../components/PageHeader"; 
+import LessonView from './LessonView'
 import Courses from "./Courses"; 
-import {connect} from 'react-redux'; 
-import jwt_decode from 'jwt-decode'; 
-import { setCurrentCourse } from "../../../actions";
 
-class CourseHub extends Component {  
+
+function CourseHub () {  
   
-  componentDidMount() {  
-    const {match : {params} } = this.props; 
-
-    this.props.setCurrentCourse(params.meetingId);
-  } 
-
- render() { 
-
   return ( 
 
     <div>
@@ -23,8 +15,15 @@ class CourseHub extends Component {
     
       <div className="content-box">
        
-        <Route exact path="/dashboard/coursehub/:meetingId"  
-        component={Courses} />
+        <Route exact path="/dashboard/coursehub/"  
+        component={Courses} /> 
+
+          
+      <Route exact path="/dashboard/coursehub/lessons/:meetingId"  
+        component={Lessons} />  
+
+      <Route exact path="/dashboard/coursehub/lessonsView/:meetingId"  
+        component={LessonView} /> 
 
       </div>
       <style jsx>{`
@@ -44,7 +43,6 @@ class CourseHub extends Component {
       `}</style>
     </div>
   );
-}
 
 }
-export default connect(null, {setCurrentCourse})(CourseHub);
+export default CourseHub;

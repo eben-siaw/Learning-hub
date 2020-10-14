@@ -9,12 +9,15 @@ export default function PageHeader({ title, useSearch }) {
   return (
     <div className="page-header">
       <h2>{title}</h2>
-      <div className="options">
+      <div className="options"> 
+        <div className="mobile-option">   
+         <Notification/> 
+         </div> 
         {useSearch && (
           <div className="search-field">
             <input placeholder="Search" type="text" name="search" id="search" />
           </div>
-        )}
+        )} 
       </div>
       <style jsx>{`
         .page-header {
@@ -39,6 +42,9 @@ export default function PageHeader({ title, useSearch }) {
           background: #dfdfdf;
           border: none;
         }
+        .mobile-option{ 
+          padding-right: 25px;
+        }
 
         @media (max-width: 740px) {
           .page-header {
@@ -47,6 +53,12 @@ export default function PageHeader({ title, useSearch }) {
           .page-header h2 {
             color: var(--color-1);
             font-size: 18px;
+          }
+        } 
+
+        @media (max-width: 500px) {  
+          .mobile-option { 
+            display: none;
           }
         }
       `}</style>

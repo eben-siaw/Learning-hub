@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
 import InputField from "../../../Components/InputField";
 import { v1 as uuid } from "uuid";
-import axios from "axios"; 
-
-import { courseEntry } from "./Coursefunctions";
+import axios from "axios";  
+import { useSelector } from "react-redux"; 
+import { courseEntry } from "./CourseActions";
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -180,7 +180,24 @@ const Actions = ({ user }) => {
 };
 
 const JoinForm = ({ action}) => { 
-   
+    
+   const userId = useSelector(state => state.auth.user._id) 
+ 
+   const courseEntry = async (join) => { 
+    try {
+      const {data} = await axios.post(URL + `/courses/join/${userId}`, {
+        ...join,
+      });
+        console.log(data); 
+        window.location = "/dashboard/coursehub";
+        return data;   
+        
+    } catch (error) {
+       return {error : "Internal Server Error"}
+    }
+        
+  }; 
+  
   const [meetingId, setMeetingId] = useState("");
   const [error, setError] = useState({
     isTrue: false,
@@ -195,18 +212,18 @@ const JoinForm = ({ action}) => {
   const onChange = ({ target }) => {
     setMeetingId(target.value);
   };
-
+  
+  
   const submit = async () => {
       if (meetingId)    
-     await courseEntry({ meetingId: meetingId }).then((res) => {  
-        console.log(res);
-        if (res.error) {
-          return throwError('Course does not exist'); 
-        }   
-          window.location = `/dashboard/coursehub/${meetingId}`;
-      }) 
+    await courseEntry({meetingId: meetingId}).then(res => {     
+      console.log(res)
+       if (res.error) {
+        return throwError(res.error); 
+      } 
+    })
   };
-
+       
   return (
     <form action={action}>
       <div className={`error-display ${error.isTrue ? "" : "hidden"}`}>

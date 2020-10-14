@@ -48,7 +48,7 @@ export default function DashboardNav() {
           width: 100%;
         }
 
-        .header-notification {
+        .header-notification { 
           display: none;
           align-items: center;
         }

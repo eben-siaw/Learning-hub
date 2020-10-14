@@ -28,11 +28,13 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const SharedLessons = () => { 
+const SharedLessons = (props) => { 
       
  const classes = useStyles();
     
  const userId = useSelector(state => state.auth.user._id);
+ 
+ const {meetingId} = props.match.params;
 
   const [lessons, setLessons] = useState([]); 
 
@@ -58,7 +60,7 @@ const SharedLessons = () => {
   
  const renderLessons = lessons.map((lesson, index) => {  
  
-  if(lesson.instructor._id == userId) {   
+  if(lesson.meetingId == meetingId) {   
 
      return(  
       <div className={classes.root}>   

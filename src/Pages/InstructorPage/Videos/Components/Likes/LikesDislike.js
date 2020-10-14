@@ -20,15 +20,15 @@ function LikesDislikes(props) {
   
 
     if (props.video) {
-        variable = { videoId: props.videoId, userId: props.userId }
+        variable = { videoId: props.videoId, userId: props.userId, userTo: props.userTo }
     } else {
-        variable = { commentId: props.commentId, userId: props.userId }
+        variable = { commentId: props.commentId, userId: props.userId, userTo: props.userTo }
     }
  
     // mount life cycle method to retrieve lists of likes and dislikes if any
     useEffect(() => { 
 
-    axios.post(URL + `/like/getLikes`, variable).then(response => { 
+    axios.post(local + `/like/getLikes`, variable).then(response => { 
 
         if(response.data.success) { 
             console.log("getLikes", response.data); 
@@ -45,7 +45,7 @@ function LikesDislikes(props) {
         }
     }) 
 
-    axios.post(URL + '/dislike/getDislikes', variable) 
+    axios.post(local + '/dislike/getDislikes', variable) 
     .then(response => { 
         if (response.data.success) {
             //How many likes does this video or comment have  
@@ -70,14 +70,14 @@ function LikesDislikes(props) {
 
     if(LikesAction == null) {  
 
-        axios.post(URL + `/like/upLike`, variable)
+        axios.post(local + `/like/upLike`, variable)
         .then(response => {
             if (response.data.success) {
 
                 setLikes(Likes + 1)
                 setLikeAction('liked')
 
-                //If dislike button is already clicked then --dislike
+                //If dislike button is already clicked then reduce by 1 --dislike
 
                 if (DisLikesAction !== null) {
                     setDisLikeAction(null)
@@ -91,7 +91,7 @@ function LikesDislikes(props) {
         })
     } else { 
 
-        axios.post(URL + `/like/unLike`, variable)
+        axios.post(local + `/like/unLike`, variable)
         .then(response => {
             if (response.data.success) {
 
@@ -111,7 +111,7 @@ function LikesDislikes(props) {
 
     if (DisLikesAction !== null) {
 
-        axios.post(URL + `/dislike/unDisLike`, variable)
+        axios.post(local + `/dislike/unDisLike`, variable)
             .then(response => {
                 if (response.data.success) {
 
@@ -125,7 +125,7 @@ function LikesDislikes(props) {
 
     } else {
 
-        axios.post(URL + `/dislike/upDisLike`, variable)
+        axios.post(local + `/dislike/upDisLike`, variable)
             .then(response => {
                 if (response.data.success) {
 

@@ -1,8 +1,42 @@
+import axios from "axios";
 import React, { useState } from "react";
+import {useEffect} from 'react';  
+import LikeIcon from '@material-ui/icons/ThumbUp';
+import {useSelector} from 'react-redux';
+import Avatar  from "@material-ui/core/Avatar";
+import { Divider } from "@material-ui/core";
+import { UpCircleFilled } from "@ant-design/icons";
 
-export default function Notification({ onHeader }) {
+const URL = "https://nilee-nodedatabase.herokuapp.com"; 
+
+const local = "http://localhost:5050"
+
+export default function Notification({ onHeader }) { 
+  
+  const user = useSelector(state => state.auth.user._id);
+
   const [openNotification, setOpenNotification] = useState(false);
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]); 
+
+  const getNotifications = async () => { 
+    
+    try { 
+      return await axios.get(URL + `/like/getNotifications/${user}`) 
+      .then(response => { 
+       if(response.data) { 
+         setNotifications(response.data); 
+         console.log(response.data);
+       }
+      }) 
+    } catch (error) {
+       console.log(error);
+    }
+ 
+  } 
+
+  useEffect(() => { 
+    getNotifications();
+  }); 
 
   const renderEmpty = () => {
     return <div className="empty-box">No new notifications</div>;
@@ -11,8 +45,13 @@ export default function Notification({ onHeader }) {
   const renderNotifications = () => {
     return (
       <div className="notification-list">
-        {notifications.forEach((item, index) => (
-          <div></div>
+        {notifications.map((item, index) => (
+        <div key={index}> 
+         <div className="notification-items"> 
+         <Avatar /> {item.sender.first_name} {item.sender.last_name} liked <LikeIcon style={{paddingTop: 8}} color="primary"/> a video you posted.  
+          
+          </div> 
+          </div> 
         ))}
       </div>
     );
@@ -61,7 +100,7 @@ export default function Notification({ onHeader }) {
           border: 1px solid #eee;
           border-radius: 5px;
           overflow: hidden;
-          min-width: 300px;
+          min-width: 300px; 
           z-index: 5;
           clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
           transition: all 0.2s cubic-bezier(0.3, 1.01, 0.99, 1.32);
@@ -77,7 +116,22 @@ export default function Notification({ onHeader }) {
           font-size: 14px;
           color: var(--text-color);
           background: #f9f9f9;
-        }
+        } 
+
+        .notification-list { 
+          padding: 5px 0px 10px 0; 
+          text-align: center;
+          font-size: 16px;
+          color: black;  
+          height: 100px; 
+          background: #f9f9f9;
+        }  
+
+        .notification-list { 
+         display: flex; 
+         flex-direction: row;
+        } 
+
       `}</style>
     </div>
   );

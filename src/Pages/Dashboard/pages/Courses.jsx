@@ -13,8 +13,9 @@ import {
 } from "@material-ui/core";
 import BookIcon from "@material-ui/icons/Book";
 import { Link } from "react-router-dom";
-import LoadingSpin from 'react-loading-spin'; 
- import {useSelector} from 'react-redux';
+import LoadingSpin from 'react-loading-spin';  
+import {setCourseCode} from '../../../actions/index'
+ import {useSelector, useDispatch} from 'react-redux';
 
 // Course Hub
 
@@ -24,43 +25,51 @@ const local = "http://localhost:5050";
 
 const Courses = (props) => {  
   
-  const meetingId =  props.match.params.meetingId;
+  const user = useSelector(state => state.auth.user._id);
 
   const [courses, setCourses] = useState([]); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);  
+  const [notFound, setNotFound] = useState(""); 
+
+  const dispatch = useDispatch(); 
   // get Courses created by the authenticated logged in user, url params
 
-  const getCourses = async () => {
-    try {
-      await axios.get(URL + `/courses/coursehub`)  
-      .then(res => { 
-        setCourses(res.data);  
+  const getCourses = () => {
+   
+     return axios.get(URL + `/courses/coursehub/${user}`)  
+      .then(res => {  
+        if(res.data.success) { 
+        setCourses(res.data.course);    
         setLoading(false);
+        } else { 
+          alert("No Courses Found");
+        }
       }) 
-    } catch (error) {
+     .catch (error => {
       console.log(error);
-    }
+    })
   };
 
   useEffect(() => {
-    getCourses();
+    getCourses(); 
   });
-
-  const renderCourses = courses.map((course, index) => {  
+   
+  console.log(courses);  
+ 
+  const renderCourses = courses.map((joined, index) => {  
      
-      if(course.meetingId == meetingId) {  
+      //if(course.meetingId == meetingId) {  
 
       return (
         <Grid md={6} xs={12} key={index} item style={{ position: "relative" }}>
           <Paper
-            key={course._id}
+            key={index}
             style={{
               padding: 10,
             }}
           >
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <Typography variant="h6">{course.course_name}</Typography> 
+              <Typography variant="h6">{joined.course.course_name}</Typography> 
             </div>
             <CardContent>
               <div
@@ -71,13 +80,14 @@ const Courses = (props) => {
                 }}
               >
                 <Link
-                  to={`/dashboard/lessons`}
+                  to={`/dashboard/coursehub/lessons/${joined.course.meetingId}`}
                   style={{ textDecoration: "none" }}
                 >
                   <Button
-                    variant="outlined"
+                    variant="contained" 
+                    color="secondary"
                     style={{
-                      backgroundColor: "rgb(5, 31, 66)",
+                    //  backgroundColor: "rgb(5, 31, 66)",
                       color: "#fff",
                       marginRight: 10,
                     }}
@@ -90,11 +100,11 @@ const Courses = (props) => {
           </Paper>
         </Grid>
       );  
-    } 
+     
     });
   
 
- if(meetingId) { 
+ if(user) { 
   return (
     <div>
       <Container>

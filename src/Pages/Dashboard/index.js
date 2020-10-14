@@ -62,13 +62,9 @@ class Dashboard extends Component {
               <Route exact path="/dashboard" render={() => <Home />} /> 
 
               <Route path="/dashboard/videos" render={() => <Videos />} /> 
-               
-               <Route path="/dashboard/lessons"  
-               component={LessonCourse}  
-               />
 
               <Route
-                path="/dashboard/coursehub/:meetingId"
+                path="/dashboard/coursehub/"
                 component={CourseHub}
               />  
           

@@ -27,16 +27,15 @@ export const setLoggedIn = bool => {
      type: LOGGED_IN,
      payload: bool
   };
+}; 
+
+export const setCourseCode = join => {
+  return {
+     type: MEETING_ID,
+     payload: join
+  };
 };
 
-export const setCurrentCourse = (decode) => {    
-  
-    return { 
-    type: MEETING_ID, 
-    payload: decode
- 
-  }
-}
 
 /*
 export const createStream = (formValues) => async (dispatch, getState) => {  

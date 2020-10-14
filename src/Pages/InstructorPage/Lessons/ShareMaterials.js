@@ -62,7 +62,7 @@ const ShareMaterials = ({meetingId}) => {
           if(response.data.success) {  
             alert("Lesson Uploaded!")
             setLoading(false);
-            window.location = `/dashboard/lessons/${meetingId}`;
+            window.location = `/courseview/${meetingId}/lessons`;
           } 
           else{ 
             alert("Failed to Upload"); 

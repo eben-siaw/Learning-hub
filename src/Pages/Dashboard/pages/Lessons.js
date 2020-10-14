@@ -5,7 +5,8 @@ import { deepOrange, deepPurple } from '@material-ui/core/colors';
 import Paper from '@material-ui/core/Paper'; 
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios'; 
+import axios from 'axios';  
+import {Link} from 'react-router-dom'
 import { Typography } from '@material-ui/core';
 import LoadingSpin from "react-loading-spin";  
 import {useSelector} from 'react-redux';
@@ -29,34 +30,37 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const Lessons = () => { 
+const Lessons = (props) => { 
       
  const classes = useStyles();
     
- const meetingId = useSelector(state => state.course.data);
+ const {meetingId} = props.match.params;
   
   const [lessons, setLessons] = useState([]); 
 
   const [loading, setLoading] = useState(true); 
 
-  const [errors, setErrors] = useState("")
-
  const getLessons = () => { 
     axios.get(URL + "/lesson/getlessons") 
     .then(res => {    
-      setLoading(false);
-     setLessons(res.data);
-     console.log(res.data)
+      if(res.data.success) { 
+        setLessons(res.data.lesson);  
+        setLoading(false);
+      } else {
+        alert("No lessons Found");
+      }
     }) 
     .catch(error => {
-      setErrors(error);
+      console.log(error);
     })
  }
 
    useEffect(() => { 
     getLessons(); 
    },[])
-  
+   
+  console.log(lessons);
+
  const renderLessons = lessons.map((lesson, index) => {  
  
   if(lesson.meetingId == meetingId) {   
@@ -64,7 +68,7 @@ const Lessons = () => {
      return(  
 
       <div className={classes.root}>   
-        <a style={{textDecoration: 'none'}} href={`/dashboard/lessons/view/${lesson._id}`}>   
+        <a style={{textDecoration: 'none'}} href={`/dashboard/coursehub/lessons/view/${lesson._id}`}>   
        <Grid container spacing={4}>  
        <Grid item xs={12}> 
         <Paper className={classes.paper}>   
@@ -78,13 +82,25 @@ const Lessons = () => {
   );
  }   
  })
-   if(meetingId) { 
+   if(lessons) { 
     return( 
-     <div>  
-       <div> 
+     <div className="main-wrapper">   
+        <Link to={`/dashboard/coursehub`} className="back-button">
+          <i className="ion-ios-arrow-back"></i>
+          <span>Go Back</span>
+        </Link>
+       <div className="lesson-wrapper"> 
       {renderLessons}  
       {loading ? <LoadingSpin /> : null}
-      </div>
+      </div> 
+    <style jsx>{`
+    .main-wrapper{
+      margin-top: 30px;
+    }
+    .lesson-wrapper{
+     margin-top: 40px;
+    }
+    `}</style>
      </div>   
 
     );

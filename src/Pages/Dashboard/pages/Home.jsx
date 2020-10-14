@@ -3,7 +3,7 @@ import Actions from "../components/Actions";
 import PageHeader from "../components/PageHeader";
 import CourseList from "../components/CourseList";
 import jwt_decode from "jwt-decode";
-
+import Notification from '../components/Notification';
 class Home extends Component {
   constructor() {
     super();
@@ -32,7 +32,7 @@ class Home extends Component {
   render() {
     return (
       <div className="container">
-        <PageHeader title="Dashboard" useSearch={false} />
+        <PageHeader title="Dashboard" useSearch={false} />    
         <div className="container-inner">
           <div className="welcome-card">
             <div>

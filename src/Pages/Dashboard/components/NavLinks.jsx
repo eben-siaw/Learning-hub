@@ -1,14 +1,11 @@
 import React, { useContext } from "react"; 
 import { NavLink } from "react-router-dom";  
 import SchoolIcon from  '@material-ui/icons/SchoolOutlined';
-import {useSelector} from 'react-redux';
 
 export default function NavLinks(props) { 
  
- const meetingId = useSelector(state => state.course.data)
-
   const logouthandler = () => { 
-    localStorage.removeItem("usertoken");
+    localStorage.removeItem("usertoken"); 
     window.location = "/login"; 
   }; 
 
@@ -21,12 +18,12 @@ export default function NavLinks(props) {
       <NavLink to={link(`/videos`)}>
         <i className="ion-ios-videocam-outline"></i>
       </NavLink>  
-      <NavLink to={link(`/coursehub/${meetingId}`)}>
+      <NavLink to={link(`/coursehub`)}>
         <i className="ion-ios-book-outline"></i>
       </NavLink> 
-      <NavLink to={link(`/lessons`)}>
+      {/*<NavLink to={link(`/lessons`)}>
         <i className="ion-ios-list-outline"></i>
-      </NavLink>
+      </NavLink>*/}
       <NavLink to={link(`/instructorhub`)}> 
       <i className="ion-android-contact"></i>
       </NavLink> 

@@ -19,7 +19,7 @@ const InstructorVideo = (props) => {
 
   // declare the states
   const [video, setVideo] = useState([]);
- 
+  const [postUser, setPostUser] = useState(null);
   const videovariable = {
     videoId: videoId,
   }; 
@@ -27,8 +27,9 @@ const InstructorVideo = (props) => {
   useEffect(() => {
     axios.post(URL + "/video/getVideo", videovariable).then((response) => {
       if (response.data.success) {
-        console.log(response.data.video);
-        setVideo(response.data.video);
+        console.log('response.data.video', response.data.video);
+        setVideo(response.data.video); 
+        setPostUser(response.data.video.instructor._id);
       } else {
         alert("Failed to get Video");
       }
@@ -46,10 +47,12 @@ const InstructorVideo = (props) => {
     })    
     
   }, []); 
+  
 
   function UpdateComments(newComment) { 
     setMessagelist(messagelist.concat(newComment));
   }
+  
 
   return (
     <div className="stream-wrapper">
@@ -68,7 +71,7 @@ const InstructorVideo = (props) => {
           <source src={video.video} type="video/mp4"/>  
         </Video>   
         <div className="likes-wrap">  
-        <LikesDislike video userId={userId} videoId={videoId} />  
+        <LikesDislike video userId={userId} userTo={postUser} videoId={videoId} />  
         <br /> 
         <Divider className="line"/>  
         </div> 

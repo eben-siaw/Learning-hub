@@ -16,9 +16,14 @@ const Videolist = () => {
   const isAuth = useSelector((state) => state.auth.isLoggedIn);
 
   const [Videos, setVideos] = useState([]); 
+ 
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [loading, setLoading] = useState(true);
+  const [filteredVideos, setFilteredVideos] = useState("")
 
+  const [loading, setLoading] = useState(true); 
+  
+  
   const getvideos = async () => {
     const res = await axios.get(URL + `/video/getVideos`);
     setVideos(res.data);
@@ -43,6 +48,10 @@ const Videolist = () => {
   useEffect(() => {
     getvideos();
   }, []);
+  
+  const UpdateSearchResults = (e) => { 
+    
+  }
 
   const reduceDescription = (description) => {
     const { length } = description;
