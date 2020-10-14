@@ -45,9 +45,13 @@ const SharedLessons = (props) => {
  const getLessons = () => { 
     axios.get(URL + "/lesson/getlessons") 
     .then(res => {    
-      setLoading(false);
-     setLessons(res.data);
-     console.log(res.data)
+      if(res.data.success) { 
+        setLoading(false);
+        setLessons(res.data.lesson);
+        console.log(res.data)
+      } else { 
+        alert("No Lessons Found")
+      }   
     }) 
     .catch(error => { 
       setErrors(error);
