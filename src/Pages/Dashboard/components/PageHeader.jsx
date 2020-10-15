@@ -1,6 +1,6 @@
 import React from "react"; 
 import {useState} from "react";
-import Notification from "./Notification";
+import Notifications from "./Notification";
 
 export default function PageHeader({ title, useSearch }) { 
  
@@ -11,7 +11,7 @@ export default function PageHeader({ title, useSearch }) {
       <h2>{title}</h2>
       <div className="options"> 
         <div className="mobile-option">   
-         <Notification/> 
+         <Notifications/> 
          </div> 
         {useSearch && (
           <div className="search-field">

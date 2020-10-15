@@ -5,51 +5,65 @@ import LikeIcon from '@material-ui/icons/ThumbUp';
 import {useSelector} from 'react-redux';
 import Avatar  from "@material-ui/core/Avatar";
 import { Divider } from "@material-ui/core";
-import { UpCircleFilled } from "@ant-design/icons";
+
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
 const local = "http://localhost:5050"
 
-export default function Notification({ onHeader }) { 
+export default function Notifications({ onHeader }) { 
   
   const user = useSelector(state => state.auth.user._id);
 
   const [openNotification, setOpenNotification] = useState(false);
   const [notifications, setNotifications] = useState([]); 
+  
 
   const getNotifications = async () => { 
     
     try { 
       return await axios.get(URL + `/like/getNotifications/${user}`) 
       .then(response => { 
-       if(response.data) { 
-         setNotifications(response.data); 
-         console.log(response.data);
+       if(response.data.success) { 
+         setNotifications(response.data.notification); 
+         console.log(response.data.notification); 
        }
       }) 
     } catch (error) {
        console.log(error);
     }
- 
+   
+   
   } 
-
+  
   useEffect(() => { 
-    getNotifications();
+    getNotifications();   
+
+    if(!("Notification" in window)) {
+      console.log("This Browser does not support notification"); 
+    }
+     else { 
+      Notification.requestPermission();
+    }
+   
   }); 
+  
+ const OpenNotification = () => {
+  setOpenNotification(!openNotification);  
+  new Notification("You may have notifications");
+ }
 
   const renderEmpty = () => {
     return <div className="empty-box">No new notifications</div>;
   };
 
-  const renderNotifications = () => {
+  const renderNotifications = () => { 
     return (
-      <div className="notification-list">
+      <div className="notification-box">
         {notifications.map((item, index) => (
         <div key={index}> 
          <div className="notification-items"> 
-         <Avatar /> {item.sender.first_name} {item.sender.last_name} liked <LikeIcon style={{paddingTop: 8}} color="primary"/> a video you posted.  
-          
+        <span> <Avatar/> {item.sender.first_name} {item.sender.last_name} liked <LikeIcon style={{paddingTop: 8}} color="primary"/> your video. </span> 
           </div> 
           </div> 
         ))}
@@ -59,7 +73,7 @@ export default function Notification({ onHeader }) {
   return (
     <div className={`notification ${onHeader ? "inverse" : ""}`}>
       <span
-        onClick={() => setOpenNotification(!openNotification)}
+        onClick={() => OpenNotification()}
         className={`ion-ios-bell-outline icon active`}
       ></span>
       <div className={`list ${openNotification ? "show" : ""}`}>
@@ -100,7 +114,7 @@ export default function Notification({ onHeader }) {
           border: 1px solid #eee;
           border-radius: 5px;
           overflow: hidden;
-          min-width: 300px; 
+          min-width: 300px;  
           z-index: 5;
           clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
           transition: all 0.2s cubic-bezier(0.3, 1.01, 0.99, 1.32);
@@ -118,16 +132,16 @@ export default function Notification({ onHeader }) {
           background: #f9f9f9;
         } 
 
-        .notification-list { 
+        .notification-box { 
           padding: 5px 0px 10px 0; 
           text-align: center;
           font-size: 16px;
           color: black;  
           height: 100px; 
-          background: #f9f9f9;
+          background: #fff;
         }  
 
-        .notification-list { 
+        .notification-items { 
          display: flex; 
          flex-direction: row;
         } 

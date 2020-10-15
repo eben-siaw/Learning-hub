@@ -17,20 +17,24 @@ function LessonView(props) {
  
  const {id} = props.match.params;
 
- const [lesson, setView] = useState({}); 
+ const [lesson, setView] = useState({});  
  
- useEffect(() => { 
- 
-    axios.get(URL + `/lesson/viewlesson/${id}`).then(res => {  
-      if(res.data.success) { 
-        setView(res.data.lesson);  
-        console.log(res.data.lesson);
-      } else { 
-        alert("No lesson found");
-      }
-    
-    })
+ const getLesson = () => { 
+   
+  axios.get(URL + `/lesson/viewlesson/${id}`).then(res => {  
+    if(res.data.success) { 
+      setView(res.data.lesson);  
+      console.log(res.data.lesson);
+    } else { 
+      alert("No lesson found");
+    }
+  
+  });
 
+ }
+
+ useEffect(() => { 
+  getLesson();
  },[])
 
  return( 
@@ -42,7 +46,7 @@ function LessonView(props) {
           <span>Go Back</span> 
         </Link> 
          <div className="inner-wrapper"> 
-         <Typography variant="body1">Click on the download icon to download <i style={{fontSize: 17}} className="ion-android-document:before"></i> {lesson.lessonTitle}</Typography> 
+         <Typography variant="body1">Click on the download icon to download {lesson.lessonTitle}</Typography> 
          <br/> 
          <FilePreviewer file={{
             url: `${lesson.fileUrl}` }}

@@ -57,11 +57,13 @@ const Videodetails = () =>
     const handleSubmit = (event) => { 
     
      event.preventDefault();
+      
      
+
      let errors = {};
      //validation  
      if(videotitle === "" || description === "" || videoFile === "") { 
-     return alert("All Fields are required")
+      alert("All Fields are required");
      } 
   
      console.log(videoFile); 

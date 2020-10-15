@@ -22,7 +22,7 @@ function CourseHub () {
       <Route exact path="/dashboard/coursehub/lessons/:meetingId"  
         component={Lessons} />  
 
-      <Route exact path="/dashboard/coursehub/lessonsView/:meetingId"  
+      <Route exact path="/dashboard/coursehub/lessonsView/:id"  
         component={LessonView} /> 
 
       </div>

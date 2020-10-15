@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { Route, Switch } from "react-router-dom";
 import DashboardNav from "./components/DashboardNav";
@@ -13,22 +13,27 @@ import NotFound from "../../Components/NotFound";
 import { connect } from "react-redux";
 import { setCurrentUser, setLoggedIn } from "../../actions/index"; 
 import {setCurrentCourse} from "../../actions/index";
-
 import Lessons from './pages/Lessons';
 import InstructorHub from "./pages/InstructorHub";
-import LessonCourse from "./pages/LessonsCourse";
-import LessonView from "./pages/LessonView";
+import axios from "axios";
 
 
-class Dashboard extends Component {
+const local = "http://localhost:5050"
+
+const URL = "https://nilee-nodedatabase.herokuapp.com"; 
+
+class Dashboard extends Component { 
+
   constructor() {
     super();
-    this.state = {
+    this.state = {  
+      notification: [],
       first_name: "",
       email: "",
       last_name: "",
       _id: null,
-    };
+    }; 
+  
   }
 
   componentDidMount() {
@@ -48,10 +53,11 @@ class Dashboard extends Component {
     this.props.setCurrentUser(decoded);  
     this.props.setLoggedIn(true); 
 
-  }
-    
+  } 
+   
 
-  render() {
+  render() {  
+  
     return (
       <main>
         <div className="inner">
