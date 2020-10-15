@@ -3,7 +3,8 @@ import Actions from "../components/Actions";
 import PageHeader from "../components/PageHeader";
 import CourseList from "../components/CourseList";
 import jwt_decode from "jwt-decode";
-import Notification from '../components/Notification';
+
+
 class Home extends Component {
   constructor() {
     super();
@@ -29,7 +30,8 @@ class Home extends Component {
     });
   }
 
-  render() {
+  render() { 
+    
     return (
       <div className="container">
         <PageHeader title="Dashboard" useSearch={false} />    
@@ -48,12 +50,12 @@ class Home extends Component {
             </div>
             <div className="icon">
               <i className="ion-chatboxes"></i>
-            </div>
+            </div> 
           </div>
           <div className="info-box">
             <Actions user={this.state} />
             <CourseList />
-          </div>
+          </div> 
         </div>
         <style jsx>{`
           .container-inner {

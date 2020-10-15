@@ -5,7 +5,9 @@ import LikeIcon from '@material-ui/icons/ThumbUp';
 import {useSelector} from 'react-redux';
 import Avatar  from "@material-ui/core/Avatar";
 import { Divider } from "@material-ui/core";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -26,31 +28,26 @@ export default function Notifications({ onHeader }) {
       .then(response => { 
        if(response.data.success) { 
          setNotifications(response.data.notification); 
-         console.log(response.data.notification); 
+         console.log(response.data.notification);  
+       } else { 
+         alert("No new notification");
        }
       }) 
     } catch (error) {
        console.log(error);
     }
    
-   
   } 
   
   useEffect(() => { 
     getNotifications();   
-
-    if(!("Notification" in window)) {
-      console.log("This Browser does not support notification"); 
-    }
-     else { 
-      Notification.requestPermission();
-    }
-   
   }); 
   
  const OpenNotification = () => {
-  setOpenNotification(!openNotification);  
-  new Notification("You may have notifications");
+  setOpenNotification(!openNotification);   
+  if(notifications) { 
+    toast("Someone liked your video");
+  } 
  }
 
   const renderEmpty = () => {
@@ -58,24 +55,33 @@ export default function Notifications({ onHeader }) {
   };
 
   const renderNotifications = () => { 
-    return (
-      <div className="notification-box">
-        {notifications.map((item, index) => (
-        <div key={index}> 
-         <div className="notification-items"> 
-        <span> <Avatar/> {item.sender.first_name} {item.sender.last_name} liked <LikeIcon style={{paddingTop: 8}} color="primary"/> your video. </span> 
-          </div> 
-          </div> 
-        ))}
-      </div>
+    return (  
+     <div> 
+     {notifications.map((item, index) => (    
+      <div className="notification-box"> 
+         <div className="user">  
+         <Avatar>E</Avatar> 
+         </div> 
+         <span> 
+        <p> • {moment(Date.parse(item.notifiedAt)).fromNow()} </p> 
+        <br/>
+        <span>  {item.sender.first_name} {item.sender.last_name} liked your video </span>    
+        <Divider/> 
+        </span>  
+        </div>    
+      ))}     
+    </div>  
     );
-  };
+  }; 
+
+  
   return (
     <div className={`notification ${onHeader ? "inverse" : ""}`}>
       <span
         onClick={() => OpenNotification()}
         className={`ion-ios-bell-outline icon active`}
-      ></span>
+      ></span> 
+      <ToastContainer/>
       <div className={`list ${openNotification ? "show" : ""}`}>
         {notifications.length < 1 ? renderEmpty() : renderNotifications()}
       </div>
@@ -114,7 +120,7 @@ export default function Notifications({ onHeader }) {
           border: 1px solid #eee;
           border-radius: 5px;
           overflow: hidden;
-          min-width: 300px;  
+          min-width: 340px;  
           z-index: 5;
           clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
           transition: all 0.2s cubic-bezier(0.3, 1.01, 0.99, 1.32);
@@ -132,18 +138,23 @@ export default function Notifications({ onHeader }) {
           background: #f9f9f9;
         } 
 
-        .notification-box { 
-          padding: 5px 0px 10px 0; 
-          text-align: center;
-          font-size: 16px;
+        .notification-box {  
+          display: flex;
+          padding: 3px 0;
+          font-size: 17px;
           color: black;  
-          height: 100px; 
+          height: 280px; 
           background: #fff;
         }  
 
-        .notification-items { 
-         display: flex; 
-         flex-direction: row;
+        .user { 
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          height: 50px;
+          width: 50px;
+          margin-right: 5px;
         } 
 
       `}</style>

@@ -3,7 +3,9 @@ import "./Styles.css";
 import {register} from './userfunctions';
 import { Link } from "react-router-dom";
 import InfoSection from "./InfoSection"; 
- 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {connect} from 'react-redux'; 
 
 
@@ -82,7 +84,8 @@ class SignUp extends React.Component {
     };
 
     register(newuser).then(({ data }) => {
-      if (!data.error) {
+      if (!data.error) { 
+        toast("You have successfully signed up");
         window.location = "/login";
       }
 
@@ -287,7 +290,8 @@ class SignUp extends React.Component {
                 <div className="button-group">
                   <button type="submit" className="submit">
                     Sign Up
-                  </button>
+                  </button> 
+                  <ToastContainer/>
                 </div>
                 <Link className="redirect-link" to="/login">
                   Already Have an Account?

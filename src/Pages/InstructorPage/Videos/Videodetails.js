@@ -12,6 +12,9 @@ import DescIcon from '@material-ui/icons/Description'
 import TitleIcon from '@material-ui/icons/TitleSharp'
 import {storage} from '../../../Firebase/firebase';
 import LoadingSpin from 'react-loading-spin'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";  
 
@@ -39,7 +42,7 @@ const Videodetails = () =>
     const [description, setdescription] = useState("");  
     const [firebaseVideo, setfirebaseVideo] = useState(""); 
   
-    const [loading, setLoading] = useState(false) 
+    const [loading, setLoading] = useState(false); 
 
    const handleDescription = (event) => { 
    setdescription(event.currentTarget.value)
@@ -58,23 +61,21 @@ const Videodetails = () =>
     
      event.preventDefault();
       
-     
-
-     let errors = {};
      //validation  
-     if(videotitle === "" || description === "" || videoFile === "") { 
-      alert("All Fields are required");
+     if(videotitle === "" || description === "" || videoFile === "") {  
+      toast("All Fields are required"); 
+      return null;
      } 
-  
-     console.log(videoFile); 
-
-     //uploading task to storage 
-
-     let videoObject = {}
+     else { 
+ 
+      console.log(videoFile); 
     
-     setLoading(true);
-
-     const uploadTask = storage.ref(`/videos/${videoFile.name}`).put(videoFile);
+      setLoading(true);
+      //uploading task to storage 
+ 
+      let videoObject = {}
+ 
+      const uploadTask = storage.ref(`/videos/${videoFile.name}`).put(videoFile);
    
       uploadTask.on('state_changed',
       (snapshot) => {},
@@ -92,23 +93,27 @@ const Videodetails = () =>
         description: description, 
         videoName: videoFile.name, 
         video: url 
-      }
-     // saving video data to mongo
-     axios.post(URL + `/video/saveVideo`, details)
+      } 
+ 
+      // saving video data to mongo
+      axios.post(URL + `/video/saveVideo`, details)
      .then(response => { 
      if(response.data.success){   
-     alert("Video Uploaded") 
-     setLoading(false);
-     window.location = "/dashboard/videos"
+      setLoading(false); 
+      toast("Your Video has been Uploaded!")
+      window.location = "/dashboard/videos"
      }else{ 
-     alert("Failed to upload video"); 
-      window.location = '/dashboard/videos/new'
-     }
-    }) 
+      toast("Failed to upload video"); 
+     window.location = '/dashboard/videos/new'
+    }
+    })  
 
-   }) 
-}) 
+   });  
 
+  }) 
+
+  }
+     
 }
      return(    
          
@@ -155,7 +160,8 @@ const Videodetails = () =>
          <div>  
          <Button onClick={handleSubmit} color="secondary"
           variant="contained" 
-          startIcon={<CloudUploadIcon />} > Submit video </Button>  
+          startIcon={<CloudUploadIcon />} > Submit video </Button>   
+            <ToastContainer />
           </div>
          
          <div style={{padding: 10}}> 

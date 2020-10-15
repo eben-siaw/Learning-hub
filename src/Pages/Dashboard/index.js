@@ -17,7 +17,6 @@ import Lessons from './pages/Lessons';
 import InstructorHub from "./pages/InstructorHub";
 import axios from "axios";
 
-
 const local = "http://localhost:5050"
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
@@ -56,8 +55,8 @@ class Dashboard extends Component {
   } 
    
 
-  render() {  
-  
+  render() {   
+
     return (
       <main>
         <div className="inner">
@@ -88,7 +87,7 @@ class Dashboard extends Component {
           </div>
 
           <div className="side-content">
-            <UserProfile user={this.state} />
+            <UserProfile user={this.state} /> 
           </div>
         </div>
         <style jsx>{`
