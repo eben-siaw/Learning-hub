@@ -68,7 +68,7 @@ const Lessons = (props) => {
      return(  
 
       <div className={classes.root}>   
-        <a style={{textDecoration: 'none'}} href={`/dashboard/coursehub/lessons/view/${lesson._id}`}>   
+        <a style={{textDecoration: 'none'}} href={`/dashboard/coursehub/lessonsView/${lesson._id}`}>   
        <Grid container spacing={4}>  
        <Grid item xs={12}> 
         <Paper className={classes.paper}>   

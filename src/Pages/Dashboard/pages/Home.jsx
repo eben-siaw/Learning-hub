@@ -42,7 +42,7 @@ class Home extends Component {
                 You can start by either joining a course or creating a course as an Instructor
               </p>
               <p>
-                Links are provided below. Enjoy your stay with EduNal by Dawn Of
+                Links are provided below. Enjoy your stay with Edunal by Dawn Of
                 Abstraction
               </p>
             </div>

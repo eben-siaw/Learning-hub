@@ -19,8 +19,6 @@ function LessonView(props) {
 
  const [lesson, setView] = useState({}); 
  
- const meetingId = useSelector(state => state.course.data);
- 
  useEffect(() => { 
  
     axios.get(URL + `/lesson/viewlesson/${id}`).then(res => { 
@@ -34,12 +32,12 @@ function LessonView(props) {
 
     <div className="outer-content"> 
      <div className="lesson-wrapper">     
-     <Link to={`/dashboard/coursehub/${meetingId}`} className="back-button">
+     <Link to={`/dashboard/coursehub/`} className="back-button">
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span> 
         </Link> 
          <div className="inner-wrapper"> 
-         <Typography variant="body1">Click on the download icon to download {lesson.lessonTitle}</Typography> 
+         <Typography variant="body1">Click on the download icon to download <i className="ion-android-document"></i> {lesson.lessonTitle}</Typography> 
          <br/> 
          <FilePreviewer file={{
             url: `${lesson.fileUrl}` }}

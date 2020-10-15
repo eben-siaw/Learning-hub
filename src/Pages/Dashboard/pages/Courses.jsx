@@ -104,7 +104,7 @@ const Courses = (props) => {
     });
   
 
- if(user) { 
+ if(courses) { 
   return (
     <div>
       <Container>
