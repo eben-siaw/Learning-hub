@@ -34,7 +34,7 @@ class Home extends Component {
     
     return (
       <div className="container">
-        <PageHeader title="Dashboard" useSearch={false} />    
+        <PageHeader title="Dashboard" useSearch={true} />    
         <div className="container-inner">
           <div className="welcome-card">
             <div>

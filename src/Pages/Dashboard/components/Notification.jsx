@@ -155,7 +155,13 @@ export default function Notifications({ onHeader }) {
           height: 50px;
           width: 50px;
           margin-right: 5px;
-        } 
+        }  
+
+        @media (max-width: 500px) { 
+          .notification-box {  
+            display: none;
+          }  
+        }
 
       `}</style>
     </div>
