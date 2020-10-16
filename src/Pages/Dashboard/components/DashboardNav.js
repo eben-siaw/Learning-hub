@@ -2,7 +2,7 @@ import React, { useContext, Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import MobileMenu from "./MobileMenu";
-import Notification from "./Notification";
+import NotificationMenu from "./LikeNotification";
 
 export default function DashboardNav() {
   const logouthandler = () => {
@@ -19,7 +19,7 @@ export default function DashboardNav() {
         <NavLinks />
       </div>
       <div className="header-notification">
-        <Notification onHeader={true} />
+        <NotificationMenu />
         <MobileMenu />
       </div>
       <div className="signout-box">
@@ -99,6 +99,9 @@ export default function DashboardNav() {
         @media (max-width: 500px) {
           .header-notification {
             display: flex;
+          }  
+          .m-view { 
+            color: #fff;
           }
           .nav-bar {
             flex-direction: row;

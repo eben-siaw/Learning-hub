@@ -2,52 +2,20 @@ import axios from "axios";
 import React, { useState } from "react";
 import {useEffect} from 'react';  
 import LikeIcon from '@material-ui/icons/ThumbUp';
-import {useSelector} from 'react-redux';
-import Avatar  from "@material-ui/core/Avatar";
 import { Divider } from "@material-ui/core";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import moment from 'moment';
+
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
 const local = "http://localhost:5050"
 
 export default function Notifications({ onHeader }) { 
-  
-  const user = useSelector(state => state.auth.user._id);
 
   const [openNotification, setOpenNotification] = useState(false);
   const [notifications, setNotifications] = useState([]); 
   
-
-  const getNotifications = async () => { 
-    
-    try { 
-      return await axios.get(URL + `/like/getNotifications/${user}`) 
-      .then(response => { 
-       if(response.data.success) { 
-         setNotifications(response.data.notification); 
-         console.log(response.data.notification);  
-       } else { 
-         alert("No new notification");
-       }
-      }) 
-    } catch (error) {
-       console.log(error);
-    }
-   
-  } 
-  
-  useEffect(() => { 
-    getNotifications();   
-  }); 
-  
  const OpenNotification = () => {
   setOpenNotification(!openNotification);   
-  if(notifications) { 
-    toast("Someone liked your video");
-  } 
  }
 
   const renderEmpty = () => {
@@ -60,12 +28,12 @@ export default function Notifications({ onHeader }) {
      {notifications.map((item, index) => (    
       <div className="notification-box"> 
          <div className="user">  
-         <Avatar>E</Avatar> 
+       
          </div> 
          <span> 
-        <p> • {moment(Date.parse(item.notifiedAt)).fromNow()} </p> 
+     {/*<p> • {moment(Date.parse(item.notifiedAt)).fromNow()} </p> */}
         <br/>
-        <span>  {item.sender.first_name} {item.sender.last_name} liked your video </span>    
+        <span>   </span>    
         <Divider/> 
         </span>  
         </div>    
@@ -81,7 +49,6 @@ export default function Notifications({ onHeader }) {
         onClick={() => OpenNotification()}
         className={`ion-ios-bell-outline icon active`}
       ></span> 
-      <ToastContainer/>
       <div className={`list ${openNotification ? "show" : ""}`}>
         {notifications.length < 1 ? renderEmpty() : renderNotifications()}
       </div>

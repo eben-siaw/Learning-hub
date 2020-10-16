@@ -1,6 +1,7 @@
 import React from "react"; 
 import {useState} from "react";
 import Notifications from "./Notification";
+import NotificationMenu from './LikeNotification';
 
 export default function PageHeader({ title, useSearch }) { 
  
@@ -11,11 +12,11 @@ export default function PageHeader({ title, useSearch }) {
       <h2>{title}</h2>
       <div className="options"> 
         <div className="mobile-option">   
-         <Notifications/> 
+         <NotificationMenu/> 
          </div> 
         {useSearch && (
           <div className="search-field">
-            <input placeholder="Search" type="text" name="search" id="search" />
+            <input placeholder="Search Videos" type="text" name="search" id="search" />
           </div>
         )} 
       </div>
