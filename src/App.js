@@ -9,10 +9,16 @@ import history from "./Pages/InstructorPage/history";
 import Login from "./Components/Login";
 import SignUp from "./Components/SignUp";
 import NotFound from "./Components/NotFound";
-
+import VideoConfig from "./Pages/InstructorPage/VideoConference/VideoConfig";
+import ReactGa from 'react-ga'
 
 class App extends Component  {
    
+  componentDidMount() { 
+   ReactGa.initialize('UA-180908848-1'); 
+
+   ReactGa.pageview(window.location.pathname + window.location.search);
+  }
   
   render() {  
 
@@ -28,17 +34,9 @@ class App extends Component  {
 
         <Route path="/dashboard" component={Dashboard} /> 
 
-        <Route path="/courseview/:meetingId/" component={CoursesTabs}  /> 
+        <Route path="/courseview/:meetingId/" component={CoursesTabs}  />  
 
-        {/* <Route path="/stream/new" component={Startstream} />
-
-        <Route path="/streams" component={StreamList} />
-
-        <Route path="/stream/watch/:id" component={StreamWatch} /> */}
-
-        {/* <Route path="/viewer/streams" component={ViewerStreamList} /> */}
-
-        {/* <Route path="/viewerstream/watch/:id" component={ViewerStreamWatch} /> */}
+        <Route path="/Video/videoConference/:room" component={VideoConfig} />
 
         <Route path="/notFound" component={NotFound} /> 
         </Switch>

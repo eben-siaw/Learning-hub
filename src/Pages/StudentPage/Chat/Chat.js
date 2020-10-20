@@ -79,7 +79,6 @@ const Chat = ({messagelist, postId, refreshFunc}) => {
         }
       `}</style>
     </div>   
-
      <Messages messagelist={messagelist}/>
     </div>
     

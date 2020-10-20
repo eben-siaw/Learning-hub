@@ -17,7 +17,7 @@ const Messages = ({messagelist}) => {
 };
 
 const CommentItem = ({ comment }) => { 
-  const user = useSelector(state => state.auth.user)
+ 
   return (
     <div className="comment">
       <div className="avatar">

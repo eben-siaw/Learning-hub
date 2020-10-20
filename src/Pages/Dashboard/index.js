@@ -14,7 +14,8 @@ import { connect } from "react-redux";
 import { setCurrentUser, setLoggedIn } from "../../actions/index"; 
 import {setCurrentCourse} from "../../actions/index";
 import Lessons from './pages/Lessons';
-import InstructorHub from "./pages/InstructorHub";
+import InstructorHub from "./pages/InstructorHub"; 
+import VideoMeet from './pages/VideoMeet';
 import axios from "axios";
 
 const local = "http://localhost:5050"
@@ -72,7 +73,10 @@ class Dashboard extends Component {
                 path="/dashboard/coursehub/"
                 component={CourseHub}
               />  
-          
+           
+             <Route path="/dashboard/videoMeet" 
+             component={VideoMeet} />
+
               <Route
                 exact
                 path="/dashboard/instructorhub"

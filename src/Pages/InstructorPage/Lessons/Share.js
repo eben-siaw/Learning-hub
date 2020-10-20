@@ -13,7 +13,7 @@ const Share = (props) => {
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
         </Link>
-        <h3>Share lessons or documents</h3>
+        <h3>Share lessons or documents- PDF</h3>
         <div className="form-wrapper">
           <ShareMaterials meetingId={meetingId}/>
         </div>

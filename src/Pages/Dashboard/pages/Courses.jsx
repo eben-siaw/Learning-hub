@@ -36,25 +36,19 @@ const Courses = (props) => {
 
   const getCourses = () => {
    
-     return axios.get(URL + `/courses/coursehub/${user}`)  
-      .then(res => {  
-        if(res.data.success) { 
-        setCourses(res.data.course);    
-        setLoading(false);
-        } else { 
-          alert("No Courses Found");
-        }
+    return axios.get(URL + `/courses/coursehub/${user}`)  
+      .then(res => {   
+          console.log(res.data)
+          setCourses(res.data.course);    
+          setLoading(false);  
       }) 
-     .catch (error => {
-      console.log(error);
-    })
   };
 
   useEffect(() => {
     getCourses(); 
-  });
+  }, []);
    
-  console.log(courses);  
+  
  
   const renderCourses = courses.map((joined, index) => {  
      
@@ -103,52 +97,71 @@ const Courses = (props) => {
      
     });
   
-
- if(courses) { 
-  return (
-    <div>
-      <Container>
-        <Grid
-          container
-          spacing={5}
-          direction="row"
-          className="course-list-container-inner"
-        >
-          {renderCourses}   
-          <div style={{paddingTop: 50}}> 
-          {loading ? <LoadingSpin /> : null} 
-          </div>
-        </Grid> 
-        <style jsx>
-          {`
-            .course-list-container-inner {
-              height: 88vh;
-              overflow: auto;
-              padding-bottom: 20px;
-            }
-            .course-list-container-inner::-webkit-scrollbar {
-              display: none;
-            }
-
-            @media (max-width: 500px) {
+  
+  if(courses.length < 1) {  
+    return (  
+      <div className="empty"> 
+      <p>  You have not joined any courses at the moment </p> 
+      <style jsx> {`
+         .empty { 
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+         -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          font-size: 25px;
+          color: black;
+        } 
+        `}
+      </style>
+      </div>
+    );
+    
+  } else {  
+    return (
+      <div>
+        <Container>
+          <Grid
+            container
+            spacing={5}
+            direction="row"
+            className="course-list-container-inner"
+          >          
+            
+            {renderCourses}    
+  
+            <div style={{paddingTop: 50}}> 
+            {loading ? <LoadingSpin /> :  null} 
+            </div> 
+  
+          </Grid> 
+          <style jsx>
+            {`
               .course-list-container-inner {
-                height: 76vh;
+                height: 88vh;
+                overflow: auto;
+                padding-bottom: 20px;
               }
-            }
-          `}
-        </style>
-      </Container>
-    </div>
-  ); 
-
- }
- else { 
-  return(  
-   <div>   
-   <div> You haven't join a course. Please join a course </div>  
-   </div>
-  ) 
+              .course-list-container-inner::-webkit-scrollbar {
+                display: none;
+              } 
+  
+              @media (max-width: 500px) {
+                .course-list-container-inner {
+                  height: 76vh;
+                }
+              }
+            `}
+          </style>
+        </Container>
+      </div>
+    ); 
+  
+    
   }
+  
+ 
 };
 
 export default Courses;

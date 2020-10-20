@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import VideoRoom from "../../../InstructorPage/VideoConference/VideoRoom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -26,7 +26,8 @@ import ListIcon from '@material-ui/icons/List';
 import GuidelinesIcon from '@material-ui/icons/ViewAgenda';
 import HomeIcon from '@material-ui/icons/Home';  
 import {createBrowserHistory} from "history"
-import NotificationIcon from '@material-ui/icons/NotificationsActive';
+import NotificationIcon from '@material-ui/icons/Notifications';
+import VideoIcon from '@material-ui/icons/Videocam'; 
 
 const drawerWidth = 240;
 
@@ -127,6 +128,20 @@ function CourseTabs(props) {
           </ListItemIcon>   
             <ListItemText>Share Materials</ListItemText> 
           </ListItem> 
+    
+           <ListItem 
+           button 
+           selected={selectedIndex === 4} 
+           onClick={(event) => handleListItemClick(event, 4)} 
+           component={Link} 
+           to={`/courseview/${meetingId}/videoRoom`}
+           >  
+          <ListItemIcon>   
+          <VideoIcon color="primary"/> 
+          </ListItemIcon>   
+          <ListItemText>Video Conference</ListItemText> 
+
+           </ListItem>
 
           <ListItem  
             component={Link}
@@ -176,8 +191,7 @@ function CourseTabs(props) {
           </Typography> 
    
           <IconButton  
-           component={Link} 
-           to="/dashboard/instructorhub"
+           onClick={() => handleEvent()}
            color="inherit"> 
            <HomeIcon /> 
              </IconButton> 
@@ -225,8 +239,9 @@ function CourseTabs(props) {
           <div className={classes.toolbar} />
 
           <Switch>
-           <Route exact path="/courseview/:meetingId/upload" component={UploadVideo} />
-           <Route path="/courseview/:meetingId/share" component={Share} /> 
+           <Route exact path="/courseview/:meetingId/upload" component={UploadVideo} /> 
+           <Route path="/courseview/:meetingId/share" component={Share} />  
+           <Route path="/courseview/:meetingId/VideoRoom" component={VideoRoom} />
            <Route path="/courseview/:meetingId/lessons" component={SharedLessons} />
            <Route path="/courseview/:meetingId/guides" component={Guidelines} />
           </Switch>

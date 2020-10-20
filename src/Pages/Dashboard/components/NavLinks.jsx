@@ -21,9 +21,9 @@ export default function NavLinks(props) {
       <NavLink to={link(`/coursehub`)}>
         <i className="ion-ios-book-outline"></i>
       </NavLink> 
-      {/*<NavLink to={link(`/lessons`)}>
-        <i className="ion-ios-list-outline"></i>
-      </NavLink>*/}
+      <NavLink to={link(`/videoMeet`)}>
+        <i className="ion-android-people"></i>
+      </NavLink>
       <NavLink to={link(`/instructorhub`)}> 
       <i className="ion-android-contact"></i>
       </NavLink> 

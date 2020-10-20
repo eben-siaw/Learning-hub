@@ -12,7 +12,7 @@ const CourseList = () => {
  
   const user = useSelector(state => state.auth.user._id);
 
-  const [list, setList] = useState({}); 
+  const [list, setList] = useState([]); 
   const [loading, setLoading] = useState(true);  
 
  const getCourse = async () => { 

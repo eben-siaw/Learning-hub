@@ -25,7 +25,6 @@ const InstructorHub = () => {
  
   const [courses, setCourses] = useState([]); 
   const [loading, setLoading] = useState(true); 
-  const [errors, setErrors] = useState("")
   // get Courses created by the authenticated logged in user, url params
  
   const user = useSelector(state => state.auth.user._id)
@@ -109,6 +108,32 @@ const InstructorHub = () => {
     });
   };
 
+  if(courses.length < 1) { 
+    return (    
+      <div className="empty">   
+        <div className="space">  <i className="ion-android-happy"></i> </div>
+      <p>  You have not created any courses yet. </p> 
+      <style jsx> {`
+         .empty { 
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+         -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          font-size: 25px;
+          color: black;
+        }  
+        .space { 
+          padding-top: -10px; 
+          font-size: 45px;
+        }
+        `}
+      </style>
+      </div>
+    );
+    
+  }
   return (
     <div>
       <PageHeader title="Instructor Hub" useSearch={true} />
