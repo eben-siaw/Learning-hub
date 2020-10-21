@@ -37,10 +37,11 @@ const Courses = (props) => {
   const getCourses = () => {
    
     return axios.get(URL + `/courses/coursehub/${user}`)  
-      .then(res => {   
-          console.log(res.data)
+      .then(res => {    
+        if(res.data.success) { 
           setCourses(res.data.course);    
           setLoading(false);  
+        }
       }) 
   };
 

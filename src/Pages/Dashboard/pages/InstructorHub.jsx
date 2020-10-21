@@ -33,8 +33,10 @@ const InstructorHub = () => {
     try {
       await axios.get(URL + `/courses/${user}/courses`)  
       .then(res => { 
-        setCourses(res.data);  
-        setLoading(false);
+        if(res.data.success) { 
+          setCourses(res.data.course);  
+          setLoading(false);
+        }
       }) 
     } catch (error) {
       console.log(error);

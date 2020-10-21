@@ -19,7 +19,7 @@ const CourseList = () => {
   
   const res = await axios.get(URL + `/courses/${user}/currentcourse`) 
     if(res.data) { 
-      setList(res.data);   
+      setList(res.data.course);   
       setLoading(false);
       console.log(res.data);
     }
@@ -33,7 +33,7 @@ const CourseList = () => {
   return (
     <div className="course-list">  
      <h5 style={{color: "CadetBlue", fontSize: '1.1em'}}>Your Courses</h5>
-      {list.length < 1 || list == null ? <Empty /> : <div className="list">   
+      {list.length < 1 || list.length === 0 ? <Empty /> : <div className="list">   
       { loading ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} timeout={10000} /> : null}
        <Typography variant="body1" style={{color: "DarkSlateGrey", fontSize: '1.4em', fontFamily: 'sans-serif, Arial, Helvetica'}}> {list.course_name}  </Typography>  
        <br/>
