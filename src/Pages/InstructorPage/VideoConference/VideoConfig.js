@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
-import io from 'socket.io-client'
+import io from 'socket.io-client'; 
+
+import { connect } from 'react-redux'; 
+
+import {setCurrentUser, setLoggedIn} from '../../../actions/index';
+
+import jwtdecode from 'jwt-decode';
 
 import Video from './Videos/Video'; 
 
@@ -32,7 +38,7 @@ class VideoConfig extends Component {
 
       status: 'Please wait...',
      
-      // stun server for more remote connections
+      // stun server for more remote connections..
       pc_config: {
         "iceServers": [
           {
@@ -220,7 +226,13 @@ class VideoConfig extends Component {
   // life cylce method.. holds the connect method for the service IP to the signaling server 
   // ... the connect method takes in an object of the room using window.location.pathname
 
-  componentDidMount = () => { 
+  componentDidMount = () => {  
+
+    const usertoken = localStorage.getItem('usertoken'); 
+    if(!usertoken) { window.location = "/login" } 
+    const decoded = jwtdecode(usertoken);  
+    this.props.setCurrentUser(decoded);
+    this.props.setLoggedIn(true); 
 
     this.socket = io("https://videocommunications.herokuapp.com", { 
        query: { 
@@ -540,7 +552,7 @@ class VideoConfig extends Component {
  
           @media (max-width: 500px) { 
            .status { 
-             margin-top: 165px;
+             margin-top: 142px;
            }
           }    
         `}
@@ -550,4 +562,4 @@ class VideoConfig extends Component {
   }
 }
 
-export default VideoConfig;
+export default connect(null, {setCurrentUser, setLoggedIn})(VideoConfig);

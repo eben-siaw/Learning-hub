@@ -8,6 +8,8 @@ const VideoChat = props => {
  
   // logged in user
   const username = useSelector(state => state.auth.user.first_name);  
+
+  const lastname = useSelector(state => state.auth.user.last_name);  
  
   // messages state
   const [message, setMessage] = useState(""); 
@@ -31,13 +33,14 @@ const VideoChat = props => {
 
   const sendMessage = (msg) => {
     props.sendMessage(msg);
-    scrollToBottom()
+    scrollToBottom();
   }
-
+ 
+  // emit message after button is pressed and scroll 
   const handleSubmit = event => {
     if (message === '') return
     event.preventDefault();
-    sendMessage({type:'text', message: { id: user.uid, sender: { uid: user.uid, }, data: { text: message } }})
+    sendMessage({type:'text', message: { id: user.uid, sender: { uid: username + ' ' + lastname, }, data: { text: message } }})
     setMessage('')
   };
 
@@ -76,7 +79,8 @@ const VideoChat = props => {
 
   }
 
-  const showEnlargedImage = (data) => {
+  const showEnlargedImage = (data) => { 
+
     return (<img
       src={data}
       style={{
@@ -94,7 +98,8 @@ const VideoChat = props => {
     />)
   }
 
-  return (
+  return ( 
+
     <div>
       {imageZoom && showEnlargedImage(selectedImage)}
 
