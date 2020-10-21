@@ -14,9 +14,10 @@ import {
 import BookIcon from "@material-ui/icons/Book";
 import { Link } from "react-router-dom";
 import LoadingSpin from 'react-loading-spin';  
-import {setCourseCode} from '../../../actions/index'
  import {useSelector, useDispatch} from 'react-redux';
-
+ import Loader from 'react-loader-spinner';
+ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css" 
+ 
 // Course Hub
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
@@ -101,8 +102,9 @@ const Courses = (props) => {
   
   if(courses.length < 1) {  
     return (  
-      <div className="empty"> 
-      <p>  You have not joined any courses at the moment </p> 
+      <div className="empty">  
+       { loading ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} timeout={10000} /> :  
+        <p>  You have not joined any courses at the moment </p>  }
       <style jsx> {`
          .empty { 
           margin: 0;

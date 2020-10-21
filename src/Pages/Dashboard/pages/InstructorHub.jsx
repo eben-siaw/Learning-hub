@@ -12,10 +12,12 @@ import {
   CardContent,
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import BookIcon from "@material-ui/icons/Book";
 import { Link } from "react-router-dom";
 import LoadingSpin from 'react-loading-spin';
 import {useSelector} from 'react-redux'; 
+import Loader from 'react-loader-spinner';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css" 
+
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -112,9 +114,11 @@ const InstructorHub = () => {
 
   if(courses.length < 1) { 
     return (    
-      <div className="empty">   
-        <div className="space">  <i className="ion-android-happy"></i> </div>
-      <p>  You have not created any courses yet. </p> 
+      <div className="empty">    
+    { loading ? <Loader type="ThreeDots" color="#00BFFF" height={80} width={80} timeout={10000} /> : 
+    <div className="space">  <i className="ion-android-happy"></i>   <p>  You have not created any courses yet. </p>  </div>
+    }
+        
       <style jsx> {`
          .empty { 
           margin: 0;
