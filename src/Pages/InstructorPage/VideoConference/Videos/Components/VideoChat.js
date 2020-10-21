@@ -6,10 +6,13 @@ import DragDrop from './Dragdrop'
 
 const VideoChat = props => { 
  
+  // logged in user
   const username = useSelector(state => state.auth.user.first_name);  
+ 
+  // messages state
+  const [message, setMessage] = useState(""); 
 
-  const [message, setMessage] = useState(''); 
-
+  // user from socket id passed as props - props.user.id
   const [user, setUser] = useState({ uid: 0, }); 
 
   const [imageZoom, setImageZoom] = useState(false); 

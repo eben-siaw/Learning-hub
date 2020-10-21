@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -28,6 +28,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import {createBrowserHistory} from "history"
 import NotificationIcon from '@material-ui/icons/Notifications';
 import VideoIcon from '@material-ui/icons/Videocam'; 
+import jwtdecode from 'jwt-decode'; 
+import {useDispatch} from 'react-redux'
+import { setCurrentUser, setLoggedIn } from "../../../../actions";
+
 
 const drawerWidth = 240;
 
@@ -67,6 +71,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function CourseTabs(props) { 
+ 
+  // get user token  
+
+  const dispatch = useDispatch()
+
+  useEffect(() => { 
+
+    const usertoken = localStorage.getItem('usertoken'); 
+    if(!usertoken) { window.location = "/login" } 
+    const decoded = jwtdecode(usertoken);  
+    dispatch(setCurrentUser(decoded));
+    dispatch(setLoggedIn(true)); 
+    
+  }, [])
 
   const { container } = props;   
  

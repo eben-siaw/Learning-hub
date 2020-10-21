@@ -234,7 +234,7 @@ class VideoConfig extends Component {
       this.getLocalStream()
 
       console.log(data.success)
-      const status = data.peerCount > 1 ? `Total Participants to room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
+      const status = data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
 
       this.setState({
         status: status,
@@ -245,7 +245,7 @@ class VideoConfig extends Component {
     this.socket.on('joined-peers', data => {
 
       this.setState({
-        status: data.peerCount > 1 ? `Total Participants to room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
+        status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
       })
     })
 
@@ -262,7 +262,7 @@ class VideoConfig extends Component {
           // remoteStream: remoteStreams.length > 0 && remoteStreams[0].stream || null,
           remoteStreams,
           ...selectedVideo,
-          status: data.peerCount > 1 ? `Total Connected Peers to room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
+          status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
         }
         }
       )
@@ -319,7 +319,7 @@ class VideoConfig extends Component {
 
           pc.ondatachannel = receiveChannelCallback
 
-
+        // offer from peers about joining a current room sdp
           pc.createOffer(this.state.sdpConstraints)
             .then(sdp => {
               pc.setLocalDescription(sdp)
@@ -446,7 +446,8 @@ class VideoConfig extends Component {
 
     const statusText = <div style={{ color: 'yellow', padding: 5 }}>{this.state.status}</div>
 
-    return (
+    return ( 
+
       <div>
       <Draggable style={{
         zIndex: 101,
@@ -471,11 +472,11 @@ class VideoConfig extends Component {
             backgroundColor: 'black',
           }}
           showMuteControls={true}
-          // ref={this.localVideoref}
           videoStream={this.state.localStream}
           autoPlay muted>
         </Video>
-      </Draggable>
+      </Draggable> 
+
       <Video
         videoStyles={{
           zIndex: 1,
@@ -498,22 +499,21 @@ class VideoConfig extends Component {
         // padding: 10,
         // borderRadius: 5,
       }}>
-        <i onClick={(e) => {this.setState({disconnected: true})}} style={{ cursor: 'pointer', paddingLeft: 15, color: 'red' }} class='material-icons'>leave room</i>
-        <div style={{
-          margin: 10,
-          backgroundColor: '#cdc4ff4f',
-          padding: 10,
-          borderRadius: 5,
-        }}>{ statusText }</div>
-      </div>
+        <i onClick={(e) => {this.setState({disconnected: true})}} style={{ cursor: 'pointer', fontSize: 25, paddingLeft: 15, color: 'red' }} className='ion-close-circled'></i>
+        <div 
+        className="status"
+      >{ statusText }</div>
+      </div> 
+
       <div>
         <Videos
           switchVideo={this.switchVideo}
           remoteStreams={this.state.remoteStreams}
         ></Videos>
-      </div>
-      <br />
+      </div> 
 
+      <br />
+        
         <VideoChat
             user={{
               uid: this.socket && this.socket.id || ''
@@ -528,7 +528,23 @@ class VideoConfig extends Component {
             })
             this.sendToPeer('new-message', JSON.stringify(message), {local: this.socket.id})
           }}
-        />
+        /> 
+        <style jsx> 
+         {` 
+          .status { 
+            margin: 10px;
+            background-color: #cdc4ff4f;
+            padding: 10px;
+            border-radius: 5px;
+          }
+ 
+          @media (max-width: 500px) { 
+           .status { 
+             margin-top: 165px;
+           }
+          }    
+        `}
+        </style>
       </div>
     )
   }
