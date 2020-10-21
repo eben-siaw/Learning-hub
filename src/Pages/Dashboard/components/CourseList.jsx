@@ -18,10 +18,9 @@ const CourseList = () => {
  const getCourse = async () => { 
   
   const res = await axios.get(URL + `/courses/${user}/currentcourse`) 
-    if(res.data) { 
+    if(res.data.success) { 
       setList(res.data.course);   
       setLoading(false);
-      console.log(res.data);
     }
   
   }
