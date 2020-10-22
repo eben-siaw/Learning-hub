@@ -45,11 +45,11 @@ class SignUp extends React.Component {
 
     switch (name) {
       case "first_name":
-        formErrors.password = value.length < 3 ? "minimum 3 characters" : "";
+        formErrors.first_name = value.length < 3 ? "minimum 3 characters" : "";
         break;
 
       case "last_name":
-        formErrors.password = value.length < 3 ? "minimum 3 characters" : "";
+        formErrors.last_name = value.length < 3 ? "minimum 3 characters" : "";
         break;
 
       case "email":
@@ -217,7 +217,8 @@ class SignUp extends React.Component {
                 <div className="input-group">
                   <input
                     type="text"
-                    name="gender"
+                    name="gender" 
+                    placeholder="Male or Female"
                     onChange={this.handleOnChange}
                     value={gender}
                     className="login-input"

@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import Video from './Video'
 
+// cleanup
+
 class Videos extends Component { 
 
   constructor(props) { 
@@ -9,7 +11,8 @@ class Videos extends Component {
 
     this.state = {
       rVideos: [],
-      remoteStreams: []
+      remoteStreams: [], 
+      videoVisible: false
     }
   }
 
