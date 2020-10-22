@@ -1,31 +1,67 @@
 import React, { Component } from 'react';
 
+// video visible additions
+
 class Video extends Component { 
 
-  constructor(props) {
-    super(props);
+  constructor(props) { 
+
+    super(props)
     this.state = {
       mic: true,
       camera: true,
+      videoVisible: true,
     }
   }
- 
-  //life cycle method
+
   componentDidMount() {
     if (this.props.videoStream) {
       this.video.srcObject = this.props.videoStream
     }
   }
 
-  componentWillReceiveProps(nextProps) { 
-    console.log(nextProps.videoStream)
+  componentWillReceiveProps(nextProps) {
 
+    // console.log('1. nextProps', this.props.showMuteControls, nextProps.videoStream && nextProps.videoStream.getTracks())
+    console.log('1', this.props.videoType, nextProps.videoStream)
+
+    // This is done only once
     if (nextProps.videoStream && nextProps.videoStream !== this.props.videoStream) {
+    // if (!this.props.videoStream) {
+      console.log('2', this.props.videoType, nextProps.videoStream)
       this.video.srcObject = nextProps.videoStream
     }
+
+    // This is done only once when we receive a video track
+    const videoTrack = nextProps.videoStream && nextProps.videoStream.getVideoTracks()
+    if (this.props.videoType === 'remoteVideo' && videoTrack && videoTrack.length) {
+
+      videoTrack[0].onmute = () => {
+        // alert('muted')
+        this.setState({
+          videoVisible: false,
+        })
+        this.props.videoMuted(nextProps.videoStream)
+      }
+
+      videoTrack[0].onunmute = () => {
+        this.setState({
+          videoVisible: true,
+        })
+        this.props.videoMuted(nextProps.videoStream)
+      }
+    }
+
+
+    const audioTrack = nextProps.videoStream && nextProps.videoStream.getAudioTracks()
+    if (this.props.videoType === 'remoteVideo' && audioTrack && audioTrack.length) {
+      audioTrack[0].onmute = () => {
+        alert('muted');
+      }
+    }
+
   }
-  
-  // mute mic 
+
   mutemic = (e) => {
     const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'audio')
     this.setState(prevState => {
@@ -33,8 +69,7 @@ class Video extends Component {
       return {mic: !prevState.mic}
     })
   }
- 
-  // mute camera
+
   mutecamera = (e) => {
     const stream = this.video.srcObject.getTracks().filter(track => track.kind === 'video')
     this.setState(prevState => {
@@ -46,20 +81,23 @@ class Video extends Component {
   render() {
     const muteControls = this.props.showMuteControls && (
       <div>
-        <i onClick={this.mutemic} style={{ cursor: 'pointer', padding: 6, fontSize: 22, color: this.state.mic && 'white' || 'red' }} className='ion-ios-mic'>{this.state.mic}</i>
-        <i onClick={this.mutecamera} style={{ cursor: 'pointer', padding: 6, fontSize: 22, color: this.state.camera && 'white' || 'red' }} className='ion-ios-videocam'>{this.state.camera}</i>
+        <i onClick={this.mutemic} style={{ cursor: 'pointer', padding: 5, fontSize: 20, color: this.state.mic && 'white' || 'red' }} className={`${this.state.mic && 'ion-ios-mic' || 'ion-ios-mic-off'}`}></i>
+        <i onClick={this.mutecamera} style={{ cursor: 'pointer', padding: 5, fontSize: 20, color: this.state.camera && 'white' || 'red' }} className={`${this.state.camera && 'ion-ios-videocam' || 'ion-ios-videocam-off'}`}></i>
       </div>
     )
+
     return (
       <div
-        style={{ ...this.props.frameStyle }}
+        style={{ ...this.props.frameStyle,  }}
       >
-        {/* <audio id={this.props.id} muted={this.props.muted} ref={ (ref) => {this.video = ref }}></audio> */}
         <video
           id={this.props.id}
           muted={this.props.muted}
           autoPlay
-          style={{ ...this.props.videoStyles }}
+          style={{
+            visibility: this.state.videoVisible && 'visible' || 'hidden',
+            ...this.props.videoStyles,
+          }}
           // ref={ this.props.videoRef }
           ref={ (ref) => {this.video = ref }}
         ></video>
@@ -70,3 +108,5 @@ class Video extends Component {
 }
 
 export default Video
+
+

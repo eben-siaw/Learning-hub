@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import io from 'socket.io-client'; 
+import io from 'socket.io-client'
 
 import { connect } from 'react-redux'; 
 
@@ -14,31 +14,24 @@ import Videos from './Videos/Videos';
 
 import VideoChat from './Videos/Components/VideoChat';
 
-import Draggable from './Videos/Components/draggable';
-
+import Draggable from './Videos/Components/draggable'; 
 
 
 class VideoConfig extends Component { 
 
-  constructor(props) { 
+  constructor(props) {
+    super(props)
 
-    super(props);
-
-    this.state = { 
-
-     // used to hold local stream object to avoid recreating the stream everytime a new offer comes 
-     // used to hold remote stream object that is displayed in the main screen 
-
-      localStream: null,    
-      remoteStream: null,   
+    this.state = {
+      localStream: null,    // used to hold local stream object to avoid recreating the stream everytime a new offer comes
+      remoteStream: null,    // used to hold remote stream object that is displayed in the main screen
 
       remoteStreams: [],    // holds all Video Streams (all remote streams)
       peerConnections: {},  // holds all Peer Connections
       selectedVideo: null,
 
       status: 'Please wait...',
-     
-      // stun server for more remote connections..
+
       pc_config: {
         "iceServers": [
           {
@@ -59,22 +52,23 @@ class VideoConfig extends Component {
       disconnected: false,
     }
 
-    // DONT FORGET TO CHANGE TO YOUR URL
-    this.serviceIP = "https://videocommunications.herokuapp.com"
+    this.serviceIP = 'https://videocommunications.herokuapp.com'
+
+    // https://reactjs.org/docs/refs-and-the-dom.html
+    // this.localVideoref = React.createRef()
+    // this.remoteVideoref = React.createRef()
 
     this.socket = null
     // this.candidates = []
   }
- 
- 
-  // Room Data Channel with chats
 
   getLocalStream = () => {
     // called when getUserMedia() successfully returns - see below
     // getUserMedia() returns a MediaStream object (https://developer.mozilla.org/en-US/docs/Web/API/MediaStream)
     const success = (stream) => {
       window.localStream = stream
-     
+      // this.localVideoref.current.srcObject = stream
+      // this.pc.addStream(stream);
       this.setState({
         localStream: stream
       })
@@ -87,8 +81,8 @@ class VideoConfig extends Component {
       console.log('getUserMedia Error: ', e)
     }
 
-   
-    // navigator media constraints options
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+    // see the above link for more constraint options
     const constraints = {
       audio: true,
       video: true,
@@ -111,7 +105,7 @@ class VideoConfig extends Component {
   }
 
   whoisOnline = () => {
-    // let all peers know I am joining
+    // let all participants know I am joining
     this.sendToPeer('onlinePeers', null, {local: this.socket.id})
   }
 
@@ -143,7 +137,13 @@ class VideoConfig extends Component {
       }
 
       pc.oniceconnectionstatechange = (e) => {
-        
+        // if (pc.iceConnectionState === 'disconnected') {
+        //   const remoteStreams = this.state.remoteStreams.filter(stream => stream.id !== socketID)
+
+        //   this.setState({
+        //     remoteStream: remoteStreams.length > 0 && remoteStreams[0].stream || null,
+        //   })
+        // }
       }
 
       pc.ontrack = (e) => {
@@ -153,14 +153,14 @@ class VideoConfig extends Component {
         let remoteVideo = {}
 
 
-        // 1. check if stream already exists in remoteStreams.. This checks if a peer has already joined 
-        //the meeting if there is no stream then the track will not be added
+        // 1. check if stream already exists in remoteStreams
         const rVideos = this.state.remoteStreams.filter(stream => stream.id === socketID)
 
         // 2. if it does exist then add track
         if (rVideos.length) {
           _remoteStream = rVideos[0].stream
           _remoteStream.addTrack(e.track, _remoteStream)
+
           remoteVideo = {
             ...rVideos[0],
             stream: _remoteStream,
@@ -180,6 +180,12 @@ class VideoConfig extends Component {
           }
           remoteStreams = [...this.state.remoteStreams, remoteVideo]
         }
+
+        // const remoteVideo = {
+        //   id: socketID,
+        //   name: socketID,
+        //   stream: e.streams[0]
+        // }
 
         this.setState(prevState => {
 
@@ -204,6 +210,7 @@ class VideoConfig extends Component {
 
       pc.close = () => {
         // alert('GONE')
+        console.log("pc closed");
       }
 
       if (this.state.localStream)
@@ -223,30 +230,29 @@ class VideoConfig extends Component {
     }
   }
 
-  // life cylce method.. holds the connect method for the service IP to the signaling server 
-  // ... the connect method takes in an object of the room using window.location.pathname
-
-  componentDidMount = () => {  
-
+  componentDidMount = () => {
+ 
     const usertoken = localStorage.getItem('usertoken'); 
     if(!usertoken) { window.location = "/login" } 
     const decoded = jwtdecode(usertoken);  
     this.props.setCurrentUser(decoded);
     this.props.setLoggedIn(true); 
 
-    this.socket = io("https://videocommunications.herokuapp.com", { 
-       query: { 
-           room: this.props.match.params.room,
-       }
-   });
+    this.socket = io.connect(
+      this.serviceIP,
+      {
+        query: {
+          room: window.location.pathname,
+        }
+      }
+    )
 
-    
     this.socket.on('connection-success', data => {
 
       this.getLocalStream()
 
-      console.log(data.success)
-      const status = data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
+      // console.log(data.success)
+      const status = data.peerCount > 1 ? `Total Connected Peers to room ${window.location.pathname}: ${data.peerCount}` : 'Waiting for other peers to connect'
 
       this.setState({
         status: status,
@@ -257,13 +263,20 @@ class VideoConfig extends Component {
     this.socket.on('joined-peers', data => {
 
       this.setState({
-        status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
+        status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params}: ${data.peerCount}` : 'Waiting for other peers to connect'
       })
     })
 
     this.socket.on('peer-disconnected', data => {
-      console.log('peer-disconnected', data)
 
+      // close peer-connection with this peer if he clicks the disconnect button
+      this.state.peerConnections[data.socketID].close()
+
+      // get and stop remote audio and video tracks of the disconnected peer
+      const rVideo = this.state.remoteStreams.filter(stream => stream.id === data.socketID)
+      rVideo && this.stopTracks(rVideo[0].stream)
+
+      // filter out the disconnected peer stream
       const remoteStreams = this.state.remoteStreams.filter(stream => stream.id !== data.socketID)
 
       this.setState(prevState => {
@@ -274,14 +287,14 @@ class VideoConfig extends Component {
           // remoteStream: remoteStreams.length > 0 && remoteStreams[0].stream || null,
           remoteStreams,
           ...selectedVideo,
-          status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
+          status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params}: ${data.peerCount}` : 'Waiting for other peers to connect'
         }
         }
       )
-    })
+    });
 
     this.socket.on('online-peer', socketID => {
-      console.log('connected peers ...', socketID)
+      // console.log('connected peers ...', socketID)
 
       // create and send offer to the peer (data.socketID)
       // 1. Create new pc
@@ -308,7 +321,7 @@ class VideoConfig extends Component {
           // Receive Channels
           const handleReceiveMessage = (event) => {
             const message = JSON.parse(event.data)
-            console.log(message)
+            // console.log(message)
             this.setState(prevState => {
               return {
                 messages: [...prevState.messages, message]
@@ -331,7 +344,7 @@ class VideoConfig extends Component {
 
           pc.ondatachannel = receiveChannelCallback
 
-        // offer from peers about joining a current room sdp
+
           pc.createOffer(this.state.sdpConstraints)
             .then(sdp => {
               pc.setLocalDescription(sdp)
@@ -367,7 +380,7 @@ class VideoConfig extends Component {
         // Receive Channels
         const handleReceiveMessage = (event) => {
           const message = JSON.parse(event.data)
-          console.log(message)
+          // console.log(message)
           this.setState(prevState => {
             return {
               messages: [...prevState.messages, message]
@@ -390,9 +403,7 @@ class VideoConfig extends Component {
 
         pc.ondatachannel = receiveChannelCallback
 
-        // settig remote description web rtc
-        pc.setRemoteDescription(new RTCSessionDescription(data.sdp)).then(() => { 
-
+        pc.setRemoteDescription(new RTCSessionDescription(data.sdp)).then(() => {
           // 2. Create Answer
           pc.createAnswer(this.state.sdpConstraints)
             .then(sdp => {
@@ -410,7 +421,7 @@ class VideoConfig extends Component {
     this.socket.on('answer', data => {
       // get remote's peerConnection
       const pc = this.state.peerConnections[data.socketID]
-      console.log(data.sdp)
+      // console.log(data.sdp)
       pc.setRemoteDescription(new RTCSessionDescription(data.sdp)).then(()=>{})
     })
 
@@ -437,29 +448,55 @@ class VideoConfig extends Component {
     //   ]
     // }
 
+    // https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection 
+  }
+
+  
+  disconnectSocket = (socketToDisconnect) => {
+    this.sendToPeer('socket-to-disconnect', null, {
+      local: this.socket.id,
+      remote: socketToDisconnect
+    })
   }
 
   switchVideo = (_video) => {
-    console.log(_video)
     this.setState({
       selectedVideo: _video
     })
   }
 
+  stopTracks = (stream) => {
+    stream.getTracks().forEach(track => track.stop())
+  }
+
   render() {
+    const {
+      status,
+      messages,
+      disconnected,
+      localStream,
+      peerConnections,
+      remoteStreams,
+    } = this.state
 
-    if (this.state.disconnected) {
+    if (disconnected) {
+      // disconnect socket
       this.socket.close()
-      this.state.localStream.getTracks().forEach(track => track.stop())
-      return (<div>You have successfully Disconnected!</div>)
+      // stop local audio & video tracks when a peer's socket is disconnected
+      this.stopTracks(localStream)
+
+      // stop all remote audio & video tracks if disconnected to fix the noise
+      remoteStreams.forEach(rVideo => this.stopTracks(rVideo.stream))
+
+      // stop all remote peerconnections
+      peerConnections && Object.values(peerConnections).forEach(pc => pc.close())
+
+      return (<div>You have successfully Disconnected</div>)
     }
-    
-    console.log(this.state.localStream)
 
-    const statusText = <div style={{ color: 'yellow', padding: 5 }}>{this.state.status}</div>
+    const statusText = <div style={{ color: 'yellow', padding: 5 }}>{status}</div>
 
-    return ( 
-
+    return (
       <div>
       <Draggable style={{
         zIndex: 101,
@@ -468,14 +505,9 @@ class VideoConfig extends Component {
         cursor: 'move'
       }}>
         <Video
+          videoType='localVideo'
           videoStyles={{
-            // zIndex:2,
-            // position: 'absolute',
-            // right:0,
             width: 200,
-            // height: 200,
-            // margin: 5,
-            // backgroundColor: 'black'
           }}
           frameStyle={{
             width: 200,
@@ -484,53 +516,33 @@ class VideoConfig extends Component {
             backgroundColor: 'black',
           }}
           showMuteControls={true}
-          videoStream={this.state.localStream}
+          videoStream={localStream}
           autoPlay muted>
         </Video>
-      </Draggable> 
-
-      <Video
-        videoStyles={{
-          zIndex: 1,
-          position: 'fixed',
-          bottom: 0,
-          minWidth: '100%',
-          minHeight: '100%',
-          backgroundColor: 'black'
-        }}
-        // ref={ this.remoteVideoref }
-        videoStream={this.state.selectedVideo && this.state.selectedVideo.stream}
-        autoPlay>
-      </Video>
+      </Draggable>
       <br />
-      <div style={{
-        zIndex: 3,
-        position: 'absolute',
-        // margin: 10,
-        // backgroundColor: '#cdc4ff4f',
-        // padding: 10,
-        // borderRadius: 5,
-      }}>
-        <i onClick={(e) => {this.setState({disconnected: true})}} style={{ cursor: 'pointer', fontSize: 25, paddingLeft: 15, color: 'red' }} className='ion-close-circled'></i>
-        <div 
-        className="status"
-      >{ statusText }</div>
-      </div> 
+        <div style={{
+          zIndex: 3,
+          position: 'absolute',
+        }}>
+          <i onClick={(e) => {this.setState({disconnected: true})}} style={{ cursor: 'pointer', paddingLeft: 15, color: 'red' }} class='ion-closed-circled'></i>
+          <div  
+          className="status"
+       >{ statusText }</div>
+        </div>
+        <div>
+          <Videos
+            switchVideo={this.switchVideo}
+            remoteStreams={remoteStreams}
+          ></Videos>
+        </div>
+        <br />
 
-      <div>
-        <Videos
-          switchVideo={this.switchVideo}
-          remoteStreams={this.state.remoteStreams}
-        ></Videos>
-      </div> 
-
-      <br />
-        
         <VideoChat
             user={{
               uid: this.socket && this.socket.id || ''
           }}
-          messages={this.state.messages}
+          messages={messages}
           sendMessage={(message) => {
             this.setState(prevState => {
               return {messages: [...prevState.messages, message]}
@@ -540,9 +552,9 @@ class VideoConfig extends Component {
             })
             this.sendToPeer('new-message', JSON.stringify(message), {local: this.socket.id})
           }}
-        /> 
-        <style jsx> 
-         {` 
+        />
+        <style jsx>  
+        {` 
           .status { 
             margin: 10px;
             background-color: #cdc4ff4f;
