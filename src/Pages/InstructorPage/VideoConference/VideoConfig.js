@@ -550,9 +550,9 @@ class VideoConfig extends Component {
             border-radius: 5px;
           }
  
-          @media (max-width: 500px) { 
+          @media (max-width: 480px) { 
            .status { 
-             display: none;
+             margin-top: 165px;
            }
           }    
         `}
