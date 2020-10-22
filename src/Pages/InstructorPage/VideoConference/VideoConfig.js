@@ -552,7 +552,7 @@ class VideoConfig extends Component {
  
           @media (max-width: 480px) { 
            .status { 
-            position: sticky;
+            position: fixed;
             bottom: 10px;
            }
           }    
