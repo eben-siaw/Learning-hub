@@ -34,9 +34,9 @@ class App extends Component  {
 
         <Route path="/dashboard" component={Dashboard} /> 
 
-        <Route path="/courseview/:meetingId/" component={CoursesTabs}  />  
+        <Route path="/courseview/:meetingId/" component={CoursesTabs}/>  
 
-        <Route path="/Video/videoConference/:room" component={VideoConfig} />
+        <Route path="/Video/videoConference/:room" component={VideoConfig}/>
 
         <Route path="/notFound" component={NotFound} /> 
         </Switch>

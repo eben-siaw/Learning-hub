@@ -19,7 +19,8 @@ import Draggable from './Videos/Components/draggable';
 
 class VideoConfig extends Component { 
 
-  constructor(props) {
+  constructor(props) { 
+
     super(props)
 
     this.state = {
@@ -239,10 +240,9 @@ class VideoConfig extends Component {
     this.props.setLoggedIn(true); 
 
     this.socket = io.connect(
-      this.serviceIP,
-      {
+      this.serviceIP, {
         query: {
-          room: window.location.pathname,
+          room: this.props.match.params.room,
         }
       }
     )
@@ -252,7 +252,7 @@ class VideoConfig extends Component {
       this.getLocalStream()
 
       // console.log(data.success)
-      const status = data.peerCount > 1 ? `Total Connected Peers to room ${window.location.pathname}: ${data.peerCount}` : 'Waiting for other peers to connect'
+      const status = data.peerCount > 1 ? `Total Connected Peers to room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
 
       this.setState({
         status: status,
@@ -263,7 +263,7 @@ class VideoConfig extends Component {
     this.socket.on('joined-peers', data => {
 
       this.setState({
-        status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params}: ${data.peerCount}` : 'Waiting for other peers to connect'
+        status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
       })
     })
 
@@ -287,7 +287,7 @@ class VideoConfig extends Component {
           // remoteStream: remoteStreams.length > 0 && remoteStreams[0].stream || null,
           remoteStreams,
           ...selectedVideo,
-          status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params}: ${data.peerCount}` : 'Waiting for other peers to connect'
+          status: data.peerCount > 1 ? `Total Participants in room ${this.props.match.params.room}: ${data.peerCount}` : 'Waiting for other peers to connect'
         }
         }
       )
@@ -564,8 +564,7 @@ class VideoConfig extends Component {
  
           @media (max-width: 480px) { 
            .status { 
-            position: fixed;
-            bottom: 25px;
+             margin-top: 500px;
            }
           }    
         `}
