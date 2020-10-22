@@ -552,7 +552,7 @@ class VideoConfig extends Component {
  
           @media (max-width: 500px) { 
            .status { 
-             margin-top: 142px;
+             display: none;
            }
           }    
         `}
