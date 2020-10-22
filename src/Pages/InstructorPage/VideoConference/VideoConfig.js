@@ -553,7 +553,7 @@ class VideoConfig extends Component {
           @media (max-width: 480px) { 
            .status { 
             position: fixed;
-            bottom: 10px;
+            bottom: 25px;
            }
           }    
         `}
