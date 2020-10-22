@@ -525,7 +525,7 @@ class VideoConfig extends Component {
           zIndex: 3,
           position: 'absolute',
         }}>
-          <i onClick={(e) => {this.setState({disconnected: true})}} style={{ cursor: 'pointer', paddingLeft: 15, color: 'red' }} className='ion-close-circled'></i>
+          <i onClick={(e) => {this.setState({disconnected: true})}} style={{ cursor: 'pointer', paddingLeft: 15, color: 'red', fontSize: 22 }} className='ion-close-circled'></i>
           <div  
           className="status"
        >{ statusText }</div>

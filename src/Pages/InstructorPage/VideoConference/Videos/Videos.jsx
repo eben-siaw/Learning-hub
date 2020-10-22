@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Video from './Video'
 
+// Video component is imported 
 // video visible and selected state additions
 
 class Videos extends Component { 

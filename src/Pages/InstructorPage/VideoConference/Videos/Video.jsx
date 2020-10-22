@@ -82,7 +82,7 @@ class Video extends Component {
     const muteControls = this.props.showMuteControls && (
       <div>
         <i onClick={this.mutemic} style={{ cursor: 'pointer', padding: 5, fontSize: 20, color: this.state.mic && 'white' || 'red' }} className={`${this.state.mic && 'ion-ios-mic' || 'ion-ios-mic-off'}`}></i>
-        <i onClick={this.mutecamera} style={{ cursor: 'pointer', padding: 5, fontSize: 20, color: this.state.camera && 'white' || 'red' }} className={`${this.state.camera && 'ion-ios-videocam' || 'ion-ios-videocam-off'}`}></i>
+        <i onClick={this.mutecamera} style={{ cursor: 'pointer', padding: 5, fontSize: 20, color: this.state.camera && 'white' || 'red' }} className={`${this.state.camera && 'ion-ios-videocam' || 'ion-ios-videocam-outline'}`}></i>
       </div>
     )
 
