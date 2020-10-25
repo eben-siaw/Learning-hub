@@ -218,7 +218,6 @@ class SignUp extends React.Component {
                   <input
                     type="text"
                     name="gender" 
-                    placeholder="Male or Female"
                     onChange={this.handleOnChange}
                     value={gender}
                     className="login-input"
@@ -228,7 +227,7 @@ class SignUp extends React.Component {
                     className={gender.length > 0 ? "static" : ""}
                     htmlFor="gender"
                   >
-                    Gender
+                    Gender(Male or Female)
                   </label>
                   <span className="ion-transgender icon"></span>
                   <div className="underline"></div>
