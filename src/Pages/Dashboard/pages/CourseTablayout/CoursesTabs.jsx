@@ -25,12 +25,14 @@ import ShareIcon from '@material-ui/icons/Share';
 import ListIcon from '@material-ui/icons/List'; 
 import GuidelinesIcon from '@material-ui/icons/ViewAgenda';
 import HomeIcon from '@material-ui/icons/Home';  
+import VideoCamIcon from '@material-ui/icons/VideoLibrary';
 import {createBrowserHistory} from "history"
 import NotificationIcon from '@material-ui/icons/Notifications';
 import VideoIcon from '@material-ui/icons/Videocam'; 
 import jwtdecode from 'jwt-decode'; 
 import {useDispatch} from 'react-redux'
 import { setCurrentUser, setLoggedIn } from "../../../../actions";
+import Videolist from "../../../InstructorPage/Videos/Components/Videolist";
 
 
 const drawerWidth = 240;
@@ -158,8 +160,7 @@ function CourseTabs(props) {
           <VideoIcon color="primary"/> 
           </ListItemIcon>   
           <ListItemText>Video Conference</ListItemText> 
-
-           </ListItem>
+          </ListItem>
 
           <ListItem  
             component={Link}
@@ -171,6 +172,18 @@ function CourseTabs(props) {
             <ListIcon color="primary"/> 
             </ListItemIcon>   
             <ListItemText>My Lessons</ListItemText>
+          </ListItem>  
+          
+          <ListItem  
+            component={Link}
+            to={`/courseview/${meetingId}/videos`} 
+            button 
+            selected={selectedIndex === 5}
+            onClick={(event) => handleListItemClick(event, 5)} >  
+            <ListItemIcon>   
+            <VideoCamIcon color="primary"/> 
+            </ListItemIcon>   
+            <ListItemText>My Videos</ListItemText>
           </ListItem>  
 
           <ListItem  
@@ -260,7 +273,8 @@ function CourseTabs(props) {
            <Route exact path="/courseview/:meetingId/upload" component={UploadVideo} /> 
            <Route path="/courseview/:meetingId/share" component={Share} />  
            <Route path="/courseview/:meetingId/VideoRoom" component={VideoRoom} />
-           <Route path="/courseview/:meetingId/lessons" component={SharedLessons} />
+           <Route path="/courseview/:meetingId/lessons" component={SharedLessons} /> 
+           <Route path="/courseview/:meetingId/videos" component={Videolist} />
            <Route path="/courseview/:meetingId/guides" component={Guidelines} />
           </Switch>
         </main>

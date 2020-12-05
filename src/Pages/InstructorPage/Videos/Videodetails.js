@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useCallback } from 'react';  
 import axios from 'axios'; 
-import {TextField, Select, Fab, FormControl, Typography} from '@material-ui/core';
+import {TextField, Select, Fab, FormControl, InputLabel} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles'; 
 import {useDropzone} from 'react-dropzone';
 import Button from '@material-ui/core/Button';  
@@ -15,7 +15,6 @@ import LoadingSpin from 'react-loading-spin'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 const URL = "https://nilee-nodedatabase.herokuapp.com";  
 
 const local = "http://localhost:5050"; 
@@ -23,15 +22,29 @@ const local = "http://localhost:5050";
 const useStyles = makeStyles((theme) => ({ 
 
     root: { 
-      display: 'flex',  
-      flexWrap: 'wrap', 
-      lineHeight: 6
-    }, 
+      display: 'flex',   
+      flexDirection: 'column', 
+      lineHeight: 2
+    },  
+
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 140,
+    },
+
+    select: { 
+      width: 500
+    },
+
  
 }));
   
+ /*const VideoState = [ 
+  {value: 0, label: "Private - Only those who join my course can see this video" }, 
+  {value: 1, label: "Public - EveryOne can see this video"}
+]*/
 
-const Videodetails = () =>
+const Videodetails = ({meetingId}) =>
 {   
     const classes = useStyles();  
   
@@ -41,7 +54,8 @@ const Videodetails = () =>
     const [videotitle, setvideoTitle] = useState(""); 
     const [description, setdescription] = useState("");  
     const [firebaseVideo, setfirebaseVideo] = useState(""); 
-  
+    const [VideoPrivacy, setVideoPrivacy] = useState(0);  
+
     const [loading, setLoading] = useState(false); 
 
    const handleDescription = (event) => { 
@@ -55,7 +69,9 @@ const Videodetails = () =>
   const handleOnChange = (event) => { 
    setVideoFile(event.target.files[0]); 
   } 
-
+  const handlePrivacy = (event) => { 
+    setVideoPrivacy(event.target.value);
+  }
  //submit all the video details to the backend mongo database
     const handleSubmit = (event) => { 
     
@@ -90,23 +106,25 @@ const Videodetails = () =>
       const details = { 
         instructor: userId,  
         title: videotitle, 
-        description: description, 
+        description: description,   
+        meetingId: meetingId,
         videoName: videoFile.name, 
         video: url 
       } 
  
-      // saving video data to mongo
+      // saving video with meeting Id to mongo
       axios.post(URL + `/video/saveVideo`, details)
      .then(response => { 
      if(response.data.success){   
       setLoading(false); 
-      toast("Your Video has been Uploaded!")
-      window.location = "/dashboard/videos"
+      toast("Your Video has been Uploaded!"); 
+      window.location =`/courseview/${meetingId}/videos`; 
      }else{ 
       toast("Failed to upload video"); 
-     window.location = '/dashboard/videos/new'
-    }
-    })  
+    // window.location = '/dashboard/videos/new'
+    } 
+
+  })  
 
    });  
 
@@ -135,14 +153,15 @@ const Videodetails = () =>
         <br/>
               
          <TextField
-          label="Title" 
+          label="Title"  
           fullWidth
           onChange={handleTitle}  
           value={videotitle} 
-        />      
-       <br/>
+        />       
+        
+         <br/>
         <TextField
-          label="Description" 
+          label="Description"  
           fullWidth 
           variant="outlined" 
           onChange={handleDescription}  
@@ -154,10 +173,9 @@ const Videodetails = () =>
               </InputAdornment>
             ),
           }}
-        />  
-         <br/>  
-
-         <div>  
+        />   
+        <br/>
+         <div className="">  
          <Button onClick={handleSubmit} color="secondary"
           variant="contained" 
           startIcon={<CloudUploadIcon />} > Submit video </Button>   

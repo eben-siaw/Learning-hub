@@ -9,7 +9,7 @@ import {useSelector} from 'react-redux';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
-const local = "http://localhost:5050"
+//const local = "http://localhost:5050"
 
 function LessonView(props) { 
   

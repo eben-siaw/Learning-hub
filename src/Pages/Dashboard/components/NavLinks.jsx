@@ -15,9 +15,9 @@ export default function NavLinks(props) {
       <NavLink exact={true} to={link()}>
         <i className="ion-ios-home-outline"></i>
       </NavLink>
-      <NavLink to={link(`/videos`)}>
+     {/* <NavLink to={link(`/videos`)}>
         <i className="ion-ios-videocam-outline"></i>
-      </NavLink>  
+       </NavLink>  */}
       <NavLink to={link(`/coursehub`)}>
         <i className="ion-ios-book-outline"></i>
       </NavLink> 

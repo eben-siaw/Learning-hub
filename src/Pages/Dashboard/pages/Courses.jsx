@@ -33,7 +33,7 @@ const Courses = (props) => {
   const [notFound, setNotFound] = useState(""); 
 
   const dispatch = useDispatch(); 
-  // get Courses created by the authenticated logged in user, url params
+  // get Courses joined by the authenticated logged in user, url params
 
   const getCourses = () => {
    
@@ -65,7 +65,9 @@ const Courses = (props) => {
             }}
           >
             <div style={{ display: "flex", flexDirection: "row" }}>
-              <Typography variant="h6">{joined.course.course_name}</Typography> 
+              <Typography variant="h6">{joined.course.course_name}</Typography>  
+              <br/>
+              <Typography variant="h6">By {joined.course.user.first_name}</Typography> 
             </div>
             <CardContent>
               <div
@@ -81,7 +83,7 @@ const Courses = (props) => {
                 >
                   <Button
                     variant="contained" 
-                    color="secondary"
+                    color="inherit"
                     style={{
                     //  backgroundColor: "rgb(5, 31, 66)",
                       color: "#fff",

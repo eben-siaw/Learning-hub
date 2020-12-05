@@ -13,7 +13,7 @@ const UploadVideo = (props) => {
         </Link>
         <h3>Upload videos for your courses</h3>
         <div className="form-wrapper">
-          <Videodetails/>
+          <Videodetails meetingId={meetingId}/>
         </div>
       </div>
       <style jsx>{`

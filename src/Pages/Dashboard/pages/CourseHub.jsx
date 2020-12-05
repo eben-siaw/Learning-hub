@@ -4,7 +4,9 @@ import Lessons from './Lessons';
 import PageHeader from "../components/PageHeader"; 
 import LessonView from './LessonView'
 import Courses from "./Courses"; 
+import CourseVideos from "./PrivateVideos/CourseVideos";
 
+ // coursehub shows the lessons and the videos.
 
 function CourseHub () {  
   
@@ -20,7 +22,10 @@ function CourseHub () {
 
           
       <Route exact path="/dashboard/coursehub/lessons/:meetingId"  
-        component={Lessons} />  
+        component={Lessons} />   
+
+      <Route path="/dashboard/coursehub/videos/:meetingId"  
+      component={CourseVideos} />
 
       <Route exact path="/dashboard/coursehub/lessonsView/:id"  
         component={LessonView} /> 

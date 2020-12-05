@@ -1,35 +1,30 @@
-import React from "react";
-import "./Styles.css";
+import React,{Component} from "react";
+import "../Styles.css";
 import { Link } from "react-router-dom";
-import InfoSection from "./InfoSection";  
-import { login } from "./userfunctions"; 
-import {setLoggedIn} from '../actions/index'; 
+import InfoSection from "../InfoSection";   
 import { connect } from "react-redux";
-  
+import { toast } from "react-toastify";
+import { reset } from "../userfunctions";
+ 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-class Login extends React.Component {
+class ResetPassword extends Component { 
+
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: "",
       errorMessage: "",
 
       formErrors: {
         email: "",
-        password: "",
       },
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOnchange = this.handleOnchange.bind(this);
-  }
-
-  componentWillMount() {
-  if (localStorage.getItem("usertoken")) window.location = "/dashboard";
   }
 
   handleOnchange(event) {
@@ -46,10 +41,6 @@ class Login extends React.Component {
           : "invalid email address";
         break;
 
-      case "password":
-        formErrors.password = value.length < 6 ? "minimum 6 characaters" : "";
-        break;
-
       default:
     }
 
@@ -60,24 +51,24 @@ class Login extends React.Component {
     event.preventDefault();
 
     const user = {
-      email: this.state.email,
-      password: this.state.password,
+      email: this.state.email
     }; 
 
-    const result = await login(user);
+   const response = await reset(user); 
 
-    if (result.error) {
-      this.setState({ errorMessage: result.error });
+    if (response.error) {
+      this.setState({ errorMessage: response.error });
       setTimeout(() => this.setState({ errorMessage: "" }), 3000);
-      return;
+      return null;
+    } else { 
+        toast("A link has been sent to your email");
+        window.location = "/"; 
     } 
-     this.props.setLoggedIn(true)
-    window.location = "/dashboard";
-   
+     
   }
 
   render() {
-    const { formErrors, email, password, errorMessage } = this.state; 
+    const { formErrors, email, errorMessage } = this.state; 
 
 
     return (
@@ -94,7 +85,7 @@ class Login extends React.Component {
                   alt="nileeLogo"
                 />
               </div> */}
-              <h2 className="form-title">LOGIN FORM</h2>
+              <h2 className="form-title">Password Reset</h2>
 
               <div className={`error-display ${!errorMessage ? "hidden" : ""}`}>
                 <p>{errorMessage}</p>
@@ -113,7 +104,7 @@ class Login extends React.Component {
                   className={email.length > 0 ? "static" : ""}
                   htmlFor="email"
                 >
-                  Emails
+                  Enter your Email
                 </label>
                 <span className="ion-ios-email icon"></span>
 
@@ -125,51 +116,19 @@ class Login extends React.Component {
                 <div className="underline"></div>
               </div>
 
-              <div className="input-group">
-                <input
-                  type="password"
-                  name="password"
-                  onChange={this.handleOnchange}
-                  value={this.state.password}
-                  className="login-input"
-                  required
-                  id="password"
-                />
-                <label
-                  className={password.length > 0 ? "static" : ""}
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                <span className="ion-ios-locked icon"></span>
-                {formErrors.password.length > 0 && (
-                  <div error={formErrors.password} className="errorMessage">
-                    !
-                  </div>
-                )}
-                <div className="underline"></div>
-              </div>
               <div className="button-group">
                 <button type="submit" className="submit">
-                  Login
+                  Reset Password
                 </button>
               </div>
               <Link to="/register">
                 {" "}
                 <span className="redirect-link">
                   {" "}
-                  Not an Edunal member? Register{" "}
+                  Go Back{" "}
                 </span>{" "}
               </Link> 
-               <div style={{paddingTop: '25px', marginLeft: '-80px'}}> 
-              <Link style={{color: 'red'}} to="/reset">
-                {" "}
-                <span className="redirect-link">
-                  {" "}
-                  Forgot Password?{" "}
-                </span>{" "}
-              </Link> 
-              </div>
+               <br/>
             </form>
           </div>
         </div>
@@ -178,4 +137,5 @@ class Login extends React.Component {
   }
 }
 
-export default connect(null,{setLoggedIn})(Login);
+export default connect(null, {})(ResetPassword);
+

@@ -1,35 +1,33 @@
-import React from "react";
-import "./Styles.css";
+import React,{Component} from "react";
+import "../Styles.css";
 import { Link } from "react-router-dom";
-import InfoSection from "./InfoSection";  
-import { login } from "./userfunctions"; 
-import {setLoggedIn} from '../actions/index'; 
+import InfoSection from "../InfoSection";   
 import { connect } from "react-redux";
-  
+import axios from 'axios';  
+import { toast } from "react-toastify";
+import { newPassword } from "../userfunctions";
+ 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-class Login extends React.Component {
+class NewPassword extends Component { 
+
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
+      password1: "", 
+      password2: "",
       errorMessage: "",
 
       formErrors: {
-        email: "",
-        password: "",
+        password1: "", 
+        password2: ""
       },
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOnchange = this.handleOnchange.bind(this);
-  }
-
-  componentWillMount() {
-  if (localStorage.getItem("usertoken")) window.location = "/dashboard";
   }
 
   handleOnchange(event) {
@@ -40,15 +38,13 @@ class Login extends React.Component {
     let formErrors = { ...this.state.formErrors };
 
     switch (name) {
-      case "email":
-        formErrors.email = emailRegex.test(value)
-          ? ""
-          : "invalid email address";
-        break;
-
-      case "password":
-        formErrors.password = value.length < 6 ? "minimum 6 characaters" : "";
-        break;
+      case "password1":
+       formErrors.password1 = value.length < 8 ? "minimum 8 characaters required" : "";
+       break; 
+    
+      case "password2": 
+      formErrors.password2 = value.length < 8 ? "minimum 8 characaters required" : "";
+      break;
 
       default:
     }
@@ -56,28 +52,42 @@ class Login extends React.Component {
     this.setState({ formErrors, [name]: value });
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event) { 
+
     event.preventDefault();
+    
+    const {token} = this.props.match.params;
 
-    const user = {
-      email: this.state.email,
-      password: this.state.password,
-    }; 
+    const details = { 
+      password1: this.state.password1,
+      password2: this.state.password2,  
+      token: token
+    }   
 
-    const result = await login(user);
+    const password = this.state.password1; 
+    const password2 = this.state.password2; 
+    
+    if(password !== password2) { 
+     this.setState({ errorMessage: "Passwords do not match!" });
+     setTimeout(() => this.setState({ errorMessage: "" }), 3050); 
+     return null;
+    }
 
-    if (result.error) {
-      this.setState({ errorMessage: result.error });
+   const response = await newPassword(details); 
+
+    if (response.data.error) {
+      this.setState({ errorMessage: response.data.error });
       setTimeout(() => this.setState({ errorMessage: "" }), 3000);
-      return;
+      return null;
+    } else { 
+        toast("A link has been sent to your email");
+        window.location = "/"; 
     } 
-     this.props.setLoggedIn(true)
-    window.location = "/dashboard";
-   
+     
   }
 
   render() {
-    const { formErrors, email, password, errorMessage } = this.state; 
+    const { formErrors, password2, password1, errorMessage } = this.state; 
 
 
     return (
@@ -94,82 +104,77 @@ class Login extends React.Component {
                   alt="nileeLogo"
                 />
               </div> */}
-              <h2 className="form-title">LOGIN FORM</h2>
+              <h2 className="form-title">Change Password</h2>
 
               <div className={`error-display ${!errorMessage ? "hidden" : ""}`}>
                 <p>{errorMessage}</p>
-              </div>
+              </div> 
+
               <div className="input-group">
                 <input
                   type="text"
-                  className={formErrors.email.length > 0 ? "error" : null}
+                  className={formErrors.password1.length > 0 ? "error" : null}
                   name="email"
                   onChange={this.handleOnchange}
-                  value={this.state.email}
+                  value={this.state.password1}
                   required
                   id="email"
                 />
                 <label
-                  className={email.length > 0 ? "static" : ""}
+                  className={password1.length > 0 ? "static" : ""}
                   htmlFor="email"
                 >
-                  Emails
+                  Enter new Password
                 </label>
                 <span className="ion-ios-email icon"></span>
 
                 {formErrors.email.length > 0 && (
-                  <div error={formErrors.email} className="errorMessage">
+                  <div error={formErrors.password1} className="errorMessage">
+                    !
+                  </div>
+                )}
+                <div className="underline"></div>
+              </div> 
+
+              <div className="input-group">
+                <input
+                  type="text"
+                  className={formErrors.password2.length > 0 ? "error" : null}
+                  name="email"
+                  onChange={this.handleOnchange}
+                  value={this.state.password2}
+                  required
+                  id="email"
+                />
+                <label
+                  className={password2.length > 0 ? "static" : ""}
+                  htmlFor="email"
+                >
+                  Confirm Password
+                </label>
+                <span className="ion-ios-email icon"></span>
+
+                {formErrors.password2.length > 0 && (
+                  <div error={formErrors.password2} className="errorMessage">
                     !
                   </div>
                 )}
                 <div className="underline"></div>
               </div>
 
-              <div className="input-group">
-                <input
-                  type="password"
-                  name="password"
-                  onChange={this.handleOnchange}
-                  value={this.state.password}
-                  className="login-input"
-                  required
-                  id="password"
-                />
-                <label
-                  className={password.length > 0 ? "static" : ""}
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                <span className="ion-ios-locked icon"></span>
-                {formErrors.password.length > 0 && (
-                  <div error={formErrors.password} className="errorMessage">
-                    !
-                  </div>
-                )}
-                <div className="underline"></div>
-              </div>
               <div className="button-group">
                 <button type="submit" className="submit">
-                  Login
+                  Reset Password
                 </button>
               </div>
               <Link to="/register">
                 {" "}
                 <span className="redirect-link">
                   {" "}
-                  Not an Edunal member? Register{" "}
+                  Go Back{" "}
                 </span>{" "}
               </Link> 
-               <div style={{paddingTop: '25px', marginLeft: '-80px'}}> 
-              <Link style={{color: 'red'}} to="/reset">
-                {" "}
-                <span className="redirect-link">
-                  {" "}
-                  Forgot Password?{" "}
-                </span>{" "}
-              </Link> 
-              </div>
+               <br/>
             </form>
           </div>
         </div>
@@ -178,4 +183,5 @@ class Login extends React.Component {
   }
 }
 
-export default connect(null,{setLoggedIn})(Login);
+export default connect(null, {})(NewPassword);
+

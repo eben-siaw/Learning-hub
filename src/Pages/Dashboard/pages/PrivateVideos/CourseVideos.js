@@ -10,11 +10,13 @@ const URL = "https://nilee-nodedatabase.herokuapp.com";
 
 const local = "http://localhost:5050"; 
 
-const Videolist = () => { 
+const PrivateVideos = (props) => { 
 
   const authUserId = useSelector((state) => state.auth.user._id);  
 
-  const isAuth = useSelector((state) => state.auth.isLoggedIn);
+  const isAuth = useSelector((state) => state.auth.isLoggedIn); 
+
+  const {meetingId} = props.match.params;
 
   const [Videos, setVideos] = useState([]); 
  
@@ -24,14 +26,15 @@ const Videolist = () => {
 
   const [loading, setLoading] = useState(true); 
   
-  const [privacy, setPrivacy] = useState(1); 
-
+  // get Only Videos by meeting Id of this course that the user joined
+  
   const getvideos = async () => {
-    const res = await axios.get(URL + `/video/getVideos/${authUserId}`);
+    const res = await axios.get(URL + `/video/getVideos/${meetingId}`);
     setVideos(res.data);
     setLoading(false);
   };
   
+  // delete video
  const onItemDelete = async id => {  
    try {
       await axios.delete(URL + `/video/removeVideo/${id}`).then(res => { 
@@ -63,17 +66,14 @@ const Videolist = () => {
     }
     return description;
   };
-  
-   // get only public videos
+
   const renderVideos = () => { 
 
     const color = Math.ceil(Math.random() * 3);
 
-    return Videos.map((videos, index) => { 
-     
-      if(videos.videoPrivacy === 1) { 
-
-        return (
+    return Videos.map((videos, index) => {
+      return (
+      
           <div className="stream-card" key={videos._id}> 
             <a
              style={{ textDecoration: "none" }}
@@ -84,7 +84,7 @@ const Videolist = () => {
                 videoUrl={videos.video}  
                 thumbnailHandler={(thumbnail) => console.log(thumbnail)}
                 snapshotAtTime={2}
-                cors={true} 
+                cors={true}
                 width={100}
               />  
             </div> 
@@ -120,11 +120,6 @@ const Videolist = () => {
           </div>
 
       );
-
-
-      }
-
-      
     });
   };
   const renderCreateButton = () => {
@@ -196,8 +191,7 @@ const Videolist = () => {
             align-items: center;
             justify-content: center;
             transition: 0.2s;
-          } 
-          
+          }
           .stream-card .auth-options:hover {
             background: #00000025;
           }
@@ -311,4 +305,5 @@ const AuthOptions = ({ videoId, onDelete }) => {
   );
 };
 
-export default Videolist;
+export default PrivateVideos;
+

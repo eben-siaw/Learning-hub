@@ -21,7 +21,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
-//const local = "http://localhost:5050"; 
+const local = "http://localhost:5050"; 
 
 const InstructorHub = () => { 
  
@@ -33,7 +33,7 @@ const InstructorHub = () => {
 
   const getCourses = async () => {
     try {
-      await axios.get(URL + `/courses/${user}/courses`)  
+      await axios.get(local + `/courses/${user}/courses`)  
       .then(res => { 
         if(res.data.success) { 
           setCourses(res.data.course);  
@@ -48,7 +48,7 @@ const InstructorHub = () => {
   const deleteCourse = async (id) => {
     try {
       await axios
-        .delete(URL + `/courses/${user}/course/delete/${id}`)
+        .delete(local + `/courses/${user}/course/delete/${id}`)
         .then((res) => {
           return res.data;
         });

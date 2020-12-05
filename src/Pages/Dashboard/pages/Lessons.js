@@ -7,11 +7,11 @@ import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';  
 import {Link} from 'react-router-dom'
-import { Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import LoadingSpin from "react-loading-spin";  
 import {useSelector} from 'react-redux';
 
-const local = "http://localhost:5050"
+//const local = "http://localhost:5050"
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 
@@ -67,7 +67,7 @@ const Lessons = (props) => {
 
      return(  
 
-      <div className={classes.root}>   
+      <div className={classes.root}>    
         <a style={{textDecoration: 'none'}} href={`/dashboard/coursehub/lessonsView/${lesson._id}`}>   
        <Grid container spacing={4}>  
        <Grid item xs={12}> 
@@ -85,10 +85,12 @@ const Lessons = (props) => {
    if(lessons) { 
     return( 
      <div className="main-wrapper">   
-        <Link to={`/dashboard/coursehub`} className="back-button">
+        <Link style={{display: 'inline-block'}} to={`/dashboard/coursehub`} className="back-button">
           <i className="ion-ios-arrow-back"></i>
           <span>Go Back</span>
-        </Link>
+        </Link> 
+    <Link style={{display: 'inline-block', paddingLeft: '24rem'}} to={`/dashboard/coursehub/videos/${meetingId}`}> <Button variant="contained" color="secondary"> Videos</Button>  
+    </Link>
        <div className="lesson-wrapper"> 
       {renderLessons}  
       {loading ? <LoadingSpin /> : null}

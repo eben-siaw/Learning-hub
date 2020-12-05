@@ -9,8 +9,10 @@ import history from "./Pages/InstructorPage/history";
 import Login from "./Components/Login";
 import SignUp from "./Components/SignUp";
 import NotFound from "./Components/NotFound";
-import VideoConfig from "./Pages/InstructorPage/VideoConference/VideoConfig";
+import VideoConfig from "./Pages/InstructorPage/VideoConference/VideoConfig"; 
+import PasswordReset from './Components/PasswordReset/Reset';
 import ReactGa from 'react-ga'
+import NewPassword from "./Components/PasswordReset/NewPassword";
 
 class App extends Component  {
    
@@ -30,7 +32,11 @@ class App extends Component  {
 
         <Route exact path="/" component={Login} /> 
 
-        <Route path="/login" component={Login} />
+        <Route path="/login" component={Login} /> 
+
+        <Route path="/reset" component={PasswordReset} /> 
+
+        <Route path="/reset-pass/:token" component={NewPassword} />
 
         <Route path="/dashboard" component={Dashboard} /> 
 
