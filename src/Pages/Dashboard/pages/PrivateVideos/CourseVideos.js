@@ -20,6 +20,7 @@ const PrivateVideos = (props) => {
 
   const [Videos, setVideos] = useState([]); 
  
+  // TODO serach 
   const [searchTerm, setSearchTerm] = useState("");
 
   const [filteredVideos, setFilteredVideos] = useState("")
@@ -27,7 +28,6 @@ const PrivateVideos = (props) => {
   const [loading, setLoading] = useState(true); 
   
   // get Only Videos by meeting Id of this course that the user joined
-  
   const getvideos = async () => {
     const res = await axios.get(URL + `/video/getVideos/${meetingId}`);
     setVideos(res.data);
@@ -77,7 +77,7 @@ const PrivateVideos = (props) => {
           <div className="stream-card" key={videos._id}> 
             <a
              style={{ textDecoration: "none" }}
-             href={`/dashboard/videos/watch/${videos._id}`}
+             href={`/dashboard/coursehub/videoplay/${videos._id}`}
             >
             <div className="thumbnail">
               <VideoThumbnail
@@ -109,10 +109,10 @@ const PrivateVideos = (props) => {
                 <p style={{ fontSize: "15px", color: "grey" }}>{videos.instructor.first_name} {videos.instructor.last_name}</p>
               </div>   
               {videos.instructor._id === authUserId ? (
-            <AuthOptions 
+             <AuthOptions 
              onDelete={() => onItemDelete(videos._id)}
               videoId={videos._id}
-            />
+            /> 
           ) : (
             ""
           )}
@@ -130,11 +130,16 @@ const PrivateVideos = (props) => {
         </Link>
       );
     }
-  };
-  if (Videos != null) {
+  }; 
+
+  if (Videos.length !== 0) {
     return (
       <div className="stream-list-container">
-        {renderCreateButton()}
+        {renderCreateButton()} 
+        <Link to={`/dashboard/coursehub/lessons/${meetingId}`} className="back-button">
+          <i className="ion-ios-arrow-back"></i>
+          <span>lessons</span> 
+        </Link> 
         <div className="stream-list-container-inner">
           {renderVideos()}
           {loading ? <LoadingSpin /> : null}
@@ -265,7 +270,7 @@ const PrivateVideos = (props) => {
       </div>
     );
   } else {
-    return <div> Loading... </div>;
+    return <div> No videos uploaded by your Instructor</div>;
   }
 };
 

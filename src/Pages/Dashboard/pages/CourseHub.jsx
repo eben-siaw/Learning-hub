@@ -5,8 +5,9 @@ import PageHeader from "../components/PageHeader";
 import LessonView from './LessonView'
 import Courses from "./Courses"; 
 import CourseVideos from "./PrivateVideos/CourseVideos";
+import InstructorVideo from "../../InstructorPage/Videos/Components/InstructorVideo";
 
- // coursehub shows the lessons and the videos.
+ // coursehub shows the lessons and the videos for a course the user joined and video playback.
 
 function CourseHub () {  
   
@@ -25,7 +26,10 @@ function CourseHub () {
         component={Lessons} />   
 
       <Route path="/dashboard/coursehub/videos/:meetingId"  
-      component={CourseVideos} />
+      component={CourseVideos} /> 
+
+      <Route exact path="/dashbaord/coursehub/videoplay/:id" 
+      component={InstructorVideo} />
 
       <Route exact path="/dashboard/coursehub/lessonsView/:id"  
         component={LessonView} /> 

@@ -64,6 +64,7 @@ class NewPassword extends Component {
       token: token
     }   
 
+     // check if confirm passwords match
     const password = this.state.password1; 
     const password2 = this.state.password2; 
     
@@ -73,14 +74,14 @@ class NewPassword extends Component {
      return null;
     }
 
-   const response = await newPassword(details); 
+    const response = await newPassword(details); 
 
     if (response.data.error) {
       this.setState({ errorMessage: response.data.error });
       setTimeout(() => this.setState({ errorMessage: "" }), 3000);
       return null;
     } else { 
-        toast("A link has been sent to your email");
+        toast("Password updated successfully!");
         window.location = "/"; 
     } 
      
@@ -164,10 +165,10 @@ class NewPassword extends Component {
 
               <div className="button-group">
                 <button type="submit" className="submit">
-                  Reset Password
+                  Submit
                 </button>
               </div>
-              <Link to="/register">
+              <Link to="/login">
                 {" "}
                 <span className="redirect-link">
                   {" "}

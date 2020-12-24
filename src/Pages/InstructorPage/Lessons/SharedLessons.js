@@ -9,7 +9,7 @@ import { Typography } from '@material-ui/core';
 import LoadingSpin from "react-loading-spin";  
 import {useSelector} from 'react-redux';
 
-const local = "http://localhost:5050"
+//const local = "http://localhost:5050"
 
 const URL = "https://nilee-nodedatabase.herokuapp.com"; 
 

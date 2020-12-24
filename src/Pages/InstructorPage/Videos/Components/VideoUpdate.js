@@ -36,7 +36,7 @@ const VideoUpdate = ({videoId}) =>
     const [description, setdescription] = useState("");  
 
   
-  const [loading, setLoading] = useState(false) 
+  const [loading, setLoading] = useState(false); 
 
    const handleDescription = (event) => { 
    setdescription(event.currentTarget.value)

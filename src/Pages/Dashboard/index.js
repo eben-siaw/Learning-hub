@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import DashboardNav from "./components/DashboardNav";
 import Home from "./pages/Home";
 import Videos from "./pages/Videos";
@@ -33,14 +33,25 @@ class Dashboard extends Component {
       last_name: "",
       _id: null,
     }; 
-  
-  }
+   
+    this.checkAuthentication = this.checkAuthentication.bind(this);
+
+  } 
+
+   checkAuthentication() { 
+    const token = localStorage.usertoken;
+    if (!token) { 
+       return( 
+        <Redirect to="/login"/>
+      );
+    } 
+   }
 
   componentDidMount() {
+
+    this.checkAuthentication(); 
+
     const token = localStorage.usertoken;
-    if (!token) {
-      window.location = "/";
-    }
     const decoded = jwt_decode(token);
     this.setState({
       _id: decoded._id,

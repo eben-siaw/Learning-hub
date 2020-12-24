@@ -62,7 +62,6 @@ class ResetPassword extends Component {
       return null;
     } else { 
         toast("A link has been sent to your email");
-        window.location = "/"; 
     } 
      
   }
@@ -121,7 +120,7 @@ class ResetPassword extends Component {
                   Reset Password
                 </button>
               </div>
-              <Link to="/register">
+              <Link to="/login">
                 {" "}
                 <span className="redirect-link">
                   {" "}

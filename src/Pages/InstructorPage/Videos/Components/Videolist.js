@@ -35,8 +35,9 @@ const Videolist = () => {
  const onItemDelete = async id => {  
    try {
       await axios.delete(URL + `/video/removeVideo/${id}`).then(res => { 
-        if(res.data) { 
-          window.location = "/dashboard/videos";
+        if(res.data) {  
+          
+          //window.location = "/dashboard/videos";
         }
       })
    } catch (error) {

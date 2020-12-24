@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const URL = "https://nilee-nodedatabase.herokuapp.com";  
 
-const local = "http://localhost:5050"; 
+//const local = "http://localhost:5050"; 
 
 const useStyles = makeStyles((theme) => ({ 
 
@@ -183,7 +183,7 @@ const Videodetails = ({meetingId}) =>
           </div>
          
          <div style={{padding: 10}}> 
-         {loading ? <LoadingSpin  /> : null } 
+         {loading ? <LoadingSpin /> : null } 
          </div>
       </div>
 

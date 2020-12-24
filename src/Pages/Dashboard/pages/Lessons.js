@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Lessons = (props) => { 
       
- const classes = useStyles();
+  const classes = useStyles();
     
- const {meetingId} = props.match.params;
+  const {meetingId} = props.match.params;
   
   const [lessons, setLessons] = useState([]); 
 
@@ -82,15 +82,18 @@ const Lessons = (props) => {
   );
  }   
  })
-   if(lessons) { 
+   if(lessons.length !== 0) { 
     return( 
-     <div className="main-wrapper">   
-        <Link style={{display: 'inline-block'}} to={`/dashboard/coursehub`} className="back-button">
-          <i className="ion-ios-arrow-back"></i>
-          <span>Go Back</span>
-        </Link> 
-    <Link style={{display: 'inline-block', paddingLeft: '24rem'}} to={`/dashboard/coursehub/videos/${meetingId}`}> <Button variant="contained" color="secondary"> Videos</Button>  
-    </Link>
+     <div className="main-wrapper">  
+
+        
+    <Link style={{display: 'inline-block'}} to={`/dashboard/coursehub`} className="back-button">
+      <i className="ion-ios-arrow-back"></i>
+      <span>Go Back</span>
+      </Link> 
+    <Link style={{display: 'inline-block', paddingLeft: '27rem'}} to={`/dashboard/coursehub/videos/${meetingId}`}> <Button variant="contained" color="secondary"> Videos</Button>  
+    </Link> 
+
        <div className="lesson-wrapper"> 
       {renderLessons}  
       {loading ? <LoadingSpin /> : null}
@@ -109,7 +112,7 @@ const Lessons = (props) => {
   } 
   else { 
     return( 
-    <div> No lessons found. Please join a course </div>
+    <div> No lessons found for this course. </div>
     )
   } 
 } 
